@@ -1,0 +1,13 @@
+<resources>
+    <!-- Base application theme. -->
+    <style name="Base.Theme.PointOfSale" parent="Theme.Material3.DayNight.NoActionBar">
+        <!-- Customize your light theme here. -->
+        <item name="colorPrimary">#004080</item>
+        <item name="colorSecondary">#EBF2FA</item>
+
+    </style>
+
+
+
+    <style name="Theme.PointOfSale" parent="Base.Theme.PointOfSale" />
+</resources>
