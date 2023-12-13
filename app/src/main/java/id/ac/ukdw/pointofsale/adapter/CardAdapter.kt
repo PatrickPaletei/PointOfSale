@@ -8,9 +8,13 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import id.ac.ukdw.pointofsale.R
 import id.ac.ukdw.pointofsale.data.CardData
+import id.ac.ukdw.pointofsale.viewmodel.SelectedItemViewModel
 
-class CardAdapter(private val dataList: List<CardData>) :
-    RecyclerView.Adapter<CardAdapter.CardViewHolder>() {
+
+class CardAdapter(
+    private val dataList: List<CardData>,
+    private val itemClickListener: (CardData) -> Unit
+) : RecyclerView.Adapter<CardAdapter.CardViewHolder>() {
 
     inner class CardViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val imageView: ImageView = itemView.findViewById(R.id.imageView)
@@ -29,6 +33,11 @@ class CardAdapter(private val dataList: List<CardData>) :
         holder.imageView.setImageResource(currentItem.imageResource)
         holder.textViewTitle.text = currentItem.title
         holder.textViewDescription.text = currentItem.description
+
+        // Set item click listener
+        holder.itemView.setOnClickListener {
+            itemClickListener(currentItem) // Invoke the lambda function on item click
+        }
     }
 
     override fun getItemCount(): Int {

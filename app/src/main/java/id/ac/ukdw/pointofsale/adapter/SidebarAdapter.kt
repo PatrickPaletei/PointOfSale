@@ -36,7 +36,7 @@ class SidebarAdapter(private val items: List<SidebarItem>, private val onItemCli
                 setBackgroundResource(R.drawable.selected_side_btn)
                 findViewById<TextView>(R.id.textTextView).setTextColor(ContextCompat.getColor(context, R.color.white))
             } else {
-                setBackgroundColor(Color.TRANSPARENT)
+                setBackgroundResource(R.drawable.unselected_side_btn)
                 findViewById<TextView>(R.id.textTextView).setTextColor(ContextCompat.getColor(context, R.color.black))
             }
 
