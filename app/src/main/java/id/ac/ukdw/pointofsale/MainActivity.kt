@@ -1,35 +1,28 @@
 package id.ac.ukdw.pointofsale
 
-import android.annotation.SuppressLint
 import android.os.Bundle
-import android.view.MenuItem
 import android.widget.ImageView
-import androidx.activity.viewModels
-import androidx.appcompat.app.ActionBarDrawerToggle
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.appcompat.widget.Toolbar
-import androidx.drawerlayout.widget.DrawerLayout
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavController
-import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.CircleCrop
 import com.bumptech.glide.request.RequestOptions
-import com.google.android.material.navigation.NavigationView
-import com.google.android.material.navigationrail.NavigationRailView
 import id.ac.ukdw.pointofsale.adapter.SidebarAdapter
 import id.ac.ukdw.pointofsale.data.SidebarItem
+import id.ac.ukdw.pointofsale.ui.EditCheckOutFragment
 import id.ac.ukdw.pointofsale.ui.PopUpFragment
+import id.ac.ukdw.pointofsale.viewmodel.EditCheckOutViewModel
 import id.ac.ukdw.pointofsale.viewmodel.SelectedItemViewModel
-import id.ac.ukdw.pointofsale.viewmodel.SharedCheckoutViewModel
 
 class MainActivity : AppCompatActivity(){
     private lateinit var selectedItemViewModel: SelectedItemViewModel
     private lateinit var navController: NavController
-    private val sharedViewModel: SharedCheckoutViewModel by viewModels()
+    private lateinit var editCheckOutViewModel: EditCheckOutViewModel
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -47,12 +40,27 @@ class MainActivity : AppCompatActivity(){
             showPopUpDialog()
         }
 
+        editCheckOutViewModel = ViewModelProvider(this).get(EditCheckOutViewModel::class.java)
+        editCheckOutViewModel.isPopupShown.observe(this) { isShown ->
+            if (isShown) {
+                showPopUpDialogEdit()
+                editCheckOutViewModel.resetPopupFlag() // Reset the flag after showing the popup
+            }
+        }
         sideBar()
 
     }
 
     fun getSelectedItemViewModel(): SelectedItemViewModel {
         return selectedItemViewModel
+    }
+    fun getCheckOutItemViewModel(): EditCheckOutViewModel {
+        return editCheckOutViewModel
+    }
+
+    fun showPopUpDialogEdit(){
+        val dialogFragment = EditCheckOutFragment()
+        dialogFragment.show(supportFragmentManager, "PopUp")
     }
 
     fun showPopUpDialog() {

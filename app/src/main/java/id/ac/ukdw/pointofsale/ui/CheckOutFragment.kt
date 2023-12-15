@@ -10,9 +10,11 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import id.ac.ukdw.pointofsale.MainActivity
 import id.ac.ukdw.pointofsale.R
 import id.ac.ukdw.pointofsale.adapter.CheckOutAdapter
 import id.ac.ukdw.pointofsale.data.CheckOutData
+import id.ac.ukdw.pointofsale.viewmodel.EditCheckOutViewModel
 import id.ac.ukdw.pointofsale.viewmodel.SharedCheckoutViewModel
 
 
@@ -20,6 +22,12 @@ class CheckOutFragment : Fragment() {
 
     private val checkoutViewModel: SharedCheckoutViewModel by activityViewModels()
     private lateinit var adapter: CheckOutAdapter
+    private lateinit var editCheckoutViewModel: EditCheckOutViewModel
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        editCheckoutViewModel = (requireActivity() as MainActivity).getCheckOutItemViewModel()
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -36,10 +44,12 @@ class CheckOutFragment : Fragment() {
             decrementClickListener = { position ->
                 decrementItem(position)
             },
-            ubahSemuaClickListener = { position ->
-
+            ubahSemuaClickListener = { dataList ->
+                editCheckoutViewModel.setSelectedItem(dataList)
+                editCheckoutViewModel.setPopUpFlag()
             }
         )
+
         recyclerView.adapter = adapter
 
         checkoutViewModel.dataList.observe(viewLifecycleOwner) { newDataList ->

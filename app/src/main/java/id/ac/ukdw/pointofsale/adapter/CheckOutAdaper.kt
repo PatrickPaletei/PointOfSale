@@ -13,7 +13,7 @@ import id.ac.ukdw.pointofsale.data.CheckOutData
 class CheckOutAdapter(
     private val incrementClickListener: (Int) -> Unit,
     private val decrementClickListener: (Int) -> Unit,
-    private val ubahSemuaClickListener: (Int) -> Unit
+    private val ubahSemuaClickListener: (CheckOutData) -> Unit
 ) : RecyclerView.Adapter<CheckOutAdapter.CardViewHolder>() {
 
     private var dataList: List<CheckOutData> = emptyList() // Initialize with empty list
@@ -23,17 +23,12 @@ class CheckOutAdapter(
         val hargaMenu: TextView = itemView.findViewById(R.id.harga)
         val jumlahMenu: TextView = itemView.findViewById(R.id.jumlahMenu)
         val catatanMenu: TextView = itemView.findViewById(R.id.catatanMenu)
-        val tambahMenu:ImageButton = itemView.findViewById(R.id.tambahMenu)
-        val kurangMenu:ImageButton = itemView.findViewById(R.id.kurangMenu)
-        val ubahSemua:TextView = itemView.findViewById(R.id.ubahMenu)
+        val containerCatatan: LinearLayout = itemView.findViewById(R.id.ubahCatatan)
+        val tambahMenu: ImageButton = itemView.findViewById(R.id.tambahMenu)
+        val kurangMenu: ImageButton = itemView.findViewById(R.id.kurangMenu)
+        val ubahSemua: TextView = itemView.findViewById(R.id.ubahMenu)
 
         init {
-            ubahSemua.setOnClickListener {
-                val position = adapterPosition
-                if (position != RecyclerView.NO_POSITION) {
-                    incrementClickListener(position)
-                }
-            }
             tambahMenu.setOnClickListener {
                 val position = adapterPosition
                 if (position != RecyclerView.NO_POSITION) {
@@ -60,7 +55,17 @@ class CheckOutAdapter(
         holder.judulMenu.text = currentItem.judulMenu
         holder.hargaMenu.text = currentItem.harga
         holder.jumlahMenu.text = currentItem.jumlah.toString()
-        holder.catatanMenu.text = currentItem.notes
+
+        if (currentItem.notes.isEmpty()) {
+            holder.containerCatatan.visibility = View.GONE // Hide catatanMenu if notes is empty or null
+        } else {
+            holder.containerCatatan.visibility = View.VISIBLE // Show catatanMenu if notes is present
+            holder.catatanMenu.text = currentItem.notes
+        }
+
+        holder.ubahSemua.setOnClickListener {
+            ubahSemuaClickListener(currentItem)
+        }
     }
 
     override fun getItemCount(): Int {
@@ -72,4 +77,6 @@ class CheckOutAdapter(
         dataList = newDataList
         notifyDataSetChanged()
     }
+
+
 }
