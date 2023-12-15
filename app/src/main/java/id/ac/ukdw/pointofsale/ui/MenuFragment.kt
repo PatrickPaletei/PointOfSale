@@ -38,9 +38,9 @@ class MenuFragment : Fragment() {
         recyclerView.addItemDecoration(SpaceItemDecoration(spacingInPixels,3))
 
         val dataList = listOf(
-            CardData(R.drawable.ayam, "Title 1", "Description 1"),
-            CardData(R.drawable.ayam, "Title 2", "Description 1"),
-            CardData(R.drawable.ayam, "Title 3", "Description 1"),
+            CardData(R.drawable.ayam, "Nasi Geprek Telur Sambel Bawang + Lalapan + Es Teh", "IDR 11.000"),
+            CardData(R.drawable.ayam, "Nasi Geprek Telur Sambel Bawang + Lalapan", "IDR 11.000"),
+            CardData(R.drawable.ayam, "Nasi Geprek Telur Sambel Bawang", "IDR 11.000"),
             CardData(R.drawable.ayam, "Title 4", "Description 1"),
             CardData(R.drawable.ayam, "Title 5", "Description 1"),
             CardData(R.drawable.ayam, "Title 6", "Description 1"),

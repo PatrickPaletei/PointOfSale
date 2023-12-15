@@ -29,12 +29,14 @@
             android:orientation="vertical">
 
             <TextView
+                android:id="@+id/namaMenu"
                 android:layout_width="292dp"
                 android:layout_height="52dp"
                 android:text="Nasi Geprek Ayam Sambal Bawang + Lalapan + Es Teh"
                 android:textSize="21sp" />
 
             <TextView
+                android:id="@+id/hargaMenu"
                 android:layout_width="292dp"
                 android:layout_height="24dp"
                 android:layout_marginTop="12dp"
@@ -68,12 +70,14 @@
         app:layout_constraintTop_toBottomOf="@+id/materialDivider">
 
         <ImageButton
+            android:id="@+id/kurangPesan"
             android:layout_width="40dp"
             android:layout_height="40dp"
             android:background="@drawable/rounded_plus_min"
             android:src="@drawable/ic_minus" />
 
         <TextView
+            android:id="@+id/banyakPesanan"
             android:layout_width="272dp"
             android:layout_height="40dp"
             android:layout_marginStart="20dp"
@@ -87,6 +91,7 @@
             android:textStyle="bold" />
 
         <ImageButton
+            android:id="@+id/tambahPesan"
             android:layout_width="40dp"
             android:layout_height="40dp"
             android:background="@drawable/rounded_plus_min"
@@ -95,7 +100,7 @@
     </LinearLayout>
 
     <EditText
-        android:id="@+id/editText"
+        android:id="@+id/editCatatan"
         android:layout_width="392dp"
         android:layout_height="80dp"
         android:layout_margin="20dp"
@@ -118,7 +123,7 @@
         android:layout_marginTop="48dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editText" />
+        app:layout_constraintTop_toBottomOf="@+id/editCatatan" />
 
 
     <LinearLayout

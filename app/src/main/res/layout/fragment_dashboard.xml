@@ -18,6 +18,8 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:gravity="center"
+            android:layout_marginTop="20dp"
             android:orientation="horizontal">
 
             <TextView
@@ -25,31 +27,35 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:lineSpacingExtra="2sp"
+                android:layout_marginStart="12dp"
                 android:text="@string/selamat_datang"
                 android:textColor="#0A0A0A"
-                android:textSize="28sp" />
+                android:textSize="26sp" />
 
             <TextView
                 android:id="@+id/nama"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:lineSpacingExtra="2sp"
+                android:layout_marginEnd="35dp"
                 android:text="Patrick"
                 android:textColor="#0A0A0A"
-                android:textSize="28sp" />
+                android:textSize="26sp" />
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/filledTextField"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
+                android:gravity="center"
                 android:layout_weight="0.9"
-                android:orientation="vertical"
+                android:layout_marginEnd="12dp"
                 app:hintEnabled="false"
                 app:startIconDrawable="@drawable/ic_search">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:textSize="12sp"
                     android:hint="@string/cari_menu_kamu_disini" />
 
             </com.google.android.material.textfield.TextInputLayout>
@@ -58,6 +64,8 @@
                 android:id="@+id/imageButton2"
                 android:layout_width="58dp"
                 android:layout_height="58dp"
+                android:layout_marginEnd="16dp"
+                android:layout_gravity="center"
                 android:layout_weight="0.1"
                 android:backgroundTint="#004080"
                 android:src="@drawable/ic_search" />
@@ -110,7 +118,7 @@
     </LinearLayout>
 
     <FrameLayout
-        android:id="@+id/menuChecout"
+        android:id="@+id/menuCheckout"
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:layout_weight="0.7"/>

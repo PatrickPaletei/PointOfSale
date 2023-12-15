@@ -5,9 +5,7 @@
     android:id="@+id/drawer_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_margin="1dp"
-    android:fitsSystemWindows="true"
-    tools:openDrawer="start">
+    android:fitsSystemWindows="true">
 
 
     <androidx.fragment.app.FragmentContainerView
@@ -15,24 +13,19 @@
         android:name="androidx.navigation.fragment.NavHostFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginStart="80dp"
+        android:layout_marginStart="81dp"
         app:defaultNavHost="true"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/navigation_rail"
+        app:layout_constraintStart_toEndOf="@+id/leftNav"
         app:layout_constraintTop_toTopOf="parent"
         app:navGraph="@navigation/app_navigation" />
 
-    <com.google.android.material.navigationrail.NavigationRailView
-        android:id="@+id/navigation_rail"
-        android:layout_width="wrap_content"
+    <include
+        android:id="@+id/leftNav"
         android:layout_height="match_parent"
-        app:headerLayout="@layout/nav_header"
-        app:labelVisibilityMode="selected"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:menu="@menu/nav_menu"/>
+        android:layout_width="wrap_content"
+        layout="@layout/sidebar_layout"/>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

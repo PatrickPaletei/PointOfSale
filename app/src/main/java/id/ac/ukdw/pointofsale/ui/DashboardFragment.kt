@@ -5,15 +5,10 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.appcompat.app.AppCompatActivity
-import androidx.appcompat.widget.Toolbar
+import android.widget.FrameLayout
 import id.ac.ukdw.pointofsale.R
 
-
-
 class DashboardFragment : Fragment() {
-
-
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -31,10 +26,17 @@ class DashboardFragment : Fragment() {
 
         // Load MenuFragment into the FrameLayout
         if (savedInstanceState == null) {
+            val checkoutFragment = CheckOutFragment()
             childFragmentManager.beginTransaction()
-                .replace(R.id.menuChecout, CheckOutFragment())
+                .replace(R.id.menuCheckout, checkoutFragment)
                 .commit()
+
+            // Set elevation after committing the transaction
+            val fragmentContainer = checkoutFragment.view?.findViewById<FrameLayout>(R.id.menuCheckout)
+            fragmentContainer?.elevation = resources.getDimension(R.dimen.your_elevation_value)
         }
+
+
 
         return view
     }

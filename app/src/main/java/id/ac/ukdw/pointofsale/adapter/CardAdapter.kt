@@ -8,7 +8,6 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import id.ac.ukdw.pointofsale.R
 import id.ac.ukdw.pointofsale.data.CardData
-import id.ac.ukdw.pointofsale.viewmodel.SelectedItemViewModel
 
 
 class CardAdapter(
@@ -24,15 +23,15 @@ class CardAdapter(
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CardViewHolder {
         val view = LayoutInflater.from(parent.context)
-            .inflate(R.layout.item_card, parent, false)
+            .inflate(R.layout.item_menu_dashboard, parent, false)
         return CardViewHolder(view)
     }
 
     override fun onBindViewHolder(holder: CardViewHolder, position: Int) {
         val currentItem = dataList[position]
         holder.imageView.setImageResource(currentItem.imageResource)
-        holder.textViewTitle.text = currentItem.title
-        holder.textViewDescription.text = currentItem.description
+        holder.textViewTitle.text = currentItem.namaMenu
+        holder.textViewDescription.text = currentItem.hargaMenu
 
         // Set item click listener
         holder.itemView.setOnClickListener {
