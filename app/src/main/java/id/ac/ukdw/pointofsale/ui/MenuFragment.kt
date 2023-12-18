@@ -1,23 +1,34 @@
 package id.ac.ukdw.pointofsale.ui
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import id.ac.ukdw.pointofsale.MainActivity
 import id.ac.ukdw.pointofsale.R
-import id.ac.ukdw.pointofsale.adapter.CardAdapter
+import id.ac.ukdw.pointofsale.adapter.CardAdapterAllMenu
 import id.ac.ukdw.pointofsale.adapter.SpaceItemDecoration
+import id.ac.ukdw.pointofsale.api.Service.ApiClient
+import id.ac.ukdw.pointofsale.api.response.AllMenuResponse
+import id.ac.ukdw.pointofsale.api.response.DataSemuaMakanan
 import id.ac.ukdw.pointofsale.data.CardData
+import id.ac.ukdw.pointofsale.databinding.FragmentMenuBinding
+import id.ac.ukdw.pointofsale.viewmodel.SelectedFilterMenuViewModel
 import id.ac.ukdw.pointofsale.viewmodel.SelectedItemViewModel
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 
 class MenuFragment : Fragment() {
 
+    private var _binding: FragmentMenuBinding? = null
+    private val binding get() = _binding!!
     private lateinit var selectedItemViewModel: SelectedItemViewModel
+    private val filterViewModel: SelectedFilterMenuViewModel by activityViewModels()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         selectedItemViewModel = (requireActivity() as MainActivity).getSelectedItemViewModel()
@@ -28,35 +39,67 @@ class MenuFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val view = inflater.inflate(R.layout.fragment_menu, container, false)
+        _binding = FragmentMenuBinding.inflate(inflater, container, false)
 
-        val recyclerView: RecyclerView = view.findViewById(R.id.recyclerViewMenu)
-        recyclerView.layoutManager = GridLayoutManager(requireContext(), 3)
+        getAllMenu()
 
-        // Set the spacing (24dp in this case)
+        return binding.root
+    }
+
+    private fun getAllMenu() {
+        ApiClient.instance.getAllMenu()
+            .enqueue(object : Callback<AllMenuResponse> {
+                override fun onResponse(
+                    call: Call<AllMenuResponse>,
+                    response: Response<AllMenuResponse>
+                ) {
+                    val body = response.body()
+                    val code = response.code()
+                    if (code == 200) {
+                        if (body != null) {
+                            showListSemuaMakanan(body.data)
+                            binding.lottieAnimationView.visibility = View.GONE
+                            binding.recyclerViewMenu.visibility = View.VISIBLE
+                        }
+                    }
+                }
+
+                override fun onFailure(call: Call<AllMenuResponse>, t: Throwable) {
+                    TODO("Not yet implemented")
+                }
+
+            })
+    }
+
+    private fun showListSemuaMakanan(data: List<DataSemuaMakanan>) {
+        val adapter = CardAdapterAllMenu(object : CardAdapterAllMenu.OnClickListener {
+            override fun onClickItem(dataSemuaMakanan: DataSemuaMakanan) {
+                val formattedHarga = dataSemuaMakanan.harga.removeSuffix(".00")
+                val hargaWithIDR = "IDR $formattedHarga"
+                selectedItemViewModel.setSelectedItem(
+                    CardData(
+                        dataSemuaMakanan.namaMenu,
+                        hargaWithIDR
+                    )
+                )
+            }
+        })
+
+
+        binding.recyclerViewMenu.layoutManager = GridLayoutManager(requireContext(), 3)
         val spacingInPixels = resources.getDimensionPixelSize(R.dimen.spacing_between_items)
-        recyclerView.addItemDecoration(SpaceItemDecoration(spacingInPixels,3))
+        binding.recyclerViewMenu.addItemDecoration(SpaceItemDecoration(spacingInPixels, 3))
 
-        val dataList = listOf(
-            CardData(R.drawable.ayam, "Nasi Geprek Telur Sambel Bawang + Lalapan + Es Teh", "IDR 11.000"),
-            CardData(R.drawable.ayam, "Nasi Geprek Telur Sambel Bawang + Lalapan", "IDR 11.000"),
-            CardData(R.drawable.ayam, "Nasi Geprek Telur Sambel Bawang", "IDR 11.000"),
-            CardData(R.drawable.ayam, "Title 4", "Description 1"),
-            CardData(R.drawable.ayam, "Title 5", "Description 1"),
-            CardData(R.drawable.ayam, "Title 6", "Description 1"),
-            CardData(R.drawable.ayam, "Title 7", "Description 1"),
-            CardData(R.drawable.ayam, "Title 8", "Description 1"),
-            CardData(R.drawable.ayam, "Title 9", "Description 1")
-            // Add more CardData objects as needed
-        )
-
-        val adapter = CardAdapter(dataList) { selectedItem ->
-            selectedItemViewModel.setSelectedItem(selectedItem)
+        filterViewModel.dataList.observe(viewLifecycleOwner) { selectedFilter ->
+            when (selectedFilter) {
+                1 -> adapter.submitData(data)
+                2 -> adapter.filterByCategory("Makanan")
+                3 -> adapter.filterByCategory("Minuman")
+                else -> adapter.filterByCategory("Snack")// Default case: show all data if no filter is selected
+            }
+            binding.recyclerViewMenu.adapter = adapter
         }
 
-        recyclerView.adapter = adapter
-
-        return view
     }
 
 }

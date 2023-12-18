@@ -101,11 +101,13 @@
 
 
         <LinearLayout
+            android:id="@+id/hide1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="12dp"
             android:background="@color/white"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:visibility="gone">
 
             <LinearLayout
                 android:id="@+id/linearLayout6"
@@ -146,20 +148,19 @@
 
         </LinearLayout>
 
-
         <com.google.android.material.divider.MaterialDivider
-            android:id="@+id/materialDivider5"
+            android:id="@+id/hide2"
             android:layout_width="match_parent"
             android:layout_height="1dp"
             android:layout_marginTop="12dp"
-            app:layout_constraintBottom_toTopOf="@+id/linearLayout7"
+            android:visibility="gone"
+            app:layout_constraintBottom_toTopOf="@+id/subTotal"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/nested" />
 
-
         <LinearLayout
-            android:id="@+id/linearLayout7"
+            android:id="@+id/subTotalHide"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="12dp"
@@ -167,6 +168,7 @@
             android:background="@drawable/place_holder_prize"
             android:orientation="vertical"
             android:padding="12dp"
+            android:visibility="gone"
             app:layout_constraintBottom_toTopOf="@+id/buttonok"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent">
@@ -250,15 +252,40 @@
             </LinearLayout>
         </LinearLayout>
 
-        <Button
-            android:id="@+id/buttonok"
+        <LinearLayout
+            android:id="@+id/containerNoItem"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:padding="80dp"
+            android:orientation="vertical">
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_noitem"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="21dp"
+                android:textSize="16sp"
+                android:textStyle="italic"
+                android:gravity="center"
+                android:text="@string/belum_ada_pesanan"/>
+
+
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/btn_checkOut"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
             android:text="@string/lanjutkan_ke_pembayaran"
-            android:layout_marginTop="-12dp"
             android:textColor="@android:color/white"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
+
     </LinearLayout>
 </androidx.core.widget.NestedScrollView>

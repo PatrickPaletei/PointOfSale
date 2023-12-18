@@ -10,9 +10,10 @@
     android:elevation="12dp"
     app:cardCornerRadius="8sp">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:orientation="vertical"
         android:padding="10dp">
 
         <ImageView
@@ -21,6 +22,7 @@
             android:layout_height="110dp"
             android:background="@drawable/round_img"
             android:padding="4dp"
+            android:layout_gravity="center"
             android:scaleType="centerCrop"
             android:src="@drawable/ayam"
             app:layout_constraintEnd_toEndOf="parent"
@@ -41,7 +43,7 @@
             app:layout_constraintVertical_bias="0.687">
 
             <TextView
-                android:id="@+id/textViewTitle"
+                android:id="@+id/nama_menu"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Nasi Geprek Telur Sambel Bawang + Lalapan + Es Teh"
@@ -53,7 +55,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/imageView" />
 
             <TextView
-                android:id="@+id/textViewDescription"
+                android:id="@+id/harga"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
@@ -64,10 +66,10 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.099"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textViewTitle" />
+                app:layout_constraintTop_toBottomOf="@+id/nama_menu" />
 
         </LinearLayout>
 
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+    </LinearLayout>
 </androidx.cardview.widget.CardView>

@@ -1,6 +1,10 @@
 package id.ac.ukdw.pointofsale
 
+import android.content.Context
+import android.content.Intent
+import android.content.SharedPreferences
 import android.os.Bundle
+import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -14,8 +18,10 @@ import com.bumptech.glide.load.resource.bitmap.CircleCrop
 import com.bumptech.glide.request.RequestOptions
 import id.ac.ukdw.pointofsale.adapter.SidebarAdapter
 import id.ac.ukdw.pointofsale.data.SidebarItem
+import id.ac.ukdw.pointofsale.ui.CheckOutFragment
 import id.ac.ukdw.pointofsale.ui.EditCheckOutFragment
 import id.ac.ukdw.pointofsale.ui.PopUpFragment
+import id.ac.ukdw.pointofsale.ui.PopUpPembayaranFragment
 import id.ac.ukdw.pointofsale.viewmodel.EditCheckOutViewModel
 import id.ac.ukdw.pointofsale.viewmodel.SelectedItemViewModel
 
@@ -23,6 +29,7 @@ class MainActivity : AppCompatActivity(){
     private lateinit var selectedItemViewModel: SelectedItemViewModel
     private lateinit var navController: NavController
     private lateinit var editCheckOutViewModel: EditCheckOutViewModel
+    private lateinit var sharedPreferences: SharedPreferences
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -37,7 +44,10 @@ class MainActivity : AppCompatActivity(){
         selectedItemViewModel = ViewModelProvider(this).get(SelectedItemViewModel::class.java)
         selectedItemViewModel.selectedItem.observe(this) { selectedItem ->
             // Handle changes to the selected item here
-            showPopUpDialog()
+            showPopUpDialogMenu()
+        }
+        selectedItemViewModel.checkOut.observe(this){
+            showPopUpDialogCheckOut()
         }
 
         editCheckOutViewModel = ViewModelProvider(this).get(EditCheckOutViewModel::class.java)
@@ -63,7 +73,12 @@ class MainActivity : AppCompatActivity(){
         dialogFragment.show(supportFragmentManager, "PopUp")
     }
 
-    fun showPopUpDialog() {
+    fun showPopUpDialogCheckOut(){
+        val dialogFragment = PopUpPembayaranFragment()
+        dialogFragment.show(supportFragmentManager, "PopUp")
+    }
+
+    fun showPopUpDialogMenu() {
         val dialogFragment = PopUpFragment()
         dialogFragment.show(supportFragmentManager, "PopUp")
     }
@@ -88,6 +103,23 @@ class MainActivity : AppCompatActivity(){
 
         }
 
+        val logOut:ImageButton = findViewById(R.id.logoutSide)
+        logOut.setOnClickListener {
+            Toast.makeText(this, "Berhasil LogOut", Toast.LENGTH_LONG).show()
+            sharedPreferences = getSharedPreferences("LoginPrefs", Context.MODE_PRIVATE)
+            val editor = sharedPreferences.edit()
+            editor.putBoolean("isLoggedIn", false)
+            editor.apply()
+//            val token = sharedPreferences.getString("token","")
+//            Toast.makeText(this, "$token", Toast.LENGTH_SHORT).show()
+
+            // Navigate back to LoginActivity
+            val intent = Intent(this, LoginActivity::class.java)
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK)
+            startActivity(intent)
+            finish()
+        }
+
         val profileAvatar: ImageView = findViewById(R.id.profileAvatar)
         val imageUrl = "https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.facebook.com%2Fpostmalone%2F%3Flocale%3Did_ID&psig=AOvVaw0aMheJ-yxHfEWXOQC_o3RY&ust=1702412900037000&source=images&cd=vfe&ved=0CBEQjRxqFwoTCPD9o8KdiIMDFQAAAAAdAAAAABAE" // Replace with your image URL or local path
 
@@ -99,6 +131,15 @@ class MainActivity : AppCompatActivity(){
             .into(profileAvatar)
     }
 
+
+    override fun onDestroy() {
+        // Clearing the "isLoggedIn" flag when the activity is being destroyed
+        val editor = sharedPreferences.edit()
+        editor.putBoolean("isLoggedIn", false) // Set to false when the app is closing
+        editor.apply()
+
+        super.onDestroy()
+    }
 
 }
 

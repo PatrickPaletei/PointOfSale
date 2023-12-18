@@ -7,7 +7,7 @@
     <string name="minuman">Minuman</string>
     <string name="snack">Snack</string>
     <string name="selamat_datang">Selamat Datang,</string>
-    <string name="cari_menu_kamu_disini">Cari Menu Kamu Disini...</string>
+    <string name="cari_menu_kamu_disini">Cari Menu Kamu disini..</string>
     <string name="penjualan">Penjualan</string>
     <string name="menu">Menu</string>
     <string name="dashboard">Dashboard</string>
@@ -43,4 +43,10 @@
     <string name="simpan_perubahan">Simpan Perubahan</string>
     <string name="edit_menu">Edit Menu</string>
     <string name="ubah">Ubah</string>
+    <string name="belum_ada_pesanan">Belum Ada Pesanan</string>
+    <string name="selamat_datang_login">Selamat Datang !</string>
+    <string name="silahkan_login_menggunakan_akun_yang_telah_didaftarkan_oleh_admin">Silahkan login menggunakan akun yang telah didaftarkan oleh admin.</string>
+    <string name="email">Email</string>
+    <string name="password">Password</string>
+    <string name="masuk">Masuk</string>
 </resources>

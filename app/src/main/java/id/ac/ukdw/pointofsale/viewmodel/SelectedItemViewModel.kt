@@ -9,7 +9,13 @@ class SelectedItemViewModel : ViewModel() {
     private val _selectedItem = MutableLiveData<CardData>()
     val selectedItem: LiveData<CardData> get() = _selectedItem
 
+    private val _checkOut = MutableLiveData<Boolean>()
+    val checkOut:LiveData<Boolean> get() = _checkOut
     fun setSelectedItem(item: CardData) {
         _selectedItem.value = item
+    }
+
+    fun setcallPopUp(value:Boolean){
+        _checkOut.value = value
     }
 }

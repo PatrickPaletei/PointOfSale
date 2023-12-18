@@ -4,8 +4,11 @@ plugins {
 }
 
 android {
+
     namespace = "id.ac.ukdw.pointofsale"
     compileSdk = 34
+
+
 
     defaultConfig {
         applicationId = "id.ac.ukdw.pointofsale"
@@ -15,6 +18,11 @@ android {
         versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+    }
+
+
+    buildFeatures{
+        this.viewBinding = true
     }
 
     buildTypes {
@@ -33,6 +41,8 @@ android {
     kotlinOptions {
         jvmTarget = "1.8"
     }
+
+
 }
 
 dependencies {
@@ -49,5 +59,18 @@ dependencies {
 
     implementation ("androidx.navigation:navigation-fragment-ktx:2.7.5")
     implementation ("androidx.navigation:navigation-ui-ktx:2.7.5")
+
+    //lottie
+    implementation ("com.airbnb.android:lottie:4.1.0")
+
+    //load btn
+    implementation("com.github.leandroborgesferreira:loading-button-android:2.3.0")
+
+    //retrofit
+    implementation("com.squareup.retrofit2:retrofit:2.9.0")
+    implementation("com.squareup.retrofit2:converter-gson:2.9.0")
+    implementation("com.squareup.okhttp3:logging-interceptor:4.9.3")
+
+    //hash
 
 }

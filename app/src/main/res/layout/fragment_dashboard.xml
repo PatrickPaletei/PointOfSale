@@ -4,9 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:baselineAligned="false"
     android:orientation="horizontal"
-    tools:context=".ui.DashboardFragment"
-    android:baselineAligned="false">
+    tools:context=".ui.DashboardFragment">
 
     <LinearLayout
         android:id="@+id/constraintLayout"
@@ -18,16 +18,16 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center"
             android:layout_marginTop="20dp"
+            android:gravity="center"
             android:orientation="horizontal">
 
             <TextView
                 android:id="@+id/textView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:lineSpacingExtra="2sp"
                 android:layout_marginStart="12dp"
+                android:lineSpacingExtra="2sp"
                 android:text="@string/selamat_datang"
                 android:textColor="#0A0A0A"
                 android:textSize="26sp" />
@@ -37,7 +37,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:lineSpacingExtra="2sp"
-                android:layout_marginEnd="35dp"
+                android:layout_marginEnd="12dp"
                 android:text="Patrick"
                 android:textColor="#0A0A0A"
                 android:textSize="26sp" />
@@ -46,17 +46,16 @@
                 android:id="@+id/filledTextField"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:gravity="center"
                 android:layout_weight="0.9"
-                android:layout_marginEnd="12dp"
+                android:gravity="center"
                 app:hintEnabled="false"
                 app:startIconDrawable="@drawable/ic_search">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:textSize="12sp"
-                    android:hint="@string/cari_menu_kamu_disini" />
+                    android:hint="@string/cari_menu_kamu_disini"
+                    android:textSize="12sp" />
 
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -64,12 +63,13 @@
                 android:id="@+id/imageButton2"
                 android:layout_width="58dp"
                 android:layout_height="58dp"
-                android:layout_marginEnd="16dp"
                 android:layout_gravity="center"
+                android:layout_marginEnd="8dp"
                 android:layout_weight="0.1"
                 android:backgroundTint="#004080"
                 android:src="@drawable/ic_search" />
         </LinearLayout>
+
 
         <LinearLayout
             android:id="@+id/linearLayout"
@@ -77,39 +77,43 @@
             android:layout_height="wrap_content"
             android:padding="16dp">
 
-            <Button
-                android:id="@+id/button1"
-                style="?attr/materialButtonOutlinedStyle"
+            <com.google.android.material.chip.Chip
+                android:id="@+id/semuaMakanan"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/semua_menu"
-                android:textColor="@color/black" />
+                android:checkable="true"
+                android:clickable="true"
+                android:text="Semua Makanan"/>
 
-            <Button
-                style="?attr/materialButtonOutlinedStyle"
+            <com.google.android.material.chip.Chip
+                android:id="@+id/makanan"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:text="@string/makanan"
-                android:textColor="@color/black" />
+                android:layout_marginStart="12dp"
+                android:checkable="true"
+                android:clickable="true"
+                android:text="@string/makanan"/>
 
-            <Button
-                style="?attr/materialButtonOutlinedStyle"
+            <com.google.android.material.chip.Chip
+                android:id="@+id/minuman"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:text="@string/minuman"
-                android:textColor="@color/black" />
+                android:layout_marginStart="12dp"
+                android:checkable="true"
+                android:clickable="true"
+                android:text="@string/minuman"/>
 
-            <Button
-                style="?attr/materialButtonOutlinedStyle"
+            <com.google.android.material.chip.Chip
+                android:id="@+id/snack"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:text="@string/snack"
-                android:textColor="@color/black" />
+                android:layout_marginStart="12dp"
+                android:checkable="true"
+                android:clickable="true"
+                android:text="@string/snack"/>
 
         </LinearLayout>
+
         <FrameLayout
             android:id="@+id/menuContainer"
             android:layout_width="match_parent"
@@ -121,7 +125,7 @@
         android:id="@+id/menuCheckout"
         android:layout_width="0dp"
         android:layout_height="match_parent"
-        android:layout_weight="0.7"/>
+        android:layout_weight="0.7" />
 
 
 </LinearLayout>

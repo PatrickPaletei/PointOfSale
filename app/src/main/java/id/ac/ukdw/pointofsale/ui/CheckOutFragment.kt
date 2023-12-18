@@ -5,28 +5,31 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.divider.MaterialDivider
 import id.ac.ukdw.pointofsale.MainActivity
 import id.ac.ukdw.pointofsale.R
 import id.ac.ukdw.pointofsale.adapter.CheckOutAdapter
-import id.ac.ukdw.pointofsale.data.CheckOutData
 import id.ac.ukdw.pointofsale.viewmodel.EditCheckOutViewModel
+import id.ac.ukdw.pointofsale.viewmodel.SelectedItemViewModel
 import id.ac.ukdw.pointofsale.viewmodel.SharedCheckoutViewModel
-
 
 class CheckOutFragment : Fragment() {
 
     private val checkoutViewModel: SharedCheckoutViewModel by activityViewModels()
     private lateinit var adapter: CheckOutAdapter
     private lateinit var editCheckoutViewModel: EditCheckOutViewModel
+    private lateinit var selectedItemViewModel: SelectedItemViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         editCheckoutViewModel = (requireActivity() as MainActivity).getCheckOutItemViewModel()
+        selectedItemViewModel = (requireActivity() as MainActivity).getSelectedItemViewModel()
     }
 
     override fun onCreateView(
@@ -65,7 +68,11 @@ class CheckOutFragment : Fragment() {
         val btnClear: Button = view.findViewById(R.id.btn_clear)
         val subtotalTxt: TextView = view.findViewById(R.id.subtotal)
         val totalKeseluruhanTxt: TextView = view.findViewById(R.id.totalKeseluruhan)
-
+        val containerRcy:LinearLayout = view.findViewById(R.id.hide1)
+        val hide2: MaterialDivider = view.findViewById(R.id.hide2)
+        val containerSub:LinearLayout = view.findViewById(R.id.subTotalHide)
+        val containerNoItem:LinearLayout = view.findViewById(R.id.containerNoItem)
+        val checkOutBtn : Button = view.findViewById(R.id.btn_checkOut)
         checkoutViewModel.dataList.observe(viewLifecycleOwner) { dataList ->
             val totalMenu = "(${dataList.size} menu)"
             val totalPrice = dataList.sumOf { item ->
@@ -80,6 +87,24 @@ class CheckOutFragment : Fragment() {
             totalMenuTxt.text = totalMenu
             subtotalTxt.text = totalPrice.toString()
             totalKeseluruhanTxt.text = subTotal
+
+            if (dataList.isEmpty()){
+                containerRcy.visibility = View.GONE
+                hide2.visibility = View.GONE
+                containerSub.visibility = View.GONE
+                checkOutBtn.visibility = View.GONE
+                containerNoItem.visibility =View.VISIBLE
+            }else{
+                containerNoItem.visibility =View.GONE
+                containerRcy.visibility = View.VISIBLE
+                hide2.visibility = View.VISIBLE
+                checkOutBtn.visibility = View.VISIBLE
+                containerSub.visibility = View.VISIBLE
+            }
+        }
+
+        checkOutBtn.setOnClickListener {
+            selectedItemViewModel.setcallPopUp(true)
         }
 
         btnClear.setOnClickListener {
