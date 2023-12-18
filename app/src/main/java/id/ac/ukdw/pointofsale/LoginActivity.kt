@@ -91,6 +91,7 @@ class LoginActivity : AppCompatActivity() {
                             val editor = sharedPreferences.edit()
                             if (body != null) {
                                 editor.putString("nama", body.username)
+                                editor.putString("id", body.id_user.toString())
                             }
                             editor.apply()
                             continuation.resume(code)

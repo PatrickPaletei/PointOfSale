@@ -1,13 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:padding="24dp">
 
     <LinearLayout
-        android:id="@+id/linearLayout3"
+        android:id="@+id/holderTitle"
         android:layout_width="392dp"
         android:layout_height="44dp"
         android:orientation="horizontal"
@@ -33,11 +32,11 @@
         android:layout_marginTop="32dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout3" />
+        app:layout_constraintTop_toBottomOf="@+id/holderTitle" />
 
 
     <LinearLayout
-        android:id="@+id/linearLayout4"
+        android:id="@+id/holderPembayaran"
         android:layout_width="392dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="48dp"
@@ -53,23 +52,24 @@
             android:orientation="vertical">
 
             <RadioButton
-                android:id="@+id/radio_button_1"
+                android:id="@+id/tunai"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:layout_marginBottom="24dp"
+                android:background="@drawable/rounded_radio"
+                android:drawableEnd="@drawable/ic_cash"
                 android:layoutDirection="rtl"
                 android:padding="12dp"
-                android:layout_marginBottom="24dp"
-                android:drawableEnd="@drawable/ic_cash"
-                android:background="@drawable/rounded_radio"
                 android:text="@string/tunai" />
 
             <RadioButton
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:background="@drawable/rounded_radio"
+                android:clickable="false"
+                android:drawableEnd="@drawable/ic_qris"
                 android:layoutDirection="rtl"
                 android:padding="12dp"
-                android:background="@drawable/rounded_radio"
-                android:drawableEnd="@drawable/ic_qris"
                 android:text="@string/qris" />
 
         </RadioGroup>
@@ -81,31 +81,32 @@
         android:id="@+id/materialDivider2"
         android:layout_width="392dp"
         android:layout_height="0dp"
-        android:layout_marginTop="32dp"
         android:layout_marginStart="20dp"
+        android:layout_marginTop="32dp"
         android:layout_marginEnd="20dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout4" />
+        app:layout_constraintTop_toBottomOf="@+id/holderPembayaran" />
 
-    <EditText
+    <TextView
         android:id="@+id/totalBayarCheckOut"
         android:layout_width="392dp"
-        android:layout_height="40dp"
+        android:layout_height="50dp"
         android:layout_marginTop="32dp"
-        android:gravity="center|start"
         android:background="@drawable/rounded_radio"
+        android:gravity="center|start"
         android:hint="@string/total_yang_dibayar"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/materialDivider2" />
 
     <LinearLayout
+        android:id="@+id/holderBtn"
         android:layout_width="392dp"
         android:layout_height="46dp"
+        android:layout_marginTop="32dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginTop="32dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/totalBayarCheckOut">
 
@@ -119,11 +120,38 @@
             android:text="@string/batal" />
 
         <Button
-            android:id="@+id/pilih"
+            android:id="@+id/btn_lanjut_checkOut"
             android:layout_width="280dp"
             android:layout_height="46dp"
             android:gravity="center"
             android:text="@string/konfirmasi_pembayran" />
 
     </LinearLayout>
+
+    <com.airbnb.lottie.LottieAnimationView
+        android:id="@+id/pembayaranBerhasil"
+        android:layout_width="220dp"
+        android:layout_height="220dp"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:lottie_autoPlay="true"
+        app:lottie_loop="true"
+        app:lottie_fileName="done_animation.json" />
+
+    <com.airbnb.lottie.LottieAnimationView
+        android:id="@+id/pembayaranDiproses"
+        android:layout_width="260dp"
+        android:layout_height="260dp"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:lottie_autoPlay="true"
+        app:lottie_loop="true"
+        app:lottie_fileName="proccesing_animation.json" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

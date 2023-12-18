@@ -67,7 +67,7 @@ class PopUpFragment : DialogFragment() {
         super.onViewCreated(view, savedInstanceState)
 
         val batalButon: Button = view.findViewById(R.id.batal)
-        val pilihButon: Button = view.findViewById(R.id.pilih)
+        val pilihButon: Button = view.findViewById(R.id.btn_lanjut_checkOut)
         val namaMenu: TextView = view.findViewById(R.id.namaMenu)
         val hargaMenu: TextView = view.findViewById(R.id.hargaMenu)
         val catatanMenu: EditText = view.findViewById(R.id.editCatatan)
@@ -108,7 +108,12 @@ class PopUpFragment : DialogFragment() {
             selectedItemViewModel.selectedItem.value?.let { selectedItem ->
                 val catatan = catatanMenu.text.toString()
                 val updatedItem =
-                    CheckOutData(selectedItem.namaMenu, selectedItem.hargaMenu, total, catatan)
+                    CheckOutData(
+                        selectedItem.idMenu,
+                        selectedItem.namaMenu,
+                        selectedItem.hargaMenu,
+                        total,
+                        catatan)
 
                 dataList.add(updatedItem)
                 checkoutViewModel.updateData(dataList)

@@ -12,4 +12,6 @@ data class LoginResponse(
     val statusCode: Int,
     @SerializedName("username")
     val username: String,
+    @SerializedName("id_user")
+    val id_user: Int,
 )

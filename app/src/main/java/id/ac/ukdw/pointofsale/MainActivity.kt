@@ -49,6 +49,11 @@ class MainActivity : AppCompatActivity(){
         selectedItemViewModel.checkOut.observe(this){
             showPopUpDialogCheckOut()
         }
+        // cannot memory not enough
+//        selectedItemViewModel.cetakNota.observe(this){
+//            showPopUpPrint()
+//            selectedItemViewModel.setCallPopUpNota(false)
+//        }
 
         editCheckOutViewModel = ViewModelProvider(this).get(EditCheckOutViewModel::class.java)
         editCheckOutViewModel.isPopupShown.observe(this) { isShown ->
@@ -66,6 +71,11 @@ class MainActivity : AppCompatActivity(){
     }
     fun getCheckOutItemViewModel(): EditCheckOutViewModel {
         return editCheckOutViewModel
+    }
+
+    fun showPopUpPrint(){
+        val dialogFragment = PopUpPembayaranFragment()
+        dialogFragment.show(supportFragmentManager, "PopUp")
     }
 
     fun showPopUpDialogEdit(){

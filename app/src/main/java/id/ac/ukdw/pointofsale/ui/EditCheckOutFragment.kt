@@ -10,10 +10,8 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageButton
 import android.widget.TextView
-import android.widget.Toast
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.activityViewModels
-import androidx.lifecycle.ViewModelProvider
 import id.ac.ukdw.pointofsale.MainActivity
 import id.ac.ukdw.pointofsale.R
 import id.ac.ukdw.pointofsale.viewmodel.EditCheckOutViewModel
@@ -41,7 +39,7 @@ class EditCheckOutFragment : DialogFragment() {
         super.onViewCreated(view, savedInstanceState)
 
         val batalButon: Button = view.findViewById(R.id.batal)
-        val pilihButon: Button = view.findViewById(R.id.pilih)
+        val pilihButon: Button = view.findViewById(R.id.btn_lanjut_checkOut)
         val namaMenu: TextView = view.findViewById(R.id.namaMenu)
         val hargaMenu: TextView = view.findViewById(R.id.hargaMenu)
         val catatanMenu: EditText = view.findViewById(R.id.editCatatan)
@@ -65,9 +63,9 @@ class EditCheckOutFragment : DialogFragment() {
         editCheckOutViewModel.checkOutData.observe(viewLifecycleOwner){checkOutData ->
             namaMenu.text = checkOutData.judulMenu
             hargaMenu.text = checkOutData.harga
-            val notes = checkOutData.notes
+            val notes = checkOutData.catatan
             catatanMenu.setText(notes)
-            banyakPesanan.text = checkOutData.jumlah.toString()
+            banyakPesanan.text = checkOutData.jumlah_pesanan.toString()
         }
 
         batalButon.setOnClickListener {
@@ -81,8 +79,8 @@ class EditCheckOutFragment : DialogFragment() {
             val currentCheckOutData = editCheckOutViewModel.checkOutData.value
 
             currentCheckOutData?.let { checkOutData ->
-                checkOutData.notes = updatedNotes
-                checkOutData.jumlah = updatedQuantity
+                checkOutData.catatan = updatedNotes
+                checkOutData.jumlah_pesanan = updatedQuantity
 
                 editCheckOutViewModel.updateCheckOutData(checkOutData)
 

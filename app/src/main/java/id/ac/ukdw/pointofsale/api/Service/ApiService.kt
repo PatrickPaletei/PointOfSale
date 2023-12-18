@@ -1,9 +1,10 @@
 package id.ac.ukdw.pointofsale.api.Service
 
 import id.ac.ukdw.pointofsale.api.request.LoginRequest
+import id.ac.ukdw.pointofsale.api.request.TambahTransaksiRequest
 import id.ac.ukdw.pointofsale.api.response.AllMenuResponse
 import id.ac.ukdw.pointofsale.api.response.LoginResponse
-import id.ac.ukdw.pointofsale.api.response.MakananMenuResponse
+import id.ac.ukdw.pointofsale.api.response.TransaksiResponse
 import retrofit2.Call
 import retrofit2.http.Body
 import retrofit2.http.GET
@@ -18,6 +19,7 @@ interface ApiService {
     @GET("api/menu")
     fun getAllMenu():Call<AllMenuResponse>
 
-    @GET("api/menu/kategori/Makanan")
-    fun getMakanan():Call<MakananMenuResponse>
+    @POST("api/tambah-detail-transaksi")
+    fun tambahTransaksi(@Body request: TambahTransaksiRequest):Call<TransaksiResponse>
+
 }

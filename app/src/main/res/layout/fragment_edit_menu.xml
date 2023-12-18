@@ -24,7 +24,7 @@
             android:textSize="28sp" />
 
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/filledTextField"
+            android:id="@+id/namaPelanggan"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:gravity="center|start"

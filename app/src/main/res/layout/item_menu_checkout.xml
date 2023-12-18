@@ -95,7 +95,7 @@
                     android:textStyle="bold" />
 
                 <LinearLayout
-                    android:id="@+id/linearLayout4"
+                    android:id="@+id/holderPembayaran"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"

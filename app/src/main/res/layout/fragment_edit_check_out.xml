@@ -7,7 +7,7 @@
     android:padding="24dp">
 
     <LinearLayout
-        android:id="@+id/linearLayout3"
+        android:id="@+id/holderTitle"
         android:layout_width="392dp"
         android:layout_height="88dp"
         android:orientation="horizontal"
@@ -56,11 +56,11 @@
         android:layout_marginTop="32dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout3" />
+        app:layout_constraintTop_toBottomOf="@+id/holderTitle" />
 
 
     <LinearLayout
-        android:id="@+id/linearLayout4"
+        android:id="@+id/holderPembayaran"
         android:layout_width="392dp"
         android:layout_height="40dp"
         android:layout_marginTop="48dp"
@@ -112,7 +112,7 @@
         android:lineSpacingExtra="3sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout4" />
+        app:layout_constraintTop_toBottomOf="@+id/holderPembayaran" />
 
     <com.google.android.material.divider.MaterialDivider
         android:id="@+id/materialDivider2"
@@ -145,7 +145,7 @@
             android:text="@string/batal"/>
 
         <Button
-            android:id="@+id/pilih"
+            android:id="@+id/btn_lanjut_checkOut"
             android:layout_width="280dp"
             android:layout_height="46dp"
             android:gravity="center"

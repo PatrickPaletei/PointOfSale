@@ -3,9 +3,9 @@ package id.ac.ukdw.pointofsale.api.response
 
 import com.google.gson.annotations.SerializedName
 
-data class MakananMenuResponse(
+data class TransaksiResponse(
     @SerializedName("data")
-    val `data`: List<DataMakanan>,
+    val `data`: DataIdTransaksi,
     @SerializedName("message")
     val message: String,
     @SerializedName("statusCode")

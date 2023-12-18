@@ -30,7 +30,7 @@ class SharedCheckoutViewModel : ViewModel() {
 
     fun removeIfEmpty() {
         val currentList = _dataList.value?.toMutableList() ?: mutableListOf()
-        currentList.removeAll { it.jumlah == 0 } // Remove items with quantity 0
+        currentList.removeAll { it.jumlah_pesanan == 0 } // Remove items with quantity 0
         _dataList.value = currentList
     }
 

@@ -11,11 +11,20 @@ class SelectedItemViewModel : ViewModel() {
 
     private val _checkOut = MutableLiveData<Boolean>()
     val checkOut:LiveData<Boolean> get() = _checkOut
+
+    private val _cetakNota = MutableLiveData<Boolean>()
+    val cetakNota:LiveData<Boolean> get() = _cetakNota
+
     fun setSelectedItem(item: CardData) {
         _selectedItem.value = item
     }
 
+    //buat popup checkOut
     fun setcallPopUp(value:Boolean){
         _checkOut.value = value
+    }
+
+    fun setCallPopUpNota(value: Boolean){
+        _cetakNota.value = value
     }
 }

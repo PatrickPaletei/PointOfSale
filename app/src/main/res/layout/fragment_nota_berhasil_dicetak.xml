@@ -47,7 +47,7 @@
         app:layout_constraintTop_toBottomOf="@+id/materialDivider">
 
         <Button
-            android:id="@+id/pilih"
+            android:id="@+id/btn_lanjut_checkOut"
             android:layout_width="392dp"
             android:layout_height="46dp"
             android:gravity="center"

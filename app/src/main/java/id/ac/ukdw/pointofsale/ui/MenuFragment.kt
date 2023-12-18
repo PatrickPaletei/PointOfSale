@@ -78,6 +78,7 @@ class MenuFragment : Fragment() {
                 val hargaWithIDR = "IDR $formattedHarga"
                 selectedItemViewModel.setSelectedItem(
                     CardData(
+                        dataSemuaMakanan.idMenu,
                         dataSemuaMakanan.namaMenu,
                         hargaWithIDR
                     )

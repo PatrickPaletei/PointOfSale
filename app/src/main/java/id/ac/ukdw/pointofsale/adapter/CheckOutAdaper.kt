@@ -54,13 +54,13 @@ class CheckOutAdapter(
         val currentItem = dataList[position]
         holder.judulMenu.text = currentItem.judulMenu
         holder.hargaMenu.text = currentItem.harga
-        holder.jumlahMenu.text = currentItem.jumlah.toString()
+        holder.jumlahMenu.text = currentItem.jumlah_pesanan.toString()
 
-        if (currentItem.notes.isEmpty()) {
+        if (currentItem.catatan.isEmpty()) {
             holder.containerCatatan.visibility = View.GONE // Hide catatanMenu if notes is empty or null
         } else {
             holder.containerCatatan.visibility = View.VISIBLE // Show catatanMenu if notes is present
-            holder.catatanMenu.text = currentItem.notes
+            holder.catatanMenu.text = currentItem.catatan
         }
 
         holder.ubahSemua.setOnClickListener {
