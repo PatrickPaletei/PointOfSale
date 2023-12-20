@@ -1,4 +1,4 @@
-package id.ac.ukdw.pointofsale.ui
+package id.ac.ukdw.pointofsale.ui.dashboard
 
 import android.app.Dialog
 import android.os.Bundle

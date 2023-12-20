@@ -42,7 +42,6 @@ class LoginActivity : AppCompatActivity() {
                 lifecycleScope.launch {
                     binding.btnLogin.startAnimation()
                     val responseCode = login(username, pass)
-                    binding.btnLogin.revertAnimation()
 
                     if (responseCode == 200) {
                         val editor = sharedPreferences.edit()

@@ -6,7 +6,7 @@
     app:startDestination="@id/dashboardFragment2">
     <fragment
         android:id="@+id/dashboardFragment2"
-        android:name="id.ac.ukdw.pointofsale.ui.DashboardFragment"
+        android:name="id.ac.ukdw.pointofsale.ui.dashboard.DashboardFragment"
         android:label="fragment_dashboard"
         tools:layout="@layout/fragment_dashboard" >
         <action
@@ -18,12 +18,12 @@
     </fragment>
     <fragment
         android:id="@+id/editMenuFragment2"
-        android:name="id.ac.ukdw.pointofsale.ui.EditMenuFragment"
+        android:name="id.ac.ukdw.pointofsale.ui.menu.EditMenuFragment"
         android:label="fragment_edit_menu"
         tools:layout="@layout/fragment_edit_menu" />
     <fragment
         android:id="@+id/penjualanFragment"
-        android:name="id.ac.ukdw.pointofsale.ui.PenjualanFragment"
+        android:name="id.ac.ukdw.pointofsale.ui.penjualan.PenjualanFragment"
         android:label="fragment_penjualan"
         tools:layout="@layout/fragment_penjualan" />
 </navigation>

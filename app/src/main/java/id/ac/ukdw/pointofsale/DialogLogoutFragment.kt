@@ -1,21 +1,16 @@
-package id.ac.ukdw.pointofsale.ui
+package id.ac.ukdw.pointofsale
 
 import android.app.Dialog
 import android.content.Context
 import android.content.Intent
-import android.content.SharedPreferences
 import android.os.Bundle
 import android.util.TypedValue
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.DialogFragment
-import id.ac.ukdw.pointofsale.LoginActivity
-import id.ac.ukdw.pointofsale.R
 import id.ac.ukdw.pointofsale.databinding.FragmentDialogLogoutBinding
-import id.ac.ukdw.pointofsale.databinding.FragmentPopUpPembayaranBinding
 
 class DialogLogoutFragment : DialogFragment() {
 

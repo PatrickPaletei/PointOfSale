@@ -1,4 +1,4 @@
-package id.ac.ukdw.pointofsale.ui
+package id.ac.ukdw.pointofsale.ui.dashboard
 
 import android.app.Dialog
 import android.content.Context
@@ -8,6 +8,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.RadioButton
+import android.widget.Toast
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.ViewModelProvider
@@ -98,23 +99,28 @@ class PopUpPembayaranFragment : DialogFragment() {
 
             val checkedRadioButtonId = radioGroup.checkedRadioButtonId
             val radioButton = view.findViewById<RadioButton>(checkedRadioButtonId)?.text.toString()
-
-            // Call the API using the ViewModel function
-            lifecycleScope.launch {
-                notaViewModel.tambahTransaksi(
-                    id_user?.toInt() ?: 0, // Convert id_user to Int or provide a default value
-                    itemTransaksi ?: emptyList(),
-                    radioButton,
-                    nama_pelanggan ?: ""
-                )
-                delay(2000)
-                selectedItemViewModel.setCallPopUpNota(true)
-                dismiss()
+            if (checkedRadioButtonId != -1) {
+                // Call the API using the ViewModel function
+                lifecycleScope.launch {
+                    binding.btnLanjutCheckOut.startAnimation()
+                    notaViewModel.tambahTransaksi(
+                        id_user?.toInt() ?: 0, // Convert id_user to Int or provide a default value
+                        itemTransaksi ?: emptyList(),
+                        radioButton,
+                        nama_pelanggan ?: ""
+                    )
+                    delay(2000)
+                    selectedItemViewModel.setCallPopUpNota(true)
+                    dismiss()
+                }
+            } else {
+                Toast.makeText(context, "Harap Isi Metode Pembayaran", Toast.LENGTH_SHORT).show()
             }
-            notaViewModel.responseBody.observe(viewLifecycleOwner){id ->
+
+            notaViewModel.responseBody.observe(viewLifecycleOwner) { id ->
                 id?.let {
-                    with(sharedPref.edit()){
-                        putInt("idNota",it)
+                    with(sharedPref.edit()) {
+                        putInt("idNota", it)
                         apply()
                     }
                 }

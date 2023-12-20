@@ -1,4 +1,4 @@
-package id.ac.ukdw.pointofsale.ui
+package id.ac.ukdw.pointofsale.ui.dashboard
 
 import android.os.Bundle
 import android.view.LayoutInflater

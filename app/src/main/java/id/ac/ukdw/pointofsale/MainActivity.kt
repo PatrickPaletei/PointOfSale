@@ -1,12 +1,9 @@
 package id.ac.ukdw.pointofsale
 
-import android.content.Context
-import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
 import android.widget.ImageButton
 import android.widget.ImageView
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavController
@@ -18,12 +15,10 @@ import com.bumptech.glide.load.resource.bitmap.CircleCrop
 import com.bumptech.glide.request.RequestOptions
 import id.ac.ukdw.pointofsale.adapter.SidebarAdapter
 import id.ac.ukdw.pointofsale.data.SidebarItem
-import id.ac.ukdw.pointofsale.ui.CetakNotaFragment
-import id.ac.ukdw.pointofsale.ui.CheckOutFragment
-import id.ac.ukdw.pointofsale.ui.DialogLogoutFragment
-import id.ac.ukdw.pointofsale.ui.EditCheckOutFragment
-import id.ac.ukdw.pointofsale.ui.PopUpFragment
-import id.ac.ukdw.pointofsale.ui.PopUpPembayaranFragment
+import id.ac.ukdw.pointofsale.ui.dashboard.CetakNotaFragment
+import id.ac.ukdw.pointofsale.ui.dashboard.EditCheckOutFragment
+import id.ac.ukdw.pointofsale.ui.dashboard.PopUpFragment
+import id.ac.ukdw.pointofsale.ui.dashboard.PopUpPembayaranFragment
 import id.ac.ukdw.pointofsale.viewmodel.EditCheckOutViewModel
 import id.ac.ukdw.pointofsale.viewmodel.SelectedItemViewModel
 

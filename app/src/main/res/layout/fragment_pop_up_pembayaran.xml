@@ -113,18 +113,30 @@
         <Button
             android:id="@+id/batal"
             style="?attr/materialButtonOutlinedStyle"
-            android:layout_width="100dp"
-            android:layout_height="46dp"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
             android:layout_marginEnd="12dp"
             android:gravity="center"
             android:text="@string/batal" />
 
-        <Button
+<!--        <Button-->
+<!--            android:id="@+id/btn_lanjut_checkOut"-->
+<!--            android:layout_width="280dp"-->
+<!--            android:layout_height="46dp"-->
+<!--            android:gravity="center"-->
+<!--            android:text="@string/konfirmasi_pembayran" />-->
+        <com.github.leandroborgesferreira.loadingbutton.customViews.CircularProgressButton
             android:id="@+id/btn_lanjut_checkOut"
-            android:layout_width="280dp"
-            android:layout_height="46dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/circle_button"
+            android:text="@string/konfirmasi_pembayran"
             android:gravity="center"
-            android:text="@string/konfirmasi_pembayran" />
+            android:textAllCaps="false"
+            android:textColor="@color/white"
+            app:spinning_bar_color="#FFF"
+            app:spinning_bar_padding="6dp"
+            app:spinning_bar_width="4dp" />
 
     </LinearLayout>
 

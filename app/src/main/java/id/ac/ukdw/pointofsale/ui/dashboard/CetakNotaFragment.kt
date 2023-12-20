@@ -1,4 +1,4 @@
-package id.ac.ukdw.pointofsale.ui
+package id.ac.ukdw.pointofsale.ui.dashboard
 
 import android.app.Dialog
 import android.content.ActivityNotFoundException
@@ -16,12 +16,14 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.DialogFragment
-import androidx.fragment.app.viewModels
+import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
 import id.ac.ukdw.pointofsale.R
 import id.ac.ukdw.pointofsale.api.Service.ApiClient
 import id.ac.ukdw.pointofsale.databinding.FragmentCetakNotaBinding
 import id.ac.ukdw.pointofsale.viewmodel.NotaViewModel
+import id.ac.ukdw.pointofsale.viewmodel.SharedCheckoutViewModel
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import okhttp3.ResponseBody
 import retrofit2.Call
@@ -35,6 +37,7 @@ class CetakNotaFragment : DialogFragment() {
 
     private var _binding: FragmentCetakNotaBinding? = null
     private val binding get() = _binding!!
+    private val checkoutViewModel: SharedCheckoutViewModel by activityViewModels()
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -85,14 +88,30 @@ class CetakNotaFragment : DialogFragment() {
             Log.d("tol", "onViewCreated: $idNota")
             lifecycleScope.launch {
                 val cetakNota = cetakNota(idNota,requireContext())
-                if (cetakNota == true){
-                    Toast.makeText(context, "Berhasil donwload nota", Toast.LENGTH_SHORT).show()
-                    dismiss()
+                if (cetakNota){
+                    Toast.makeText(context, "Transaksi Berhasil", Toast.LENGTH_SHORT).show()
+                    binding.cetakNota.visibility = View.GONE
+                    binding.sedangCetak.visibility = View.VISIBLE
+                    delay(2000)
+                    binding.sedangCetak.visibility = View.GONE
+                    binding.berhasilCetak.visibility = View.VISIBLE
+                    binding.backToDash.setOnClickListener {
+                        dismiss()
+                    }
                 }else{
-                    Toast.makeText(context, "Gagal donwload nota", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(context, "Transaksi Gagal", Toast.LENGTH_SHORT).show()
                 }
             }
         }
+    }
+
+    private fun clearCheckOut(){
+        checkoutViewModel.clearData()
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        clearCheckOut()
     }
 
     private suspend fun cetakNota(idNota: Int, context: Context): Boolean {
