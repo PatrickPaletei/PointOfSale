@@ -22,4 +22,37 @@
         app:lottie_fileName="lottie_loading.json"
         app:lottie_loop="true" />
 
+    <LinearLayout
+        android:id="@+id/noItemFound"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:visibility="gone"
+        android:orientation="vertical"
+        android:padding="20dp">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:src="@drawable/no_item_filter" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAlignment="center"
+            android:text="@string/tidak_menemukan_hasil"
+            android:textSize="26sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAlignment="center"
+            android:text="@string/harap_mencoba_menggunakan_kata_kunci_lain_apabila_anda_tidak_dapat_menemukan_menu_yang_dicari"
+            android:textSize="20sp" />
+
+    </LinearLayout>
+
+
 </FrameLayout>

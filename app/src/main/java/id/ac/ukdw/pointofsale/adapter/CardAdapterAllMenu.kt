@@ -48,6 +48,20 @@ class CardAdapterAllMenu(
         differ.submitList(filteredList)
     }
 
+    fun filterByInput(inputString: String): Int {
+        val filteredList = if (inputString.isNotEmpty()) {
+            originalData.filter { data ->
+                data.namaMenu.contains(inputString, ignoreCase = true)
+                // You can modify the condition based on your filter requirement
+            }
+        } else {
+            emptyList() // Return an empty list if inputString is empty
+        }
+        differ.submitList(filteredList)
+        return filteredList.size // Return the size of the filtered list
+    }
+
+
     inner class CardViewHolder(private val binding: ItemMenuDashboardBinding) :
         RecyclerView.ViewHolder(binding.root) {
         // Access your views using binding instead of findViewById

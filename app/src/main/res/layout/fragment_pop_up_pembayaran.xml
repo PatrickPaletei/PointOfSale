@@ -128,30 +128,7 @@
 
     </LinearLayout>
 
-    <com.airbnb.lottie.LottieAnimationView
-        android:id="@+id/pembayaranBerhasil"
-        android:layout_width="220dp"
-        android:layout_height="220dp"
-        android:visibility="gone"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:lottie_autoPlay="true"
-        app:lottie_loop="true"
-        app:lottie_fileName="done_animation.json" />
 
-    <com.airbnb.lottie.LottieAnimationView
-        android:id="@+id/pembayaranDiproses"
-        android:layout_width="260dp"
-        android:layout_height="260dp"
-        android:visibility="gone"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:lottie_autoPlay="true"
-        app:lottie_loop="true"
-        app:lottie_fileName="proccesing_animation.json" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

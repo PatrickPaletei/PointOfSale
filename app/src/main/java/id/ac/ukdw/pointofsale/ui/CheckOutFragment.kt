@@ -129,6 +129,7 @@ class CheckOutFragment : Fragment() {
 
         btnClear.setOnClickListener {
             checkoutViewModel.clearData()
+            namaPelanggan.setText("")
         }
     }
 

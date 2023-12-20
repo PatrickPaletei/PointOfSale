@@ -42,11 +42,14 @@ class SidebarAdapter(private val items: List<SidebarItem>, private val onItemCli
 
             setOnClickListener {
                 val previousSelected = selectedItemPosition
-                selectedItemPosition = holder.adapterPosition
-                notifyItemChanged(previousSelected)
-                notifyItemChanged(selectedItemPosition)
+                if (selectedItemPosition != holder.adapterPosition) {
+                    selectedItemPosition = holder.adapterPosition
+                    notifyItemChanged(previousSelected)
+                    notifyItemChanged(selectedItemPosition)
 
-                onItemClick(selectedItemPosition)
+                    onItemClick(selectedItemPosition)
+                }
+                // Add an else block if you want to handle something when the same item is clicked again
             }
         }
     }

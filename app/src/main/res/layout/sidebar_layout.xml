@@ -43,16 +43,17 @@
 
         <ImageView
             android:id="@+id/profileAvatar"
-            android:layout_width="36dp"
-            android:layout_height="36dp"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
             android:layout_gravity="center"
             android:scaleType="centerCrop" />
 
         <ImageButton
             android:id="@+id/logoutSide"
-            android:layout_width="42dp"
-            android:layout_height="42dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_gravity="center"
+            android:layout_marginTop="20dp"
             android:background="@color/white"
             android:src="@drawable/ic_logout" />
     </LinearLayout>

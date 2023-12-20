@@ -36,14 +36,13 @@
                 android:id="@+id/nama"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:lineSpacingExtra="2sp"
                 android:layout_marginEnd="12dp"
+                android:lineSpacingExtra="2sp"
                 android:text="Patrick"
                 android:textColor="#0A0A0A"
                 android:textSize="26sp" />
 
             <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/namaPelanggan"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_weight="0.9"
@@ -52,6 +51,7 @@
                 app:startIconDrawable="@drawable/ic_search">
 
                 <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/txt_search"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="@string/cari_menu_kamu_disini"
@@ -60,7 +60,7 @@
             </com.google.android.material.textfield.TextInputLayout>
 
             <ImageButton
-                android:id="@+id/imageButton2"
+                android:id="@+id/btn_search"
                 android:layout_width="58dp"
                 android:layout_height="58dp"
                 android:layout_gravity="center"
@@ -83,7 +83,7 @@
                 android:layout_height="wrap_content"
                 android:checkable="true"
                 android:clickable="true"
-                android:text="Semua Makanan"/>
+                android:text="Semua Makanan" />
 
             <com.google.android.material.chip.Chip
                 android:id="@+id/makanan"
@@ -92,7 +92,7 @@
                 android:layout_marginStart="12dp"
                 android:checkable="true"
                 android:clickable="true"
-                android:text="@string/makanan"/>
+                android:text="@string/makanan" />
 
             <com.google.android.material.chip.Chip
                 android:id="@+id/minuman"
@@ -101,7 +101,7 @@
                 android:layout_marginStart="12dp"
                 android:checkable="true"
                 android:clickable="true"
-                android:text="@string/minuman"/>
+                android:text="@string/minuman" />
 
             <com.google.android.material.chip.Chip
                 android:id="@+id/snack"
@@ -110,7 +110,7 @@
                 android:layout_marginStart="12dp"
                 android:checkable="true"
                 android:clickable="true"
-                android:text="@string/snack"/>
+                android:text="@string/snack" />
 
         </LinearLayout>
 
