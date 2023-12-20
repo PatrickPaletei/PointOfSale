@@ -27,7 +27,7 @@ class NotaViewModel : ViewModel() {
         items: List<ItemTransaksi>,
         metode_pembayaran: String,
         nama_pelanggan: String
-    ) {
+    ):Int? {
         val request = TambahTransaksiRequest(
             idUser = id_user,
             items = items,
@@ -58,5 +58,7 @@ class NotaViewModel : ViewModel() {
                     updateResponseBody(null)
                 }
             })
+        return responseBody.value
     }
+
 }

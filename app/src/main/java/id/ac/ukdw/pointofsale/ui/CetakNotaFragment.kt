@@ -1,8 +1,11 @@
 package id.ac.ukdw.pointofsale.ui
 
 import android.app.Dialog
+import android.content.ActivityNotFoundException
 import android.content.ContentValues
 import android.content.Context
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.os.Environment
 import android.provider.MediaStore
@@ -32,8 +35,6 @@ class CetakNotaFragment : DialogFragment() {
 
     private var _binding: FragmentCetakNotaBinding? = null
     private val binding get() = _binding!!
-    private val notaViewModel: NotaViewModel by viewModels({ requireActivity() })
-    var idNota = 0
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -86,6 +87,7 @@ class CetakNotaFragment : DialogFragment() {
                 val cetakNota = cetakNota(idNota,requireContext())
                 if (cetakNota == true){
                     Toast.makeText(context, "Berhasil donwload nota", Toast.LENGTH_SHORT).show()
+                    dismiss()
                 }else{
                     Toast.makeText(context, "Gagal donwload nota", Toast.LENGTH_SHORT).show()
                 }
@@ -138,9 +140,26 @@ class CetakNotaFragment : DialogFragment() {
                 responseBody.byteStream().use { inputStream ->
                     if (outputStream != null) {
                         inputStream.copyTo(outputStream)
+                        openPDFWithDialog(uri)
                     }
                 }
             }
+        }
+    }
+
+    private fun openPDFWithDialog(pdfUri: Uri) {
+        val intent = Intent(Intent.ACTION_VIEW).apply {
+            addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
+            setDataAndType(pdfUri, "application/pdf")
+        }
+
+        val chooserIntent = Intent.createChooser(intent, "Open PDF")
+        chooserIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+
+        try {
+            requireContext().startActivity(chooserIntent)
+        } catch (e: ActivityNotFoundException) {
+            Toast.makeText(requireContext(), "No PDF viewer app found", Toast.LENGTH_SHORT).show()
         }
     }
 
