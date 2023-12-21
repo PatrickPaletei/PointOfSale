@@ -7,7 +7,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.create
 
 
-object ApiClient {
+object ApiClient: ApiClientInterface {
 
     const val  BASE_URL = "https://stormy-plains-56457-19235671afa2.herokuapp.com/"
 
@@ -21,7 +21,7 @@ object ApiClient {
     private val client = OkHttpClient.Builder()
         .addInterceptor(logging)
         .build()
-    val instance: ApiService by lazy {
+    override val instance: ApiService by lazy {
         val retrofit = Retrofit.Builder()
             .baseUrl(BASE_URL)
             .addConverterFactory(GsonConverterFactory.create())

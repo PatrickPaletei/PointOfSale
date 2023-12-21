@@ -7,9 +7,11 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.GridLayoutManager
+import dagger.hilt.android.AndroidEntryPoint
 import id.ac.ukdw.pointofsale.MainActivity
 import id.ac.ukdw.pointofsale.R
 import id.ac.ukdw.pointofsale.adapter.CardAdapterAllMenu
@@ -18,6 +20,7 @@ import id.ac.ukdw.pointofsale.api.Service.ApiClient
 import id.ac.ukdw.pointofsale.api.response.AllMenuResponse
 import id.ac.ukdw.pointofsale.api.response.DataSemuaMakanan
 import id.ac.ukdw.pointofsale.data.CardData
+import id.ac.ukdw.pointofsale.database.MenuItem
 import id.ac.ukdw.pointofsale.databinding.FragmentMenuBinding
 import id.ac.ukdw.pointofsale.viewmodel.MenuViewModel
 import id.ac.ukdw.pointofsale.viewmodel.SelectedFilterMenuViewModel
@@ -29,19 +32,17 @@ import retrofit2.Response
 import kotlin.coroutines.resume
 import kotlin.coroutines.suspendCoroutine
 
-
+@AndroidEntryPoint
 class MenuFragment : Fragment() {
 
     private var _binding: FragmentMenuBinding? = null
     private val binding get() = _binding!!
     private lateinit var selectedItemViewModel: SelectedItemViewModel
-    private lateinit var menuViewModel: MenuViewModel // Include MenuViewModel
+    private val menuViewModel: MenuViewModel by viewModels()
     private val filterViewModel: SelectedFilterMenuViewModel by activityViewModels()
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         selectedItemViewModel = (requireActivity() as MainActivity).getSelectedItemViewModel()
-        menuViewModel = ViewModelProvider(this).get(MenuViewModel::class.java)
     }
 
     override fun onCreateView(
@@ -50,8 +51,9 @@ class MenuFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentMenuBinding.inflate(inflater, container, false)
+        setupRecyclerView()
         observeMenuData()
-        menuViewModel.fetchMenuData() // Trigger API call from ViewModel
+        menuViewModel.fetchMenuData()
         return binding.root
     }
 
@@ -59,7 +61,7 @@ class MenuFragment : Fragment() {
         menuViewModel.menuData.observe(viewLifecycleOwner) { menuData ->
             // Handle menuData updates here
             if (menuData.isNotEmpty()) {
-                showListSemuaMakanan(menuData)
+                showListSemuaMakanan(mapMenuItemsToDataSemuaMakanan(menuData))
                 updateViewsVisibility(200) // Assuming 200 for success
             } else {
                 // Handle no data scenario
@@ -67,6 +69,32 @@ class MenuFragment : Fragment() {
         }
     }
 
+    private fun mapMenuItemsToDataSemuaMakanan(menuItems: List<MenuItem>): List<DataSemuaMakanan> {
+        return menuItems.map { menuItem ->
+            DataSemuaMakanan(
+                idMenu = menuItem.idMenu,
+                namaMenu = menuItem.namaMenu,
+                harga = menuItem.harga,
+                image = menuItem.image ?: "",
+                jumlahStok = menuItem.jumlahStok,
+                kategori = menuItem.kategori
+                // map other properties accordingly
+            )
+        }
+    }
+
+
+    private val spacingInPixels by lazy {
+        resources.getDimensionPixelSize(R.dimen.spacing_between_items)
+    }
+    private val spaceItemDecoration by lazy {
+        SpaceItemDecoration(spacingInPixels, 3)
+    }
+
+    private fun setupRecyclerView() {
+        binding.recyclerViewMenu.layoutManager = GridLayoutManager(requireContext(), 3)
+        binding.recyclerViewMenu.addItemDecoration(spaceItemDecoration)
+    }
 
     private fun showListSemuaMakanan(data: List<DataSemuaMakanan>) {
         val adapter = CardAdapterAllMenu(object : CardAdapterAllMenu.OnClickListener {
@@ -82,10 +110,6 @@ class MenuFragment : Fragment() {
                 )
             }
         })
-
-        binding.recyclerViewMenu.layoutManager = GridLayoutManager(requireContext(), 3)
-        val spacingInPixels = resources.getDimensionPixelSize(R.dimen.spacing_between_items)
-        binding.recyclerViewMenu.addItemDecoration(SpaceItemDecoration(spacingInPixels, 3))
 
         filterViewModel.combinedFilter.observe(viewLifecycleOwner) { combinedValue ->
             val (intFilter, stringFilter) = combinedValue
@@ -114,6 +138,7 @@ class MenuFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
         filterViewModel.dataState.observe(viewLifecycleOwner){state->
             if (state == true){
                 binding.recyclerViewMenu.visibility = View.VISIBLE
@@ -128,6 +153,11 @@ class MenuFragment : Fragment() {
             binding.recyclerViewMenu.visibility = View.VISIBLE
             binding.noItemFound.visibility = View.GONE
         }
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        filterViewModel.updateData(1,"")
     }
 }
 

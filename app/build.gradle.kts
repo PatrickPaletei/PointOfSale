@@ -2,14 +2,13 @@ plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
     id ("kotlin-kapt")
+    id ("dagger.hilt.android.plugin")
 }
 
 android {
 
     namespace = "id.ac.ukdw.pointofsale"
     compileSdk = 34
-
-
 
     defaultConfig {
         applicationId = "id.ac.ukdw.pointofsale"
@@ -20,6 +19,7 @@ android {
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
+
 
 
     buildFeatures{
@@ -81,11 +81,12 @@ dependencies {
     implementation ("androidx.lifecycle:lifecycle-viewmodel-ktx:2.4.0")
 
     //room
-    implementation ("androidx.room:room-runtime:2.4.3")
-    kapt ("androidx.room:room-compiler:2.4.3")
+    implementation ("androidx.room:room-runtime:2.6.1")
+    kapt ("androidx.room:room-compiler:2.6.1")
+    implementation ("androidx.room:room-ktx:2.6.1")
 
     // Hilt
-    implementation ("com.google.dagger:hilt-android:2.40.5")
-    kapt ("com.google.dagger:hilt-compiler:2.40.5")
+    implementation ("com.google.dagger:hilt-android:2.50")
+    kapt ("com.google.dagger:hilt-compiler:2.50")
 
 }
