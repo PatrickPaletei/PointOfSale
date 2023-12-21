@@ -14,6 +14,8 @@ import id.ac.ukdw.pointofsale.adapter.CheckOutAdapter
 import id.ac.ukdw.pointofsale.data.CheckOutData
 import id.ac.ukdw.pointofsale.databinding.FragmentCheckOutBinding
 import id.ac.ukdw.pointofsale.viewmodel.SharedCheckoutViewModel
+import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
 
 class CheckOutFragment : Fragment() {
 
@@ -35,6 +37,7 @@ class CheckOutFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        getCurrentTime()
         setupClickListener()
     }
 
@@ -56,6 +59,12 @@ class CheckOutFragment : Fragment() {
             updateUI(newDataList)
             (binding.rcyViewCheckOut.adapter as? CheckOutAdapter)?.updateData(newDataList)
         }
+    }
+
+    private fun getCurrentTime(){
+        val formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy")
+        val current = LocalDateTime.now().format(formatter)
+        binding.tanggal.text = current
     }
 
     private fun setupClickListener() {

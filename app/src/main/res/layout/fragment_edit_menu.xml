@@ -4,12 +4,15 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:layout_marginStart="10dp"
+    android:layout_marginTop="4dp"
+    android:layout_marginEnd="8dp"
     android:orientation="vertical"
     tools:context=".ui.menu.EditMenuFragment">
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="58dp"
+        android:layout_height="wrap_content"
         android:orientation="horizontal">
 
         <TextView
@@ -24,7 +27,6 @@
             android:textSize="28sp" />
 
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/namaPelanggan"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:gravity="center|start"
@@ -33,6 +35,7 @@
             app:startIconDrawable="@drawable/ic_search">
 
             <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/querySearch"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/cari_menu_kamu_disini" />
@@ -40,8 +43,8 @@
         </com.google.android.material.textfield.TextInputLayout>
 
         <ImageButton
-            android:id="@+id/imageButton2"
-            android:layout_width="58dp"
+            android:id="@+id/search"
+            android:layout_width="60dp"
             android:layout_height="match_parent"
             android:backgroundTint="#004080"
             android:src="@drawable/ic_search" />
@@ -50,27 +53,28 @@
     <com.google.android.material.divider.MaterialDivider
         android:id="@+id/materialDivider2"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_marginTop="36dp" />
+        android:layout_height="2dp"
+        android:layout_marginTop="8dp" />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="25dp"
+        android:layout_marginTop="8dp"
         android:orientation="horizontal">
 
         <TextView
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="start|center"
+            android:layout_height="match_parent"
             android:layout_weight="0.9"
-            android:text="@string/menu_saya"
-            android:textSize="26sp" />
+            android:gravity="center|start"
+            android:text="@string/daftar_menu"
+            android:textColor="#000000"
+            android:textSize="22sp" />
 
         <Button
             style="@style/Widget.Material3.Button.OutlinedButton.Icon"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_gravity="center"
             android:layout_weight="0.1"
             android:text="@string/tambah"
@@ -78,9 +82,84 @@
             app:iconTint="@color/blue" />
     </LinearLayout>
 
+    <LinearLayout
+        android:id="@+id/chip"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/semuaMakanan"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:checkable="true"
+            android:clickable="true"
+            android:text="Semua Makanan" />
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/makanan"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="12dp"
+            android:checkable="true"
+            android:clickable="true"
+            android:text="@string/makanan" />
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/minuman"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="12dp"
+            android:checkable="true"
+            android:clickable="true"
+            android:text="@string/minuman" />
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/snack"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="12dp"
+            android:checkable="true"
+            android:clickable="true"
+            android:text="@string/snack" />
+
+    </LinearLayout>
+
     <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rcyView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="25dp"/>
+        android:layout_marginTop="12dp" />
+
+    <LinearLayout
+        android:id="@+id/noItemFound"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:visibility="gone"
+        android:orientation="vertical"
+        android:padding="20dp">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:src="@drawable/no_item_filter" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAlignment="center"
+            android:text="@string/tidak_menemukan_hasil"
+            android:textSize="26sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAlignment="center"
+            android:text="@string/harap_mencoba_menggunakan_kata_kunci_lain_apabila_anda_tidak_dapat_menemukan_menu_yang_dicari"
+            android:textSize="20sp" />
+
+    </LinearLayout>
 
 </LinearLayout>
