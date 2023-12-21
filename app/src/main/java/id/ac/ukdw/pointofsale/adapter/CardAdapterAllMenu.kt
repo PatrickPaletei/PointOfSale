@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import id.ac.ukdw.pointofsale.api.response.DataSemuaMakanan
 import id.ac.ukdw.pointofsale.databinding.ItemMenuDashboardBinding
+import id.ac.ukdw.pointofsale.viewmodel.MenuViewModel
 
 
 class CardAdapterAllMenu(

@@ -27,6 +27,8 @@ class DashboardFragment : Fragment() {
 
         binding.nama.text = getUserNameFromPrefs()
 
+        binding.semuaMakanan.isChecked = true
+
         setChipClickListener(binding.semuaMakanan, 1)
         setChipClickListener(binding.makanan, 2)
         setChipClickListener(binding.minuman, 3)

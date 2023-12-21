@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.GridLayoutManager
 import id.ac.ukdw.pointofsale.MainActivity
@@ -18,6 +19,7 @@ import id.ac.ukdw.pointofsale.api.response.AllMenuResponse
 import id.ac.ukdw.pointofsale.api.response.DataSemuaMakanan
 import id.ac.ukdw.pointofsale.data.CardData
 import id.ac.ukdw.pointofsale.databinding.FragmentMenuBinding
+import id.ac.ukdw.pointofsale.viewmodel.MenuViewModel
 import id.ac.ukdw.pointofsale.viewmodel.SelectedFilterMenuViewModel
 import id.ac.ukdw.pointofsale.viewmodel.SelectedItemViewModel
 import kotlinx.coroutines.launch
@@ -33,11 +35,13 @@ class MenuFragment : Fragment() {
     private var _binding: FragmentMenuBinding? = null
     private val binding get() = _binding!!
     private lateinit var selectedItemViewModel: SelectedItemViewModel
+    private lateinit var menuViewModel: MenuViewModel // Include MenuViewModel
     private val filterViewModel: SelectedFilterMenuViewModel by activityViewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         selectedItemViewModel = (requireActivity() as MainActivity).getSelectedItemViewModel()
+        menuViewModel = ViewModelProvider(this).get(MenuViewModel::class.java)
     }
 
     override fun onCreateView(
@@ -46,43 +50,23 @@ class MenuFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentMenuBinding.inflate(inflater, container, false)
-        var responseCode: Int?
-        lifecycleScope.launch {
-            responseCode = getAllMenu()
-            responseCode?.let { nonNullableCode ->
-                updateViewsVisibility(nonNullableCode)
-            }
-        }
+        observeMenuData()
+        menuViewModel.fetchMenuData() // Trigger API call from ViewModel
         return binding.root
     }
 
-    private suspend fun getAllMenu(): Int? {
-        return suspendCoroutine { continuation ->
-            ApiClient.instance.getAllMenu()
-                .enqueue(object : Callback<AllMenuResponse> {
-                    override fun onResponse(
-                        call: Call<AllMenuResponse>,
-                        response: Response<AllMenuResponse>
-                    ) {
-                        val body = response.body()
-                        val code = response.code()
-                        if (code == 200) {
-                            if (body != null) {
-                                showListSemuaMakanan(body.data)
-                                continuation.resume(code)
-                            }
-                        } else {
-                            continuation.resume(null)
-                        }
-                    }
-
-                    override fun onFailure(call: Call<AllMenuResponse>, t: Throwable) {
-                        Toast.makeText(context, "Harap Coba Beberapa Saat Lagi Server Sibuk", Toast.LENGTH_SHORT).show()
-                    }
-
-                })
+    private fun observeMenuData() {
+        menuViewModel.menuData.observe(viewLifecycleOwner) { menuData ->
+            // Handle menuData updates here
+            if (menuData.isNotEmpty()) {
+                showListSemuaMakanan(menuData)
+                updateViewsVisibility(200) // Assuming 200 for success
+            } else {
+                // Handle no data scenario
+            }
         }
     }
+
 
     private fun showListSemuaMakanan(data: List<DataSemuaMakanan>) {
         val adapter = CardAdapterAllMenu(object : CardAdapterAllMenu.OnClickListener {

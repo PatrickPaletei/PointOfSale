@@ -78,32 +78,33 @@ class CetakNotaFragment : DialogFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val cetakNotaBtn = binding.btnCetakNota
-        val sharedPref = requireActivity().getPreferences(Context.MODE_PRIVATE)
-        val idNota = sharedPref.getInt("idNota",0)
-        binding.balikDashboard.setOnClickListener {
-            dismiss()
-        }
+        binding.balikDashboard.setOnClickListener { dismiss() }
 
         cetakNotaBtn.setOnClickListener {
-            Log.d("tol", "onViewCreated: $idNota")
             lifecycleScope.launch {
-                val cetakNota = cetakNota(idNota,requireContext())
-                if (cetakNota){
-                    Toast.makeText(context, "Transaksi Berhasil", Toast.LENGTH_SHORT).show()
-                    binding.cetakNota.visibility = View.GONE
-                    binding.sedangCetak.visibility = View.VISIBLE
-                    delay(2000)
-                    binding.sedangCetak.visibility = View.GONE
-                    binding.berhasilCetak.visibility = View.VISIBLE
-                    binding.backToDash.setOnClickListener {
-                        dismiss()
-                    }
-                }else{
+                val idNota = requireActivity().getPreferences(Context.MODE_PRIVATE).getInt("idNota", 0)
+                val success = cetakNota(idNota, requireContext())
+                if (success) {
+                    showToastAndHandleSuccess()
+                } else {
                     Toast.makeText(context, "Transaksi Gagal", Toast.LENGTH_SHORT).show()
                 }
             }
         }
     }
+
+    private fun showToastAndHandleSuccess() {
+        Toast.makeText(context, "Transaksi Berhasil", Toast.LENGTH_SHORT).show()
+        binding.cetakNota.visibility = View.GONE
+        binding.sedangCetak.visibility = View.VISIBLE
+        lifecycleScope.launch {
+            delay(2000)
+            binding.sedangCetak.visibility = View.GONE
+            binding.berhasilCetak.visibility = View.VISIBLE
+            binding.backToDash.setOnClickListener { dismiss() }
+        }
+    }
+
 
     private fun clearCheckOut(){
         checkoutViewModel.clearData()

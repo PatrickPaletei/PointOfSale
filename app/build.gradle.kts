@@ -1,6 +1,7 @@
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
+    id ("kotlin-kapt")
 }
 
 android {
@@ -24,6 +25,7 @@ android {
     buildFeatures{
         this.viewBinding = true
     }
+
 
     buildTypes {
         release {
@@ -77,4 +79,13 @@ dependencies {
     //dataStore
     implementation ("androidx.datastore:datastore-preferences:1.0.0")
     implementation ("androidx.lifecycle:lifecycle-viewmodel-ktx:2.4.0")
+
+    //room
+    implementation ("androidx.room:room-runtime:2.4.3")
+    kapt ("androidx.room:room-compiler:2.4.3")
+
+    // Hilt
+    implementation ("com.google.dagger:hilt-android:2.40.5")
+    kapt ("com.google.dagger:hilt-compiler:2.40.5")
+
 }
