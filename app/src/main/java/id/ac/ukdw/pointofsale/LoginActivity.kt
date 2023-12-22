@@ -91,6 +91,8 @@ class LoginActivity : AppCompatActivity() {
                             if (body != null) {
                                 editor.putString("nama", body.username)
                                 editor.putString("id", body.id_user.toString())
+                                editor.putString("token",body.plainTextToken)
+                                //send pake sf bearer token nya
                             }
                             editor.apply()
                             continuation.resume(code)

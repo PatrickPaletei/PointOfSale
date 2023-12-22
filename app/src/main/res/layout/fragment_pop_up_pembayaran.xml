@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="wrap_content"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:padding="24dp">
 
     <LinearLayout
         android:id="@+id/holderTitle"
-        android:layout_width="392dp"
-        android:layout_height="44dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:orientation="horizontal"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -26,10 +26,9 @@
 
     <com.google.android.material.divider.MaterialDivider
         android:id="@+id/materialDivider"
-        android:layout_width="392dp"
-        android:layout_height="0dp"
-        android:layout_margin="20dp"
-        android:layout_marginTop="32dp"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginTop="18dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/holderTitle" />
@@ -37,9 +36,9 @@
 
     <LinearLayout
         android:id="@+id/holderPembayaran"
-        android:layout_width="392dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="48dp"
+        android:layout_marginTop="22dp"
         android:orientation="horizontal"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -79,32 +78,33 @@
 
     <com.google.android.material.divider.MaterialDivider
         android:id="@+id/materialDivider2"
-        android:layout_width="392dp"
+        android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="32dp"
-        android:layout_marginEnd="20dp"
+        android:layout_marginTop="22dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/holderPembayaran" />
 
     <TextView
         android:id="@+id/totalBayarCheckOut"
-        android:layout_width="392dp"
+        android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="22dp"
         android:background="@drawable/rounded_radio"
         android:gravity="center|start"
         android:hint="@string/total_yang_dibayar"
+        android:paddingLeft="12dp"
+        android:textColor="@color/black"
+        android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/materialDivider2" />
 
     <LinearLayout
         android:id="@+id/holderBtn"
-        android:layout_width="392dp"
-        android:layout_height="46dp"
-        android:layout_marginTop="32dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="22dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -119,19 +119,13 @@
             android:gravity="center"
             android:text="@string/batal" />
 
-<!--        <Button-->
-<!--            android:id="@+id/btn_lanjut_checkOut"-->
-<!--            android:layout_width="280dp"-->
-<!--            android:layout_height="46dp"-->
-<!--            android:gravity="center"-->
-<!--            android:text="@string/konfirmasi_pembayran" />-->
         <com.github.leandroborgesferreira.loadingbutton.customViews.CircularProgressButton
             android:id="@+id/btn_lanjut_checkOut"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@drawable/circle_button"
+            android:layout_gravity="center"
             android:text="@string/konfirmasi_pembayran"
-            android:gravity="center"
             android:textAllCaps="false"
             android:textColor="@color/white"
             app:spinning_bar_color="#FFF"
@@ -139,8 +133,6 @@
             app:spinning_bar_width="4dp" />
 
     </LinearLayout>
-
-
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

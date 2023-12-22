@@ -1,6 +1,9 @@
 package id.ac.ukdw.pointofsale.ui.menu
 
+import android.content.Context
+import android.content.SharedPreferences
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,27 +12,35 @@ import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.chip.Chip
 import dagger.hilt.android.AndroidEntryPoint
+import id.ac.ukdw.pointofsale.MainActivity
 import id.ac.ukdw.pointofsale.R
 import id.ac.ukdw.pointofsale.adapter.MenuPageAdapter
+import id.ac.ukdw.pointofsale.data.DataEditHelper
 import id.ac.ukdw.pointofsale.databinding.FragmentEditMenuBinding
+import id.ac.ukdw.pointofsale.viewmodel.MenuViewModel
 import id.ac.ukdw.pointofsale.viewmodel.PageMenuViewModel
+import id.ac.ukdw.pointofsale.viewmodel.SelectedItemViewModel
+import kotlinx.coroutines.delay
 
 @AndroidEntryPoint
 class EditMenuFragment : Fragment() {
 
-    private val viewModel: PageMenuViewModel by viewModels()
+    private val pageMenuViewModel: PageMenuViewModel by viewModels()
     private lateinit var binding: FragmentEditMenuBinding // Replace with your actual binding class name
     private lateinit var menuPageAdapter: MenuPageAdapter
+    private lateinit var selectedItemViewModel: SelectedItemViewModel
+    private val menuViewModel: MenuViewModel by viewModels()
+    private lateinit var sharedPreferences: SharedPreferences
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        selectedItemViewModel = (requireActivity() as MainActivity).getSelectedItemViewModel()
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         binding = FragmentEditMenuBinding.inflate(inflater, container, false)
-        // Fetch menu items when the fragment is created or as needed
-//        lifecycleScope.launch {
-//            viewModel.getMenuItemsFromDB()
-//        }
         return binding.root
     }
 
@@ -37,11 +48,39 @@ class EditMenuFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         binding.semuaMakanan.isChecked = true
         setupChipsListeners()
-        menuPageAdapter = MenuPageAdapter { menuItem ->
-            // Handle item click here
-            // For example, navigate to a detail screen with the selected menu item
-            // Or perform any other action based on the clicked item
+        sharedPreferences = requireActivity().getSharedPreferences("dataEdit", Context.MODE_PRIVATE)
+        menuPageAdapter = MenuPageAdapter(
+            onItemClick = { judulMenu, kategori, harga, id ->
+                val hargaWithoutSuffix = harga.removeSuffix(".00")
+                val hargaAsInt =
+                    hargaWithoutSuffix.toIntOrNull() ?: 0 // Default to 0 if parsing fails
+                val editor = sharedPreferences.edit()
+                editor.putString("judulMenu", judulMenu)
+                editor.putString("kategori", kategori)
+                editor.putInt("harga", hargaAsInt)
+                editor.putInt("id", id)
+                Log.d("idUntaaa", "onViewCreated: $id")
+                editor.apply()
 
+                selectedItemViewModel.setCallPopUpEditMenu(true)
+            },
+            onItemDeleteClick = { idMenu,namaMenu ->
+                val editor = sharedPreferences.edit()
+                editor.putString("judulMenuDelete", namaMenu)
+                editor.putInt("idMenuDelete",idMenu)
+                editor.apply()
+                selectedItemViewModel.setCallPopUpDeleteMenu(true)
+            }
+        )
+
+        binding.swipeRefreshLayout.setOnRefreshListener {
+            menuViewModel.fetchMenuData()
+            pageMenuViewModel.menuItems.observe(viewLifecycleOwner) { menuItems ->
+                menuPageAdapter.submitList(menuItems)
+                stopRefreshing()
+                unCheckAllChips()
+                binding.semuaMakanan.isChecked = true
+            }
         }
 
         binding.rcyView.apply {
@@ -49,17 +88,26 @@ class EditMenuFragment : Fragment() {
             layoutManager = LinearLayoutManager(requireContext())
         }
 
-        viewModel.menuItems.observe(viewLifecycleOwner) { menuItems ->
+        pageMenuViewModel.menuItems.observe(viewLifecycleOwner) { menuItems ->
             menuPageAdapter.submitList(menuItems)
         }
 
+        binding.btnTambahTransaksi.setOnClickListener {
+            selectedItemViewModel.setCallPopUpTambahMenu(true)
 
+        }
+
+    }
+
+
+    private fun stopRefreshing() {
+        binding.swipeRefreshLayout.isRefreshing = false
     }
 
     private fun setupChipsListeners() {
         binding.semuaMakanan.setOnClickListener {
             observeAndCheckChip(binding.semuaMakanan) {
-                viewModel.menuItems.observe(viewLifecycleOwner) { allData ->
+                pageMenuViewModel.menuItems.observe(viewLifecycleOwner) { allData ->
                     allData?.let {
                         menuPageAdapter.submitList(it)
                     }
@@ -68,15 +116,39 @@ class EditMenuFragment : Fragment() {
             updateUIVisibility(View.VISIBLE, View.GONE)
         }
 
-        binding.makanan.setOnClickListener { filterAndCheckChip(binding.makanan, getString(R.string.makanan)) }
-        binding.minuman.setOnClickListener { filterAndCheckChip(binding.minuman, getString(R.string.minuman)) }
-        binding.snack.setOnClickListener { filterAndCheckChip(binding.snack, getString(R.string.snack)) }
+        binding.makanan.setOnClickListener {
+            filterAndCheckChip(
+                binding.makanan,
+                getString(R.string.makanan)
+            )
+        }
+        binding.minuman.setOnClickListener {
+            filterAndCheckChip(
+                binding.minuman,
+                getString(R.string.minuman)
+            )
+        }
+        binding.snack.setOnClickListener {
+            filterAndCheckChip(
+                binding.snack,
+                getString(R.string.snack)
+            )
+        }
+        binding.lain.setOnClickListener {
+            filterAndCheckChip(
+                binding.lain,
+                getString(R.string.lain_lain)
+            )
+        }
 
         binding.search.setOnClickListener {
             val query = binding.querySearch.text.toString().trim()
             val filteredSize = menuPageAdapter.filterByInput(query)
             unCheckAllChips()
-            updateUIVisibility(if (filteredSize == 0) View.GONE else View.VISIBLE, if (filteredSize == 0) View.VISIBLE else View.GONE)
+            updateUIVisibility(
+                if (filteredSize == 0) View.GONE else View.VISIBLE,
+                if (filteredSize == 0) View.VISIBLE else View.GONE
+            )
         }
     }
 
@@ -97,6 +169,7 @@ class EditMenuFragment : Fragment() {
         binding.makanan.isChecked = false
         binding.minuman.isChecked = false
         binding.snack.isChecked = false
+        binding.lain.isChecked = false
     }
 
     private fun updateUIVisibility(rcyViewVisibility: Int, noItemFoundVisibility: Int) {

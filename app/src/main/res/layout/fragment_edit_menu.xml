@@ -72,6 +72,7 @@
             android:textSize="22sp" />
 
         <Button
+            android:id="@+id/btnTambahTransaksi"
             style="@style/Widget.Material3.Button.OutlinedButton.Icon"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
@@ -122,22 +123,36 @@
             android:clickable="true"
             android:text="@string/snack" />
 
+        <com.google.android.material.chip.Chip
+            android:id="@+id/lain"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="12dp"
+            android:checkable="true"
+            android:clickable="true"
+            android:text="@string/lain_lain" />
+
     </LinearLayout>
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rcyView"
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id="@+id/swipeRefreshLayout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginTop="12dp" />
+        android:layout_height="match_parent">
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rcyView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="12dp" />
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
     <LinearLayout
         android:id="@+id/noItemFound"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:gravity="center"
-        android:visibility="gone"
         android:orientation="vertical"
-        android:padding="20dp">
+        android:padding="20dp"
+        android:visibility="gone">
 
         <ImageView
             android:layout_width="wrap_content"
@@ -148,16 +163,16 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textAlignment="center"
             android:text="@string/tidak_menemukan_hasil"
+            android:textAlignment="center"
             android:textSize="26sp"
             android:textStyle="bold" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textAlignment="center"
             android:text="@string/harap_mencoba_menggunakan_kata_kunci_lain_apabila_anda_tidak_dapat_menemukan_menu_yang_dicari"
+            android:textAlignment="center"
             android:textSize="20sp" />
 
     </LinearLayout>

@@ -55,4 +55,7 @@
     <string name="tidak_menemukan_hasil">Tidak Menemukan Hasil</string>
     <string name="harap_mencoba_menggunakan_kata_kunci_lain_apabila_anda_tidak_dapat_menemukan_menu_yang_dicari">Harap mencoba menggunakan kata kunci lain apabila Anda tidak dapat menemukan menu yang dicari.</string>
     <string name="edit">Edit</string>
+    <string name="harga_menu">Harga Menu</string>
+    <string name="nama_menu">Nama Menu</string>
+    <string name="lain_lain">Lain-Lain</string>
 </resources>

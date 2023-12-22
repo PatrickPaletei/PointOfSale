@@ -9,10 +9,12 @@ import id.ac.ukdw.pointofsale.database.MenuItem
 import id.ac.ukdw.pointofsale.databinding.ItemMenuHalamanMenuBinding
 
 class MenuPageAdapter(
-    private val onItemClick: (MenuItem) -> Unit
+    private val onItemClick: (String, String, String, Int) -> Unit,
+    private val onItemDeleteClick: (Int,String) -> Unit,
 ) : RecyclerView.Adapter<MenuPageAdapter.ViewHolder>() {
 
     private var originalData: List<MenuItem> = listOf()
+    private var currentData: List<MenuItem> = listOf()
 
     private val diffCallback = object : DiffUtil.ItemCallback<MenuItem>() {
         override fun areItemsTheSame(oldItem: MenuItem, newItem: MenuItem): Boolean {
@@ -28,9 +30,11 @@ class MenuPageAdapter(
 
     fun submitList(items: List<MenuItem>) {
         originalData = items
+        currentData = items // Update currentData when new list is submitted
         differ.submitList(items)
     }
-    fun filterByCategory(category:String){
+
+    fun filterByCategory(category: String) {
         val filteredList = if (category.isNotEmpty()) {
             originalData.filter { it.kategori == category }
         } else {
@@ -60,8 +64,17 @@ class MenuPageAdapter(
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val menuItem = differ.currentList[position]
-        holder.bind(menuItem)
-        holder.itemView.setOnClickListener { onItemClick(menuItem) }
+        holder.bind(
+            menuItem,
+            onButton1Click = { item ->
+                // Action when button 1 is clicked for this menuItem
+                onItemClick(item.namaMenu, item.kategori, item.harga , item.idMenu)
+            },
+            onButton2Click = { item ->
+                // Action when button 2 is clicked for this menuItem
+                onItemDeleteClick(item.idMenu,item.namaMenu)
+            }
+        )
     }
 
     override fun getItemCount(): Int {
@@ -71,14 +84,21 @@ class MenuPageAdapter(
     class ViewHolder(private val binding: ItemMenuHalamanMenuBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
-        fun bind(menuItem: MenuItem) {
+        fun bind(
+            menuItem: MenuItem,
+            onButton1Click: (MenuItem) -> Unit,
+            onButton2Click: (MenuItem) -> Unit
+        ) {
             binding.apply {
                 judulMenu.text = menuItem.namaMenu
                 val formatHarga = menuItem.harga.removeSuffix(".00")
                 val hargaWithIDR = "IDR $formatHarga"
                 harga.text = hargaWithIDR
                 kategori.text = menuItem.kategori
-                // Bind other data as needed
+
+                // Set click listeners for buttons
+                editMenu.setOnClickListener { onButton1Click(menuItem) }
+                hapusMenu.setOnClickListener { onButton2Click(menuItem) }
             }
         }
     }

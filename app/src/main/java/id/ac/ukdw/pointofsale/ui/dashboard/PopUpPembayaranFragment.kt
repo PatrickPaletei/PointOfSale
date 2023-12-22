@@ -50,8 +50,8 @@ class PopUpPembayaranFragment : DialogFragment() {
     override fun onStart() {
         super.onStart()
 
-        val widthInDp = 480// Replace with your desired width in dp
-        val heightInDp = 480 // Replace with your desired height in dp
+        val widthInDp = 420// Replace with your desired width in dp
+        val heightInDp = 420 // Replace with your desired height in dp
 
         val widthInPixels = TypedValue.applyDimension(
             TypedValue.COMPLEX_UNIT_DIP,

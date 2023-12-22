@@ -27,4 +27,22 @@ class SelectedItemViewModel : ViewModel() {
     fun setCallPopUpNota(value: Boolean){
         _cetakNota.value = value
     }
+
+    private val _tambahMenu = MutableLiveData<Boolean>()
+    val tambahMenu: LiveData<Boolean> get() = _tambahMenu
+    fun setCallPopUpTambahMenu(value: Boolean) {
+        _tambahMenu.value = value
+    }
+
+    private val _editMenu = MutableLiveData<Boolean>()
+    val editMenu: LiveData<Boolean> get() = _editMenu
+    fun setCallPopUpEditMenu(value: Boolean) {
+        _editMenu.value = value
+    }
+
+    private val _deleteMenu = MutableLiveData<Boolean>()
+    val deleteMenu: LiveData<Boolean> get() = _deleteMenu
+    fun setCallPopUpDeleteMenu(value: Boolean) {
+        _deleteMenu.value = value
+    }
 }

@@ -33,7 +33,7 @@ class DashboardFragment : Fragment() {
         setChipClickListener(binding.makanan, 2)
         setChipClickListener(binding.minuman, 3)
         setChipClickListener(binding.snack, 4)
-
+        setChipClickListener(binding.lain, 5)
         setSearchButtonClickListener()
 
         replaceFragment(savedInstanceState, R.id.menuContainer, MenuFragment())
@@ -53,7 +53,7 @@ class DashboardFragment : Fragment() {
         binding.makanan.isChecked = false
         binding.minuman.isChecked = false
         binding.snack.isChecked = false
-
+        binding.lain.isChecked =false
         // Set only the clicked chip to selected state
         chip.isChecked = true
         // Update the appearance of the chip here, change background color or other visual indicators
@@ -77,7 +77,7 @@ class DashboardFragment : Fragment() {
         binding.btnSearch.setOnClickListener {
             val searchString = binding.txtSearch.text.toString()
             if (searchString.isNotEmpty()) {
-                filterViewModel.updateData(5, searchString)
+                filterViewModel.updateData(6, searchString)
                 binding.semuaMakanan.isChecked = false
             }
         }

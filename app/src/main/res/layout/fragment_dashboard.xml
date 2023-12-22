@@ -75,7 +75,7 @@
             android:id="@+id/linearLayout"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:padding="16dp">
+            android:padding="12dp">
 
             <com.google.android.material.chip.Chip
                 android:id="@+id/semuaMakanan"
@@ -89,7 +89,7 @@
                 android:id="@+id/makanan"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="12dp"
+                android:layout_marginStart="4dp"
                 android:checkable="true"
                 android:clickable="true"
                 android:text="@string/makanan" />
@@ -98,7 +98,7 @@
                 android:id="@+id/minuman"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="12dp"
+                android:layout_marginStart="4dp"
                 android:checkable="true"
                 android:clickable="true"
                 android:text="@string/minuman" />
@@ -107,10 +107,18 @@
                 android:id="@+id/snack"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="12dp"
+                android:layout_marginStart="4dp"
                 android:checkable="true"
                 android:clickable="true"
                 android:text="@string/snack" />
+            <com.google.android.material.chip.Chip
+                android:id="@+id/lain"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="4dp"
+                android:checkable="true"
+                android:clickable="true"
+                android:text="@string/lain_lain" />
 
         </LinearLayout>
 

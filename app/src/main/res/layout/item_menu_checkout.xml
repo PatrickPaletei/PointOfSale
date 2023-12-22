@@ -1,142 +1,128 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="horizontal"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:src="@drawable/ayam"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginStart="4dp"
+        android:layout_marginTop="8dp"/>
+
+    <TextView
+        android:id="@+id/judulMenu"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Nasi Geprek Telur Sambel Bawang + Lalapan + Es Teh"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toStartOf="@+id/ubahMenu"
+        app:layout_constraintStart_toEndOf="@+id/imageView"
+        app:layout_constraintTop_toTopOf="@+id/imageView"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="24dp"/>
+
+    <TextView
+        android:id="@+id/ubahMenu"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/ubah"
+        android:textColor="@color/blue"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/judulMenu"
+        android:layout_marginEnd="8dp"/>
+
+    <LinearLayout
+        android:id="@+id/ubahCatatan"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintStart_toStartOf="@+id/judulMenu"
+        app:layout_constraintTop_toBottomOf="@+id/judulMenu">
 
         <ImageView
-            android:layout_width="60dp"
-            android:layout_height="60dp"
-            android:layout_marginEnd="12dp"
-            android:src="@drawable/ayam" />
+            android:layout_width="12dp"
+            android:layout_height="12dp"
+            android:layout_gravity="center"
+            android:src="@drawable/ic_notes" />
 
-        <LinearLayout
-            android:layout_width="match_parent"
+        <TextView
+            android:id="@+id/catatanMenu"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
-
-            <LinearLayout
-                android:id="@+id/linearLayout8"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent">
-
-                <TextView
-                    android:id="@+id/judulMenu"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:text="Nasi Geprek Telur Sambel Bawang + Lalapan + Es Teh"
-                    android:textSize="16sp"
-                    android:layout_marginEnd="24dp"
-                    android:textStyle="bold" />
-
-                <TextView
-                    android:id="@+id/ubahMenu"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:gravity="end"
-                    android:text="@string/ubah"
-                    android:textColor="@color/blue"
-                    android:textSize="16sp" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/ubahCatatan"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
-
-                <ImageView
-                    android:layout_width="12dp"
-                    android:layout_height="12dp"
-                    android:layout_gravity="center"
-                    android:src="@drawable/ic_notes" />
-
-                <TextView
-                    android:id="@+id/catatanMenu"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_marginStart="4dp"
-                    android:text="2 cabe"
-                    android:textSize="14sp"
-                    android:textStyle="italic" />
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="0.1"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:id="@+id/harga"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_weight="0.9"
-                    android:text="IDR 22.000"
-                    android:textColor="@color/blue"
-                    android:textSize="16sp"
-                    android:textStyle="bold" />
-
-                <LinearLayout
-                    android:id="@+id/holderPembayaran"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_weight="0.1"
-                    android:orientation="horizontal">
-
-                    <ImageButton
-                        android:id="@+id/kurangMenu"
-                        android:layout_width="24dp"
-                        android:layout_height="24dp"
-                        android:background="@drawable/rounded_plus_min"
-                        android:src="@drawable/ic_minus" />
-
-                    <TextView
-                        android:id="@+id/jumlahMenu"
-                        android:layout_width="24dp"
-                        android:layout_height="24dp"
-                        android:layout_marginStart="20dp"
-                        android:layout_marginEnd="20dp"
-                        android:layout_weight="0.5"
-                        android:gravity="center"
-                        android:lineSpacingExtra="3sp"
-                        android:text="1"
-                        android:textSize="20sp"
-                        android:textStyle="bold" />
-
-                    <ImageButton
-                        android:id="@+id/tambahMenu"
-                        android:layout_width="24dp"
-                        android:layout_height="24dp"
-                        android:background="@drawable/rounded_plus_min"
-                        android:src="@drawable/ic_plus" />
-
-                </LinearLayout>
-            </LinearLayout>
-            <com.google.android.material.divider.MaterialDivider
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:layout_marginTop="12dp" />
-        </LinearLayout>
+            android:layout_gravity="center"
+            android:layout_marginStart="4dp"
+            android:text="2 cabe"
+            android:textSize="14sp"
+            android:textStyle="italic" />
 
     </LinearLayout>
 
-</LinearLayout>
+    <TextView
+        android:id="@+id/harga"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="IDR 22.000"
+        android:textColor="@color/blue"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toStartOf="@+id/holderPembayaran"
+        app:layout_constraintStart_toStartOf="@+id/judulMenu"
+        app:layout_constraintTop_toBottomOf="@+id/ubahCatatan"
+        android:layout_marginTop="8dp"/>
+
+    <LinearLayout
+        android:id="@+id/holderPembayaran"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/ubahCatatan"
+        android:layout_marginEnd="4dp"
+        android:layout_marginTop="8dp">
+
+        <ImageButton
+            android:id="@+id/kurangMenu"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:gravity="center"
+            android:background="@drawable/rounded_plus_min"
+            android:src="@drawable/ic_minus" />
+
+        <TextView
+            android:id="@+id/jumlahMenu"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="20dp"
+            android:gravity="center"
+            android:text="1"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+
+        <ImageButton
+            android:id="@+id/tambahMenu"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:background="@drawable/rounded_plus_min"
+            android:src="@drawable/ic_plus" />
+
+    </LinearLayout>
+
+    <com.google.android.material.divider.MaterialDivider
+        android:id="@+id/divider"
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        android:layout_marginTop="12dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/harga" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

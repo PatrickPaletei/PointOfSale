@@ -2,14 +2,14 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="wrap_content"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:padding="24dp">
 
     <LinearLayout
         android:id="@+id/holderTitle"
-        android:layout_width="392dp"
-        android:layout_height="44dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:orientation="horizontal"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -18,7 +18,7 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:lineSpacingExtra="4sp"
+            android:gravity="center"
             android:text="@string/tambah_menu_baru"
             android:textSize="26sp"
             android:textStyle="bold" />
@@ -27,10 +27,9 @@
 
     <com.google.android.material.divider.MaterialDivider
         android:id="@+id/materialDivider"
-        android:layout_width="392dp"
-        android:layout_height="0dp"
-        android:layout_margin="20dp"
-        android:layout_marginTop="32dp"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginTop="12dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/holderTitle" />
@@ -38,25 +37,25 @@
 
     <LinearLayout
         android:id="@+id/holderPembayaran"
-        android:layout_width="392dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="12dp"
         android:orientation="vertical"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/materialDivider">
 
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/namaPelanggan"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
             app:hintEnabled="false">
 
             <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/namaMenu"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Nama Menu" />
+                android:hint="@string/nama_menu" />
 
 
         </com.google.android.material.textfield.TextInputLayout>
@@ -64,17 +63,29 @@
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="24dp"
+            android:layout_marginTop="12dp"
             android:orientation="vertical"
             app:hintEnabled="false">
 
             <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/hargaMenu"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Harga Menu" />
+                android:hint="@string/harga_menu"
+                android:inputType="number" />
 
 
         </com.google.android.material.textfield.TextInputLayout>
+
+
+        <Spinner
+            android:id="@+id/spinnerKategori"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+
+            android:layout_marginTop="12dp"
+            android:background="@drawable/spinner_background" />
+
 
     </LinearLayout>
 
@@ -83,7 +94,7 @@
         android:id="@+id/imageplace"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="16dp"
         android:orientation="horizontal"
         app:layout_constraintTop_toBottomOf="@+id/holderPembayaran"
         tools:layout_editor_absoluteX="24dp">
@@ -95,6 +106,7 @@
 
         <Button
             style="@style/Widget.Material3.Button.OutlinedButton.Icon"
+            android:id="@+id/tambahGambar"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
@@ -108,20 +120,18 @@
 
     <com.google.android.material.divider.MaterialDivider
         android:id="@+id/materialDivider2"
-        android:layout_width="392dp"
-        android:layout_height="0dp"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="32dp"
-        android:layout_marginEnd="20dp"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginTop="16dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imageplace" />
 
     <LinearLayout
         android:id="@+id/linearLayout2"
-        android:layout_width="392dp"
-        android:layout_height="46dp"
-        android:layout_marginTop="32dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -130,18 +140,27 @@
         <Button
             android:id="@+id/batal"
             style="?attr/materialButtonOutlinedStyle"
-            android:layout_width="100dp"
-            android:layout_height="46dp"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
             android:layout_marginEnd="12dp"
+            android:layout_weight="0.1"
             android:gravity="center"
             android:text="@string/batal" />
 
-        <Button
-            android:id="@+id/btn_lanjut_checkOut"
-            android:layout_width="280dp"
-            android:layout_height="46dp"
-            android:gravity="center"
-            android:text="@string/tambah_menu" />
+
+        <com.github.leandroborgesferreira.loadingbutton.customViews.CircularProgressButton
+            android:id="@+id/btn_tambah_menu"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.9"
+            android:layout_gravity="center"
+            android:background="@drawable/circle_button"
+            android:text="@string/tambah_menu"
+            android:textAllCaps="false"
+            android:textColor="@color/white"
+            app:spinning_bar_color="#FFF"
+            app:spinning_bar_padding="6dp"
+            app:spinning_bar_width="4dp" />
 
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -20,10 +20,14 @@ import id.ac.ukdw.pointofsale.ui.dashboard.CetakNotaFragment
 import id.ac.ukdw.pointofsale.ui.dashboard.EditCheckOutFragment
 import id.ac.ukdw.pointofsale.ui.dashboard.PopUpFragment
 import id.ac.ukdw.pointofsale.ui.dashboard.PopUpPembayaranFragment
+import id.ac.ukdw.pointofsale.ui.menu.PopUpEditMenuFragment
+import id.ac.ukdw.pointofsale.ui.menu.PopUpHapusMenuFragment
+import id.ac.ukdw.pointofsale.ui.menu.PopUpTambahMenuFragment
 import id.ac.ukdw.pointofsale.viewmodel.EditCheckOutViewModel
 import id.ac.ukdw.pointofsale.viewmodel.SelectedItemViewModel
+
 @AndroidEntryPoint
-class MainActivity : AppCompatActivity(){
+class MainActivity : AppCompatActivity() {
     private lateinit var selectedItemViewModel: SelectedItemViewModel
     private lateinit var navController: NavController
     private lateinit var editCheckOutViewModel: EditCheckOutViewModel
@@ -44,13 +48,22 @@ class MainActivity : AppCompatActivity(){
             // Handle changes to the selected item here
             showPopUpDialogMenu()
         }
-        selectedItemViewModel.checkOut.observe(this){
+        selectedItemViewModel.checkOut.observe(this) {
             showPopUpDialogCheckOut()
         }
-        // cannot memory not enough
-        selectedItemViewModel.cetakNota.observe(this){
+
+        selectedItemViewModel.cetakNota.observe(this) {
             showPopUpPrint()
-//            selectedItemViewModel.setCallPopUpNota(false)
+        }
+
+        selectedItemViewModel.tambahMenu.observe(this) { tambahMenuValue ->
+            showPopUpTambahMenu()
+        }
+        selectedItemViewModel.editMenu.observe(this){
+            showPopUpEditMenu()
+        }
+        selectedItemViewModel.deleteMenu.observe(this){
+            showPopUpDeleteMenu()
         }
 
         editCheckOutViewModel = ViewModelProvider(this).get(EditCheckOutViewModel::class.java)
@@ -64,24 +77,40 @@ class MainActivity : AppCompatActivity(){
 
     }
 
+    private fun showPopUpTambahMenu() {
+        val dialogFragment = PopUpTambahMenuFragment()
+        dialogFragment.show(supportFragmentManager, "PopUp")
+    }
+
+    private fun showPopUpDeleteMenu() {
+        val dialogFragment = PopUpHapusMenuFragment()
+        dialogFragment.show(supportFragmentManager, "PopUp")
+    }
+
+    private fun showPopUpEditMenu() {
+        val dialogFragment = PopUpEditMenuFragment()
+        dialogFragment.show(supportFragmentManager, "PopUp")
+    }
+
     fun getSelectedItemViewModel(): SelectedItemViewModel {
         return selectedItemViewModel
     }
+
     fun getCheckOutItemViewModel(): EditCheckOutViewModel {
         return editCheckOutViewModel
     }
 
-    fun showPopUpPrint(){
+    fun showPopUpPrint() {
         val dialogFragment = CetakNotaFragment()
         dialogFragment.show(supportFragmentManager, "PopUp")
     }
 
-    fun showPopUpDialogEdit(){
+    fun showPopUpDialogEdit() {
         val dialogFragment = EditCheckOutFragment()
         dialogFragment.show(supportFragmentManager, "PopUp")
     }
 
-    fun showPopUpDialogCheckOut(){
+    fun showPopUpDialogCheckOut() {
         val dialogFragment = PopUpPembayaranFragment()
         dialogFragment.show(supportFragmentManager, "PopUp")
     }
@@ -96,11 +125,11 @@ class MainActivity : AppCompatActivity(){
         dialogFragment.show(supportFragmentManager, "PopUp")
     }
 
-    private fun sideBar(){
+    private fun sideBar() {
         val sidebarItems = listOf(
-            SidebarItem(R.drawable.ic_dashboard_unselected,R.drawable.ic_dashboard, "Dashboard"),
-            SidebarItem(R.drawable.ic_menu_unselected,R.drawable.ic_menu, "Menu"),
-            SidebarItem(R.drawable.ic_penjualan_unselected,R.drawable.ic_penjualan, "Penjualan"),
+            SidebarItem(R.drawable.ic_dashboard_unselected, R.drawable.ic_dashboard, "Dashboard"),
+            SidebarItem(R.drawable.ic_menu_unselected, R.drawable.ic_menu, "Menu"),
+            SidebarItem(R.drawable.ic_penjualan_unselected, R.drawable.ic_penjualan, "Penjualan"),
             // Add more items as needed
         )
 
@@ -108,7 +137,7 @@ class MainActivity : AppCompatActivity(){
         recyclerView.layoutManager = LinearLayoutManager(this)
         recyclerView.adapter = SidebarAdapter(sidebarItems) { position ->
             // Handle item click (e.g., highlight, change fragment, etc.)
-            when(position){
+            when (position) {
                 0 -> navController.navigate(R.id.dashboardFragment2)
                 1 -> navController.navigate(R.id.editMenuFragment2)
                 2 -> navController.navigate(R.id.penjualanFragment)
@@ -116,13 +145,14 @@ class MainActivity : AppCompatActivity(){
 
         }
 
-        val logOut:ImageButton = findViewById(R.id.logoutSide)
+        val logOut: ImageButton = findViewById(R.id.logoutSide)
         logOut.setOnClickListener {
             showPopUpLogOut()
         }
 
         val profileAvatar: ImageView = findViewById(R.id.profileAvatar)
-        val imageUrl = "https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.facebook.com%2Fpostmalone%2F%3Flocale%3Did_ID&psig=AOvVaw0aMheJ-yxHfEWXOQC_o3RY&ust=1702412900037000&source=images&cd=vfe&ved=0CBEQjRxqFwoTCPD9o8KdiIMDFQAAAAAdAAAAABAE" // Replace with your image URL or local path
+        val imageUrl =
+            "https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.facebook.com%2Fpostmalone%2F%3Flocale%3Did_ID&psig=AOvVaw0aMheJ-yxHfEWXOQC_o3RY&ust=1702412900037000&source=images&cd=vfe&ved=0CBEQjRxqFwoTCPD9o8KdiIMDFQAAAAAdAAAAABAE" // Replace with your image URL or local path
 
         Glide.with(this)
             .load(imageUrl)

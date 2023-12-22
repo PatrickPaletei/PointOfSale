@@ -45,18 +45,26 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <Button
+
+            <com.github.leandroborgesferreira.loadingbutton.customViews.CircularProgressButton
                 android:id="@+id/btnCetakNota"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:background="@drawable/circle_button"
                 android:layout_gravity="center"
-                android:text="@string/cetak_nota" />
+                android:text="@string/cetak_nota"
+                android:textAllCaps="false"
+                android:textColor="@color/white"
+                app:spinning_bar_color="#FFF"
+                app:spinning_bar_padding="6dp"
+                app:spinning_bar_width="4dp" />
 
             <Button
                 android:id="@+id/balikDashboard"
                 style="?attr/materialButtonOutlinedStyle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="2dp"
                 android:layout_gravity="center"
                 android:text="@string/kembali_ke_dashboard" />
 

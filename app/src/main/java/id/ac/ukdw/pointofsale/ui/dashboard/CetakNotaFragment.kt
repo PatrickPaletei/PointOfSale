@@ -81,6 +81,7 @@ class CetakNotaFragment : DialogFragment() {
         binding.balikDashboard.setOnClickListener { dismiss() }
 
         cetakNotaBtn.setOnClickListener {
+            binding.btnCetakNota.startAnimation()
             lifecycleScope.launch {
                 val idNota = requireActivity().getPreferences(Context.MODE_PRIVATE).getInt("idNota", 0)
                 val success = cetakNota(idNota, requireContext())

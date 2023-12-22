@@ -63,13 +63,14 @@
                 android:orientation="horizontal">
 
                 <Button
+                    android:id="@+id/editMenu"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:drawableLeft="@drawable/id_edit"
                     android:text="@string/edit" />
 
                 <ImageButton
-                    android:id="@+id/iconButton"
+                    android:id="@+id/hapusMenu"
                     style="?attr/materialIconButtonOutlinedStyle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"

@@ -4,6 +4,7 @@ import android.app.Dialog
 import android.content.Context
 import android.os.Bundle
 import android.util.TypedValue
+import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,24 +13,22 @@ import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.viewModels
 import dagger.hilt.android.AndroidEntryPoint
 import id.ac.ukdw.pointofsale.R
+import id.ac.ukdw.pointofsale.databinding.FragmentHapusMenuBinding
 import id.ac.ukdw.pointofsale.databinding.FragmentPopUpEditMenuBinding
 import id.ac.ukdw.pointofsale.viewmodel.PageMenuViewModel
 
 @AndroidEntryPoint
-class PopUpEditMenuFragment : DialogFragment() {
+class PopUpHapusMenuFragment : DialogFragment() {
+    private lateinit var binding : FragmentHapusMenuBinding
     private val pageMenuViewModel: PageMenuViewModel by viewModels()
-    private lateinit var binding : FragmentPopUpEditMenuBinding
-
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        binding = FragmentPopUpEditMenuBinding.inflate(inflater, container, false)
+        binding = FragmentHapusMenuBinding.inflate(inflater, container, false)
         return binding.root
     }
-
     private fun getTokenFromPrefs(): String {
         val sharedPreferences = activity?.getSharedPreferences("LoginPrefs", Context.MODE_PRIVATE)
         return sharedPreferences?.getString("token", "") ?: ""
@@ -38,35 +37,26 @@ class PopUpEditMenuFragment : DialogFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val token = "Bearer ${getTokenFromPrefs()}"
-        binding.batal.setOnClickListener {
-            dismiss()
-        }
-
         val sharedPreferences = requireActivity().getSharedPreferences("dataEdit", Context.MODE_PRIVATE)
-        val judulMenu = sharedPreferences.getString("judulMenu", "")
-        val kategori = sharedPreferences.getString("kategori", "")
-        val harga = sharedPreferences.getInt("harga", 0)
-        val idEditMenu = sharedPreferences.getInt("id", 0)
+        val judulMenu = sharedPreferences.getString("judulMenuDelete", "")
+        val idDeleteMenu = sharedPreferences.getInt("idMenuDelete", 0)
 
-        binding.namaMenu.setText(judulMenu)
-        binding.hargaMenu.setText(harga.toString())
+        binding.namaMenu.text = judulMenu
+        binding.btnDeleteMenu.setOnClickListener {
+            binding.btnDeleteMenu.startAnimation()
+            if (idDeleteMenu != 0){
+                pageMenuViewModel.deleteMenu(idDeleteMenu,token)
+                pageMenuViewModel.menuDeleted.observe(viewLifecycleOwner){
+                    if (it){
+                        Toast.makeText(context, "Berhasil Menghapus Menu", Toast.LENGTH_SHORT).show()
+                        dismiss()
+                    }else{
+                        Toast.makeText(context, "Gagal Mengahpus Menu", Toast.LENGTH_SHORT).show()
 
-        binding.btnEditMenu.setOnClickListener {
-            val namaMenuBaru = binding.namaMenu.text.toString()
-            val hargaBaru = binding.hargaMenu.text.toString()
-            binding.btnEditMenu.startAnimation()
-            if(namaMenuBaru.isNotEmpty() && hargaBaru.isNotEmpty()){
-                if (kategori != null) {
-                    pageMenuViewModel.editData(namaMenuBaru,hargaBaru.toInt(),kategori,token,idEditMenu)
-                    pageMenuViewModel.menuUpdated.observe(viewLifecycleOwner) { menuAdded ->
-                        if (menuAdded) {
-                            Toast.makeText(context, "Berhasil Mengubah Menu", Toast.LENGTH_SHORT).show()
-                            dismiss()
-                        } else {
-                            Toast.makeText(context, "Gagal Mengubah menu", Toast.LENGTH_SHORT).show()
-                        }
                     }
                 }
+            }else{
+                Toast.makeText(context, "Gagal Mengahpus Menu Harap Cek Koneksi Internet!", Toast.LENGTH_SHORT).show()
             }
         }
 
@@ -74,7 +64,7 @@ class PopUpEditMenuFragment : DialogFragment() {
 
     override fun onStart() {
         super.onStart()
-        setDialogDimensions(500, 500)
+        setDialogDimensions(450, 400)
     }
 
     private fun setDialogDimensions(widthInDp: Int, heightInDp: Int) {

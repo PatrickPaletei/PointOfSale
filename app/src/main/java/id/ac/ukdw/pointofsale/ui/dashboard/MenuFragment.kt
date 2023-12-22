@@ -23,6 +23,7 @@ import id.ac.ukdw.pointofsale.data.CardData
 import id.ac.ukdw.pointofsale.database.MenuItem
 import id.ac.ukdw.pointofsale.databinding.FragmentMenuBinding
 import id.ac.ukdw.pointofsale.viewmodel.MenuViewModel
+import id.ac.ukdw.pointofsale.viewmodel.PageMenuViewModel
 import id.ac.ukdw.pointofsale.viewmodel.SelectedFilterMenuViewModel
 import id.ac.ukdw.pointofsale.viewmodel.SelectedItemViewModel
 import kotlinx.coroutines.launch
@@ -118,7 +119,8 @@ class MenuFragment : Fragment() {
                 2 -> adapter.filterByCategory("Makanan")
                 3 -> adapter.filterByCategory("Minuman")
                 4 -> adapter.filterByCategory("Snack")
-                5 -> {
+                5 -> adapter.filterByCategory("Lain-Lain")
+                6 -> {
                     stringFilter?.let { filterString ->
                         val filteredSize = adapter.filterByInput(filterString)
                         if (filteredSize == 0) {
@@ -145,6 +147,7 @@ class MenuFragment : Fragment() {
                 binding.noItemFound.visibility = View.GONE
             }
         }
+
     }
 
     private fun updateViewsVisibility(code: Int?) {
