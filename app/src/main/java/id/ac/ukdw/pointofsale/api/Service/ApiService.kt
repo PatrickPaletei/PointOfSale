@@ -8,6 +8,7 @@ import id.ac.ukdw.pointofsale.api.response.AllMenuResponse
 import id.ac.ukdw.pointofsale.api.response.DeleteResponse
 import id.ac.ukdw.pointofsale.api.response.EditMenuResponse
 import id.ac.ukdw.pointofsale.api.response.LoginResponse
+import id.ac.ukdw.pointofsale.api.response.SummaryResponse
 import id.ac.ukdw.pointofsale.api.response.TambahMenuResponse
 import id.ac.ukdw.pointofsale.api.response.TransaksiResponse
 import okhttp3.ResponseBody
@@ -55,4 +56,11 @@ interface ApiService {
     @DELETE("api/hapus-menu/{id}")
     fun deleteMenu(@Header("Authorization")token: String,@Path("id") id:Int) : Call<DeleteResponse>
 
+    //exportexcel
+    @GET("api/export")
+    fun export(@Header("Authorization")token: String):Call<ResponseBody>
+
+    //summary
+    @GET("api/summary-penjualan")
+    fun getSummaryToday(@Header("criteria")criteria:String):Call<SummaryResponse>
 }

@@ -58,4 +58,15 @@
     <string name="harga_menu">Harga Menu</string>
     <string name="nama_menu">Nama Menu</string>
     <string name="lain_lain">Lain-Lain</string>
+    <string name="tidak_ada_menu_apapun">Tidak Ada Menu Apapun</string>
+    <string name="anda_belum_menambahkan_menu_mohon_tambahkan_menu_terlebih_dahulu">Anda belum menambahkan menu. Mohon tambahkan menu terlebih dahulu.</string>
+    <string name="penjualan_saya">Penjualan Saya</string>
+    <string name="unduh">Unduh</string>
+    <string name="kemarin">Kemarin</string>
+    <string name="hari_ini">Hari Ini</string>
+    <string name="minggu_ini">Minggu Ini</string>
+    <string name="bulan_ini">Bulan Ini</string>
+    <string name="pendapatan">Pendapatan</string>
+    <string name="belum_ada_riwayat_penjualan">Belum Ada Riwayat Penjualan</string>
+    <string name="anda_tidak_mempunyai_riwayat_penjualan_item_apapun">Anda tidak mempunyai riwayat penjualan item apapun.</string>
 </resources>

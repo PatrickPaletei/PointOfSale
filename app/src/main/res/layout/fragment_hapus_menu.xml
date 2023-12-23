@@ -117,8 +117,7 @@
         <com.github.leandroborgesferreira.loadingbutton.customViews.CircularProgressButton
             android:id="@+id/btn_delete_menu"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
+            android:layout_height="match_parent"
             android:layout_weight="0.9"
             android:background="@drawable/circle_button_red"
             android:text="@string/hapus"

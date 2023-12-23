@@ -149,6 +149,7 @@ class EditMenuFragment : Fragment() {
                 if (filteredSize == 0) View.GONE else View.VISIBLE,
                 if (filteredSize == 0) View.VISIBLE else View.GONE
             )
+
         }
     }
 
@@ -161,7 +162,11 @@ class EditMenuFragment : Fragment() {
     private fun filterAndCheckChip(chip: Chip, category: String) {
         unCheckAllChips()
         chip.isChecked = true
-        menuPageAdapter.filterByCategory(category)
+        val filterResult = menuPageAdapter.filterByCategory(category)
+        updateUIVisibilityNoDataDb(
+            if (filterResult == 0) View.GONE else View.VISIBLE, // Update RecyclerView visibility
+            if (filterResult == 0) View.VISIBLE else View.GONE // Update No Item Found TextView visibility
+        )
     }
 
     private fun unCheckAllChips() {
@@ -173,7 +178,12 @@ class EditMenuFragment : Fragment() {
     }
 
     private fun updateUIVisibility(rcyViewVisibility: Int, noItemFoundVisibility: Int) {
-        binding.rcyView.visibility = rcyViewVisibility
+        binding.swipeRefreshLayout.visibility = rcyViewVisibility
         binding.noItemFound.visibility = noItemFoundVisibility
+    }
+
+    private fun updateUIVisibilityNoDataDb(rcyViewVisibility: Int, noItemFoundVisibility: Int) {
+        binding.swipeRefreshLayout.visibility = rcyViewVisibility
+        binding.noDataFoundInDb.visibility = noItemFoundVisibility
     }
 }

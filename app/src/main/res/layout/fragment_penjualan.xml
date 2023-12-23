@@ -4,54 +4,141 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:layout_marginStart="20dp"
+    android:layout_marginTop="20dp"
+    android:layout_marginEnd="20dp"
+    android:layout_marginBottom="10dp"
     android:orientation="vertical"
     tools:context=".ui.menu.EditMenuFragment">
 
-    <LinearLayout
+
+    <TextView
+        android:id="@+id/textView5"
         android:layout_width="match_parent"
-        android:layout_height="58dp"
-        android:orientation="horizontal">
-
-        <TextView
-            android:id="@+id/textView"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="0.9"
-            android:gravity="center|start"
-            android:lineSpacingExtra="2sp"
-            android:text="Penjualan Saya"
-            android:textColor="#0A0A0A"
-            android:textSize="28sp" />
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/namaPelanggan"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:gravity="center|start"
-            android:orientation="vertical"
-            app:hintEnabled="false"
-            app:startIconDrawable="@drawable/ic_search">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="@string/cari_menu_kamu_disini" />
-
-        </com.google.android.material.textfield.TextInputLayout>
-
-        <ImageButton
-            android:id="@+id/imageButton2"
-            android:layout_width="58dp"
-            android:layout_height="match_parent"
-            android:backgroundTint="#004080"
-            android:src="@drawable/ic_search" />
-    </LinearLayout>
+        android:layout_height="wrap_content"
+        android:gravity="center|start"
+        android:text="@string/penjualan_saya"
+        android:textColor="#0A0A0A"
+        android:textSize="28sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <com.google.android.material.divider.MaterialDivider
         android:id="@+id/materialDivider2"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_marginTop="36dp" />
+        android:layout_height="1dp"
+        android:layout_marginTop="18dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView5" />
+
+    <LinearLayout
+        android:id="@+id/tol"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/materialDivider2">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_weight="0.8">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:background="@drawable/spinner_background">
+                <Spinner
+                    android:id="@+id/spiner"
+                    android:layout_width="180dp"
+                    android:layout_height="40dp"
+                    android:drawableEnd="@drawable/right_arrow" />
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <com.github.leandroborgesferreira.loadingbutton.customViews.CircularProgressButton
+            android:id="@+id/btnDownload"
+            android:layout_width="10dp"
+            android:layout_height="45dp"
+            android:layout_gravity="center|end"
+            android:layout_weight="0.2"
+            android:background="@drawable/circle_button_black"
+            android:drawableStart="@drawable/ic_download"
+            android:padding="12dp"
+            android:text="@string/unduh"
+            android:textAllCaps="false"
+            android:textColor="@color/black"
+            app:spinning_bar_color="#000"
+            app:spinning_bar_padding="6dp"
+            app:spinning_bar_width="4dp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/holderHariIni"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tol">
+
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rcyViewToday"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="14dp"
+            android:visibility="gone" />
+
+        <com.airbnb.lottie.LottieAnimationView
+            android:id="@+id/lottieToday"
+            android:layout_width="220dp"
+            android:layout_height="220dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="120dp"
+            app:lottie_autoPlay="true"
+            app:lottie_fileName="lottie_loading.json"
+            app:lottie_loop="true" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/noDataFound"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:padding="20dp">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:src="@drawable/no_data_db" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/belum_ada_riwayat_penjualan"
+            android:textAlignment="center"
+            android:textSize="26sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/anda_tidak_mempunyai_riwayat_penjualan_item_apapun"
+            android:textAlignment="center"
+            android:textSize="20sp" />
+
+    </LinearLayout>
 
 
 </LinearLayout>
