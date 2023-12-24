@@ -106,7 +106,10 @@ class MenuFragment : Fragment() {
         filterViewModel.combinedFilter.observe(viewLifecycleOwner) { combinedValue ->
             val (intFilter, stringFilter) = combinedValue
             when (intFilter) {
-                1 -> adapter.submitData(data)
+                1 -> {
+                    adapter.submitData(data)
+                    binding.noMenuInDb.visibility = View.GONE
+                }
                 2, 3, 4, 5 -> {
                     val category = when (intFilter) {
                         2 -> "Makanan"

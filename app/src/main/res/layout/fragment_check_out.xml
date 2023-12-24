@@ -86,7 +86,10 @@
                 android:id="@+id/namaPelanggan"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
-                android:hint="@string/masukan_nama_pembeli" />
+                android:hint="@string/masukan_nama_pembeli"
+                android:inputType="text"
+                android:imeOptions="actionDone"
+                android:maxLines="1" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
