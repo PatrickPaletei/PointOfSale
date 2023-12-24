@@ -40,13 +40,14 @@ class CardAdapterAllMenu(
         differ.submitList(value)
     }
 
-    fun filterByCategory(category: String) {
+    fun filterByCategory(category: String): Int {
         val filteredList = if (category.isNotEmpty()) {
             originalData.filter { it.kategori == category }
         } else {
             originalData // Return original unfiltered data if category is empty
         }
         differ.submitList(filteredList)
+        return filteredList.size
     }
 
     fun filterByInput(inputString: String): Int {

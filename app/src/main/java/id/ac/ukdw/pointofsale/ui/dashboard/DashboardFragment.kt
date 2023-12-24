@@ -79,6 +79,10 @@ class DashboardFragment : Fragment() {
             if (searchString.isNotEmpty()) {
                 filterViewModel.updateData(6, searchString)
                 binding.semuaMakanan.isChecked = false
+                binding.makanan.isChecked = false
+                binding.minuman.isChecked = false
+                binding.snack.isChecked = false
+                binding.lain.isChecked = false
             }
         }
     }

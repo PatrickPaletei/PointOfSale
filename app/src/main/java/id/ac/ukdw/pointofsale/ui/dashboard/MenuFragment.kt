@@ -4,11 +4,9 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.GridLayoutManager
 import dagger.hilt.android.AndroidEntryPoint
@@ -16,22 +14,15 @@ import id.ac.ukdw.pointofsale.MainActivity
 import id.ac.ukdw.pointofsale.R
 import id.ac.ukdw.pointofsale.adapter.CardAdapterAllMenu
 import id.ac.ukdw.pointofsale.adapter.SpaceItemDecoration
-import id.ac.ukdw.pointofsale.api.Service.ApiClient
-import id.ac.ukdw.pointofsale.api.response.AllMenuResponse
 import id.ac.ukdw.pointofsale.api.response.DataSemuaMakanan
 import id.ac.ukdw.pointofsale.data.CardData
 import id.ac.ukdw.pointofsale.database.MenuItem
 import id.ac.ukdw.pointofsale.databinding.FragmentMenuBinding
 import id.ac.ukdw.pointofsale.viewmodel.MenuViewModel
-import id.ac.ukdw.pointofsale.viewmodel.PageMenuViewModel
 import id.ac.ukdw.pointofsale.viewmodel.SelectedFilterMenuViewModel
 import id.ac.ukdw.pointofsale.viewmodel.SelectedItemViewModel
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
-import kotlin.coroutines.resume
-import kotlin.coroutines.suspendCoroutine
 
 @AndroidEntryPoint
 class MenuFragment : Fragment() {
@@ -65,7 +56,7 @@ class MenuFragment : Fragment() {
                 showListSemuaMakanan(mapMenuItemsToDataSemuaMakanan(menuData))
                 updateViewsVisibility(200) // Assuming 200 for success
             } else {
-                // Handle no data scenario
+                //nodata
             }
         }
     }
@@ -116,15 +107,23 @@ class MenuFragment : Fragment() {
             val (intFilter, stringFilter) = combinedValue
             when (intFilter) {
                 1 -> adapter.submitData(data)
-                2 -> adapter.filterByCategory("Makanan")
-                3 -> adapter.filterByCategory("Minuman")
-                4 -> adapter.filterByCategory("Snack")
-                5 -> adapter.filterByCategory("Lain-Lain")
+                2, 3, 4, 5 -> {
+                    val category = when (intFilter) {
+                        2 -> "Makanan"
+                        3 -> "Minuman"
+                        4 -> "Snack"
+                        else -> "Lain-Lain"
+                    }
+                    val filteredSize = adapter.filterByCategory(category)
+                    updateVisibilityBasedOnFilterResult(filteredSize)
+                }
+
                 6 -> {
                     stringFilter?.let { filterString ->
                         val filteredSize = adapter.filterByInput(filterString)
                         if (filteredSize == 0) {
                             binding.recyclerViewMenu.visibility = View.GONE
+                            binding.noMenuInDb.visibility = View.GONE
                             binding.noItemFound.visibility = View.VISIBLE
                         } else {
                             binding.recyclerViewMenu.visibility = View.VISIBLE
@@ -138,11 +137,26 @@ class MenuFragment : Fragment() {
         }
     }
 
+    private fun updateVisibilityBasedOnFilterResult(filteredSize: Int) {
+        val delayDuration = 100L // Adjust the delay time as needed in milliseconds
+        viewLifecycleOwner.lifecycleScope.launch {
+            delay(delayDuration)
+            if (filteredSize == 0) {
+                binding.recyclerViewMenu.visibility = View.GONE
+                binding.noMenuInDb.visibility = View.VISIBLE
+            } else {
+                binding.recyclerViewMenu.visibility = View.VISIBLE
+                binding.noMenuInDb.visibility = View.GONE
+            }
+        }
+    }
+
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        filterViewModel.dataState.observe(viewLifecycleOwner){state->
-            if (state == true){
+        filterViewModel.dataState.observe(viewLifecycleOwner) { state ->
+            if (state == true) {
                 binding.recyclerViewMenu.visibility = View.VISIBLE
                 binding.noItemFound.visibility = View.GONE
             }
@@ -160,7 +174,7 @@ class MenuFragment : Fragment() {
 
     override fun onDestroyView() {
         super.onDestroyView()
-        filterViewModel.updateData(1,"")
+        filterViewModel.updateData(1, "")
     }
 }
 

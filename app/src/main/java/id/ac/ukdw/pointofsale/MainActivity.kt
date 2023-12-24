@@ -1,7 +1,9 @@
 package id.ac.ukdw.pointofsale
 
+import android.content.Context
 import android.content.SharedPreferences
 import android.os.Bundle
+import android.util.Log
 import android.widget.ImageButton
 import android.widget.ImageView
 import androidx.appcompat.app.AppCompatActivity
@@ -126,12 +128,23 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun sideBar() {
-        val sidebarItems = listOf(
-            SidebarItem(R.drawable.ic_dashboard_unselected, R.drawable.ic_dashboard, "Dashboard"),
-            SidebarItem(R.drawable.ic_menu_unselected, R.drawable.ic_menu, "Menu"),
-            SidebarItem(R.drawable.ic_penjualan_unselected, R.drawable.ic_penjualan, "Penjualan"),
-            // Add more items as needed
-        )
+        val sharedPref = getSharedPreferences("LoginPrefs", Context.MODE_PRIVATE)
+        val role = sharedPref.getString("role","")
+        var sidebarItems = listOf<SidebarItem>()
+        if (role == "Login Admin"){
+            sidebarItems = listOf(
+                SidebarItem(R.drawable.ic_dashboard_unselected, R.drawable.ic_dashboard, "Dashboard"),
+                SidebarItem(R.drawable.ic_menu_unselected, R.drawable.ic_menu, "Menu"),
+                SidebarItem(R.drawable.ic_penjualan_unselected, R.drawable.ic_penjualan, "Penjualan"),
+                // Add more items as needed
+            )
+        }else if (role == "Login Karyawan"){
+            sidebarItems = listOf(
+                SidebarItem(R.drawable.ic_dashboard_unselected, R.drawable.ic_dashboard, "Dashboard")
+                // Add more items as needed
+            )
+        }
+
 
         val recyclerView: RecyclerView = findViewById(R.id.sidebarRecyclerView)
         recyclerView.layoutManager = LinearLayoutManager(this)

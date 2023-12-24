@@ -42,7 +42,7 @@ class LoginActivity : AppCompatActivity() {
                 lifecycleScope.launch {
                     binding.btnLogin.startAnimation()
                     val responseCode = login(username, pass)
-
+                    val body = responseCode
                     if (responseCode == 200) {
                         val editor = sharedPreferences.edit()
                         editor.putBoolean("isLoggedIn", true)
@@ -92,6 +92,7 @@ class LoginActivity : AppCompatActivity() {
                                 editor.putString("nama", body.username)
                                 editor.putString("id", body.id_user.toString())
                                 editor.putString("token",body.plainTextToken)
+                                editor.putString("role",body.message)
                                 //send pake sf bearer token nya
                             }
                             editor.apply()
