@@ -17,7 +17,7 @@ import id.ac.ukdw.pointofsale.databinding.FragmentHapusMenuBinding
 import id.ac.ukdw.pointofsale.databinding.FragmentPopUpEditMenuBinding
 import id.ac.ukdw.pointofsale.viewmodel.PageMenuViewModel
 
-@AndroidEntryPoint
+
 class PopUpHapusMenuFragment : DialogFragment() {
     private lateinit var binding : FragmentHapusMenuBinding
     private val pageMenuViewModel: PageMenuViewModel by viewModels()

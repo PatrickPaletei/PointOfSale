@@ -3,7 +3,6 @@ package id.ac.ukdw.pointofsale
 import android.content.Context
 import android.content.SharedPreferences
 import android.os.Bundle
-import android.util.Log
 import android.widget.ImageButton
 import android.widget.ImageView
 import androidx.appcompat.app.AppCompatActivity
@@ -25,6 +24,8 @@ import id.ac.ukdw.pointofsale.ui.dashboard.PopUpPembayaranFragment
 import id.ac.ukdw.pointofsale.ui.menu.PopUpEditMenuFragment
 import id.ac.ukdw.pointofsale.ui.menu.PopUpHapusMenuFragment
 import id.ac.ukdw.pointofsale.ui.menu.PopUpTambahMenuFragment
+import id.ac.ukdw.pointofsale.ui.karyawan.DeleteKaryawanFragment
+import id.ac.ukdw.pointofsale.ui.karyawan.RegisFragment
 import id.ac.ukdw.pointofsale.viewmodel.EditCheckOutViewModel
 import id.ac.ukdw.pointofsale.viewmodel.SelectedItemViewModel
 
@@ -67,6 +68,12 @@ class MainActivity : AppCompatActivity() {
         selectedItemViewModel.deleteMenu.observe(this){
             showPopUpDeleteMenu()
         }
+        selectedItemViewModel.regisUser.observe(this){
+            showPopUpRegisUser()
+        }
+        selectedItemViewModel.deleteUser.observe(this){
+            showPopUpDeleteUser()
+        }
 
         editCheckOutViewModel = ViewModelProvider(this).get(EditCheckOutViewModel::class.java)
         editCheckOutViewModel.isPopupShown.observe(this) { isShown ->
@@ -77,6 +84,11 @@ class MainActivity : AppCompatActivity() {
         }
         sideBar()
 
+    }
+
+    private fun showPopUpDeleteUser() {
+        val dialogFragment = DeleteKaryawanFragment()
+        dialogFragment.show(supportFragmentManager, "PopUp")
     }
 
     private fun showPopUpTambahMenu() {
@@ -127,6 +139,11 @@ class MainActivity : AppCompatActivity() {
         dialogFragment.show(supportFragmentManager, "PopUp")
     }
 
+    fun showPopUpRegisUser(){
+        val dialogFragment = RegisFragment()
+        dialogFragment.show(supportFragmentManager, "PopUp")
+    }
+
     private fun sideBar() {
         val sharedPref = getSharedPreferences("LoginPrefs", Context.MODE_PRIVATE)
         val role = sharedPref.getString("role","")
@@ -136,6 +153,7 @@ class MainActivity : AppCompatActivity() {
                 SidebarItem(R.drawable.ic_dashboard_unselected, R.drawable.ic_dashboard, "Dashboard"),
                 SidebarItem(R.drawable.ic_menu_unselected, R.drawable.ic_menu, "Menu"),
                 SidebarItem(R.drawable.ic_penjualan_unselected, R.drawable.ic_penjualan, "Penjualan"),
+                SidebarItem(R.drawable.ic_user_unselected,R.drawable.ic_user,"Karyawan")
                 // Add more items as needed
             )
         }else if (role == "Login Karyawan"){
@@ -154,6 +172,7 @@ class MainActivity : AppCompatActivity() {
                 0 -> navController.navigate(R.id.dashboardFragment2)
                 1 -> navController.navigate(R.id.editMenuFragment2)
                 2 -> navController.navigate(R.id.penjualanFragment)
+                3 -> navController.navigate(R.id.karyawanFragment)
             }
 
         }

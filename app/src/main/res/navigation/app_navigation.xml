@@ -15,6 +15,9 @@
         <action
             android:id="@+id/action_dashboardFragment2_to_penjualanFragment"
             app:destination="@id/penjualanFragment" />
+        <action
+            android:id="@+id/action_dashboardFragment2_to_karyawanFragment"
+            app:destination="@id/karyawanFragment" />
     </fragment>
     <fragment
         android:id="@+id/editMenuFragment2"
@@ -26,4 +29,9 @@
         android:name="id.ac.ukdw.pointofsale.ui.penjualan.PenjualanFragment"
         android:label="fragment_penjualan"
         tools:layout="@layout/fragment_penjualan" />
+    <fragment
+        android:id="@+id/karyawanFragment"
+        android:name="id.ac.ukdw.pointofsale.ui.karyawan.KaryawanFragment"
+        android:label="fragment_karyawan"
+        tools:layout="@layout/fragment_karyawan" />
 </navigation>

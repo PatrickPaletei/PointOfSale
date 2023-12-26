@@ -68,7 +68,6 @@ class PenjualanFragment : Fragment() {
             }
         }
 
-        // Assuming you have a button with ID 'exportButton'
         binding.btnDownload.setOnClickListener {
             val token = "Bearer ${getTokenFromPrefs()}"
             val fileName = "pembukuan $formattedDateTime.xlsx"
@@ -95,7 +94,6 @@ class PenjualanFragment : Fragment() {
         spinner.adapter = adapter
         spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-
                 when (position) {
                     0 -> getTodaySummary("today") // Hari Ini
                     1 -> getTodaySummary("yesterday") // Kemarin

@@ -45,4 +45,17 @@ class SelectedItemViewModel : ViewModel() {
     fun setCallPopUpDeleteMenu(value: Boolean) {
         _deleteMenu.value = value
     }
+
+    private val _regisUser = MutableLiveData<Boolean>()
+    val regisUser: LiveData<Boolean> get() = _regisUser
+    fun setCallPopUpRegisUser(value: Boolean) {
+        _regisUser.value = value
+    }
+
+    private val _deleteUser = MutableLiveData<Boolean>()
+    val deleteUser: LiveData<Boolean> get() = _deleteUser
+    fun setCallPopUpDeleteUser(value: Boolean) {
+        _deleteUser.value = value
+    }
+
 }

@@ -1,13 +1,17 @@
 package id.ac.ukdw.pointofsale.api.Service
 
+import id.ac.ukdw.pointofsale.api.request.DeleteRequest
 import id.ac.ukdw.pointofsale.api.request.EditMenuRequest
 import id.ac.ukdw.pointofsale.api.request.LoginRequest
+import id.ac.ukdw.pointofsale.api.request.RegisterRequest
 import id.ac.ukdw.pointofsale.api.request.TambahMenuRequest
 import id.ac.ukdw.pointofsale.api.request.TambahTransaksiRequest
 import id.ac.ukdw.pointofsale.api.response.AllMenuResponse
 import id.ac.ukdw.pointofsale.api.response.DeleteResponse
 import id.ac.ukdw.pointofsale.api.response.EditMenuResponse
+import id.ac.ukdw.pointofsale.api.response.GetUserResponse
 import id.ac.ukdw.pointofsale.api.response.LoginResponse
+import id.ac.ukdw.pointofsale.api.response.RegisterResponse
 import id.ac.ukdw.pointofsale.api.response.SummaryResponse
 import id.ac.ukdw.pointofsale.api.response.TambahMenuResponse
 import id.ac.ukdw.pointofsale.api.response.TransaksiResponse
@@ -63,4 +67,14 @@ interface ApiService {
     //summary
     @GET("api/summary-penjualan")
     fun getSummaryToday(@Header("criteria")criteria:String):Call<SummaryResponse>
+
+    @GET("api/user")
+    fun getUser():Call<GetUserResponse>
+
+    //regis user
+    @POST("api/register")
+    fun registerUser(@Header("Authorization") token:String,@Body request:RegisterRequest):Call<RegisterResponse>
+
+    @DELETE("api/destroy/{id}")
+    fun deleteUser(@Path("id") id:Int):Call<DeleteResponse>
 }

@@ -1,8 +1,13 @@
 package id.ac.ukdw.pointofsale.adapter
 
 import android.view.LayoutInflater
+import android.view.RoundedCorner
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
+import com.bumptech.glide.load.resource.bitmap.CircleCrop
+import com.bumptech.glide.request.RequestOptions
+import id.ac.ukdw.pointofsale.R
 import id.ac.ukdw.pointofsale.api.response.DataSummary
 import id.ac.ukdw.pointofsale.api.response.SummaryResponse
 import id.ac.ukdw.pointofsale.databinding.ItemPenjualanBinding

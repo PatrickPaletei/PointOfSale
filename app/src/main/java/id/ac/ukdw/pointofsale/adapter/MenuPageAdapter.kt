@@ -5,6 +5,11 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
+import com.bumptech.glide.load.resource.bitmap.CircleCrop
+import com.bumptech.glide.load.resource.bitmap.RoundedCorners
+import com.bumptech.glide.request.RequestOptions
+import id.ac.ukdw.pointofsale.R
 import id.ac.ukdw.pointofsale.database.MenuItem
 import id.ac.ukdw.pointofsale.databinding.ItemMenuHalamanMenuBinding
 
@@ -102,6 +107,14 @@ class MenuPageAdapter(
                 // Set click listeners for buttons
                 editMenu.setOnClickListener { onButton1Click(menuItem) }
                 hapusMenu.setOnClickListener { onButton2Click(menuItem) }
+
+                Glide.with(binding.root.context)
+                    .load("https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.facebook.com%2Fpostmalone%2F%3Flocale%3Did_ID&psig=AOvVaw0aMheJ-yxHfEWXOQC_o3RY&ust=1702412900037000&source=images&cd=vfe&ved=0CBEQjRxqFwoTCPD9o8KdiIMDFQAAAAAdAAAAABAE" // Replace with your image URL or local path
+                    )
+                    .apply(RequestOptions.bitmapTransform(RoundedCorners(12)))
+                    .placeholder(R.drawable.ayam) // Placeholder while loading
+                    .error(R.drawable.ayam) // Error placeholder if image fails to load
+                    .into(imgMakanan)
             }
         }
     }
