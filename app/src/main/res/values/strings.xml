@@ -71,4 +71,7 @@
     <string name="anda_tidak_mempunyai_riwayat_penjualan_item_apapun">Anda tidak mempunyai riwayat penjualan item apapun.</string>
     <string name="tambah_karyawan">Tambah Karyawan</string>
     <string name="konfirmasi_password">Konfirmasi Password</string>
+    <string name="tambah_karyawan_baru">Tambah Karyawan Baru</string>
+    <string name="camera">Camera</string>
+    <string name="gallery">Gallery</string>
 </resources>

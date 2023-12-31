@@ -15,6 +15,7 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.CircleCrop
 import com.bumptech.glide.request.RequestOptions
 import dagger.hilt.android.AndroidEntryPoint
+import id.ac.ukdw.pointofsale.adapter.CardAdapterAllMenu
 import id.ac.ukdw.pointofsale.adapter.SidebarAdapter
 import id.ac.ukdw.pointofsale.data.SidebarItem
 import id.ac.ukdw.pointofsale.ui.dashboard.CetakNotaFragment
@@ -85,6 +86,7 @@ class MainActivity : AppCompatActivity() {
         sideBar()
 
     }
+
 
     private fun showPopUpDeleteUser() {
         val dialogFragment = DeleteKaryawanFragment()
@@ -202,6 +204,8 @@ class MainActivity : AppCompatActivity() {
 
         super.onDestroy()
     }
+
+
 }
 
 

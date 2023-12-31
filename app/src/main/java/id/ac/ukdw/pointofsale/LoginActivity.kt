@@ -60,10 +60,6 @@ class LoginActivity : AppCompatActivity() {
         }
     }
 
-    override fun onStart() {
-        super.onStart()
-    }
-
     private fun startNextActivity() {
         val intent = Intent(this, MainActivity::class.java)
         startActivity(intent)

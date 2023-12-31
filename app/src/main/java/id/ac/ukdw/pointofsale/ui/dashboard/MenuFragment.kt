@@ -21,6 +21,7 @@ import id.ac.ukdw.pointofsale.databinding.FragmentMenuBinding
 import id.ac.ukdw.pointofsale.viewmodel.MenuViewModel
 import id.ac.ukdw.pointofsale.viewmodel.SelectedFilterMenuViewModel
 import id.ac.ukdw.pointofsale.viewmodel.SelectedItemViewModel
+import id.ac.ukdw.pointofsale.viewmodel.SharedCheckoutViewModel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
@@ -32,6 +33,8 @@ class MenuFragment : Fragment() {
     private lateinit var selectedItemViewModel: SelectedItemViewModel
     private val menuViewModel: MenuViewModel by viewModels()
     private val filterViewModel: SelectedFilterMenuViewModel by activityViewModels()
+    private val checkoutViewModel: SharedCheckoutViewModel by activityViewModels()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         selectedItemViewModel = (requireActivity() as MainActivity).getSelectedItemViewModel()
@@ -100,8 +103,9 @@ class MenuFragment : Fragment() {
                         hargaWithIDR
                     )
                 )
+                // You can handle selected items here based on your requirements
             }
-        })
+        }, checkoutViewModel)
 
         filterViewModel.combinedFilter.observe(viewLifecycleOwner) { combinedValue ->
             val (intFilter, stringFilter) = combinedValue

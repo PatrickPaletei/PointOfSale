@@ -8,6 +8,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.viewModels
 import dagger.hilt.android.AndroidEntryPoint
@@ -34,6 +35,13 @@ class RegisFragment : DialogFragment() {
         binding.batal.setOnClickListener {
             dismiss()
         }
+        binding.tambahGambar.setOnClickListener {
+            uploadPicFromGallery()
+        }
+        binding.tambahGambarCam.setOnClickListener {
+            uploadPicFromCamera()
+        }
+
         binding.btnRegis.setOnClickListener {
             val username = binding.username.text.toString().trim()
             val nama = binding.namaKaryawan.text.toString().trim()
@@ -85,6 +93,28 @@ class RegisFragment : DialogFragment() {
         }
     }
 
+    private fun uploadPicFromGallery() {
+        pickImages.launch("image/*")
+    }
+
+    private fun uploadPicFromCamera() {
+        takePicture.launch(null)
+    }
+
+    // Activity result contracts
+    private val pickImages =
+        registerForActivityResult(ActivityResultContracts.GetContent()) { selectedImageUri ->
+            selectedImageUri?.let {
+                binding.imageContainer.setImageURI(selectedImageUri)
+            }
+        }
+
+    private val takePicture =
+        registerForActivityResult(ActivityResultContracts.TakePicturePreview()) { result ->
+            result?.let { image ->
+                binding.imageContainer.setImageBitmap(image)
+            }
+        }
 
     private fun regisUser(token: String, nama: String, password: String, username: String) {
         karyawanViewModel.regisUser(

@@ -1,14 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="200dp"
     android:layout_height="wrap_content"
-    android:background="@android:color/transparent"
     android:clipChildren="false"
     android:clipToPadding="false"
-    app:cardElevation="8dp"
-    app:cardCornerRadius="8sp">
+    app:cardBackgroundColor="@color/white"
+    app:cardCornerRadius="8sp"
+    app:cardElevation="8dp">
 
     <LinearLayout
         android:layout_width="wrap_content"
@@ -20,9 +19,9 @@
             android:id="@+id/imageView"
             android:layout_width="180dp"
             android:layout_height="110dp"
+            android:layout_gravity="center"
             android:background="@drawable/round_img"
             android:padding="4dp"
-            android:layout_gravity="center"
             android:scaleType="centerCrop"
             android:src="@drawable/ayam"
             app:layout_constraintEnd_toEndOf="parent"
@@ -57,8 +56,8 @@
                 android:id="@+id/harga"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
                 android:layout_gravity="bottom"
+                android:layout_marginTop="8dp"
                 android:text="IDR 11.000"
                 android:textColor="#3267E3"
                 android:textSize="16sp"
@@ -71,4 +70,4 @@
 
 
     </LinearLayout>
-</androidx.cardview.widget.CardView>
+</com.google.android.material.card.MaterialCardView>

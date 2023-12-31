@@ -99,9 +99,10 @@
         tools:layout_editor_absoluteX="24dp">
 
         <ImageView
+            android:id="@+id/imageContainer"
             android:layout_width="120dp"
             android:layout_height="90dp"
-            android:src="@drawable/ayam" />
+            android:src="@drawable/ic_blank" />
 
         <Button
             style="@style/Widget.Material3.Button.OutlinedButton.Icon"
@@ -111,8 +112,20 @@
             android:layout_gravity="center"
             android:layout_marginStart="20dp"
             android:layout_weight="0.1"
-            android:text="@string/tambah"
-            app:icon="@drawable/ic_plus"
+            android:text="@string/gallery"
+            app:icon="@drawable/ic_galery"
+            app:iconTint="@color/blue" />
+
+        <Button
+            style="@style/Widget.Material3.Button.OutlinedButton.Icon"
+            android:id="@+id/tambahGambarCam"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginStart="10dp"
+            android:layout_weight="0.1"
+            android:text="@string/camera"
+            app:icon="@drawable/ic_cam"
             app:iconTint="@color/blue" />
 
     </LinearLayout>

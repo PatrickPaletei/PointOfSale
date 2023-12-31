@@ -124,7 +124,7 @@ class CheckOutFragment : Fragment() {
         val subtotalTxt = binding.subtotal
         val totalKeseluruhanTxt = binding.totalKeseluruhan
         val containerRcy = binding.hide1
-        val hide2 = binding.hide2
+//        val hide2 = binding.hide2
         val containerSub = binding.subTotalHide
         val containerNoItem = binding.containerNoItem
         val checkOutBtn = binding.btnCheckOut
@@ -148,14 +148,14 @@ class CheckOutFragment : Fragment() {
 
         if (dataList.isEmpty()) {
             containerRcy.visibility = View.GONE
-            hide2.visibility = View.GONE
+//            hide2.visibility = View.GONE
             containerSub.visibility = View.GONE
             checkOutBtn.visibility = View.GONE
             containerNoItem.visibility = View.VISIBLE
         } else {
             containerNoItem.visibility = View.GONE
             containerRcy.visibility = View.VISIBLE
-            hide2.visibility = View.VISIBLE
+//            hide2.visibility = View.VISIBLE
             checkOutBtn.visibility = View.VISIBLE
             containerSub.visibility = View.VISIBLE
         }

@@ -14,6 +14,7 @@ import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.activityViewModels
 import id.ac.ukdw.pointofsale.MainActivity
 import id.ac.ukdw.pointofsale.R
+import id.ac.ukdw.pointofsale.adapter.CardAdapterAllMenu
 import id.ac.ukdw.pointofsale.data.CheckOutData
 import id.ac.ukdw.pointofsale.viewmodel.SelectedItemViewModel
 import id.ac.ukdw.pointofsale.viewmodel.SharedCheckoutViewModel
@@ -23,6 +24,7 @@ class PopUpFragment : DialogFragment() {
 
     private lateinit var selectedItemViewModel: SelectedItemViewModel
     private val checkoutViewModel: SharedCheckoutViewModel by activityViewModels()
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -104,6 +106,7 @@ class PopUpFragment : DialogFragment() {
         batalButon.setOnClickListener {
             dismiss()
         }
+
         pilihButon.setOnClickListener {
             selectedItemViewModel.selectedItem.value?.let { selectedItem ->
                 val catatan = catatanMenu.text.toString()
@@ -126,4 +129,5 @@ class PopUpFragment : DialogFragment() {
     companion object {
         private const val DEFAULT_TOTAL = 1
     }
+
 }

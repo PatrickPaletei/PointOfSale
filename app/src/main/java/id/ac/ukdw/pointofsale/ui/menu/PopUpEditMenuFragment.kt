@@ -8,6 +8,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.viewModels
 import dagger.hilt.android.AndroidEntryPoint
@@ -48,6 +49,13 @@ class PopUpEditMenuFragment : DialogFragment() {
         val harga = sharedPreferences.getInt("harga", 0)
         val idEditMenu = sharedPreferences.getInt("id", 0)
 
+        binding.tambahGambar.setOnClickListener {
+            uploadPicFromGallery()
+        }
+        binding.tambahGambarCam.setOnClickListener {
+            uploadPicFromCamera()
+        }
+
         binding.namaMenu.setText(judulMenu)
         binding.hargaMenu.setText(harga.toString())
 
@@ -71,6 +79,26 @@ class PopUpEditMenuFragment : DialogFragment() {
         }
 
     }
+    private fun uploadPicFromGallery() {
+        pickImages.launch("image/*")
+    }
+
+    private fun uploadPicFromCamera() {
+        takePicture.launch(null)
+    }
+    private val pickImages =
+        registerForActivityResult(ActivityResultContracts.GetContent()) { selectedImageUri ->
+            selectedImageUri?.let {
+                binding.imageContainer.setImageURI(selectedImageUri)
+            }
+        }
+
+    private val takePicture =
+        registerForActivityResult(ActivityResultContracts.TakePicturePreview()) { result ->
+            result?.let { image ->
+                binding.imageContainer.setImageBitmap(image)
+            }
+        }
 
     override fun onStart() {
         super.onStart()
