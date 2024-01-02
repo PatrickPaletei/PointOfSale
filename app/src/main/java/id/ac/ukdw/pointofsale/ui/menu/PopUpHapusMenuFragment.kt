@@ -12,12 +12,13 @@ import android.widget.Toast
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.viewModels
 import dagger.hilt.android.AndroidEntryPoint
+import dagger.hilt.android.lifecycle.HiltViewModel
 import id.ac.ukdw.pointofsale.R
 import id.ac.ukdw.pointofsale.databinding.FragmentHapusMenuBinding
 import id.ac.ukdw.pointofsale.databinding.FragmentPopUpEditMenuBinding
 import id.ac.ukdw.pointofsale.viewmodel.PageMenuViewModel
 
-
+@AndroidEntryPoint
 class PopUpHapusMenuFragment : DialogFragment() {
     private lateinit var binding : FragmentHapusMenuBinding
     private val pageMenuViewModel: PageMenuViewModel by viewModels()

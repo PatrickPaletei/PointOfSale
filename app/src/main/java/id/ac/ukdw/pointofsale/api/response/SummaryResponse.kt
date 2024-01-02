@@ -5,7 +5,7 @@ import com.google.gson.annotations.SerializedName
 
 data class SummaryResponse(
     @SerializedName("data")
-    val `data`: List<DataSummary>,
+    val `data`: List<DataSummary>?,
     @SerializedName("jumlah_pesanan")
     val jumlahPesanan: Int,
     @SerializedName("message")

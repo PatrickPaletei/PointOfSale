@@ -5,7 +5,7 @@ import com.google.gson.annotations.SerializedName
 
 data class DataTambahMenu(
     @SerializedName("harga")
-    val harga: Int,
+    val harga: String,
     @SerializedName("id_menu")
     val idMenu: Int,
     @SerializedName("image")

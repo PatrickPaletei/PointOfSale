@@ -7,10 +7,16 @@ import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
+import com.bumptech.glide.load.resource.bitmap.RoundedCorners
+import com.bumptech.glide.request.RequestOptions
 import id.ac.ukdw.pointofsale.R
 import id.ac.ukdw.pointofsale.api.response.DataSemuaMakanan
 import id.ac.ukdw.pointofsale.databinding.ItemMenuDashboardBinding
 import id.ac.ukdw.pointofsale.viewmodel.SharedCheckoutViewModel
+import java.text.DecimalFormat
+import java.text.DecimalFormatSymbols
+import java.util.Locale
 
 
 class CardAdapterAllMenu(
@@ -75,10 +81,18 @@ class CardAdapterAllMenu(
 
         fun bind(dataSemuaMakanan: DataSemuaMakanan, isSelected: Boolean) {
             binding.apply {
+
+                Glide.with(binding.root.context)
+                    .load(dataSemuaMakanan.image)
+                    .apply(RequestOptions.bitmapTransform(RoundedCorners(12)))
+                    .placeholder(R.drawable.ic_blank)
+                    .error(R.drawable.ic_blank)
+                    .into(binding.imgMenu)
+
                 namaMenu.text = dataSemuaMakanan.namaMenu
-                val formattedHarga = dataSemuaMakanan.harga.removeSuffix(".00")
-                val hargaWithIDR = "IDR $formattedHarga"
-                harga.text = hargaWithIDR
+                val priceValue = dataSemuaMakanan.harga.toDoubleOrNull() ?: 0.0
+                val formattedPrice = formatPriceWithIDR(priceValue)
+                harga.text = formattedPrice
 
                 root.setOnClickListener {
                     if (!isSelected) {
@@ -96,7 +110,8 @@ class CardAdapterAllMenu(
 
                 // Observe the selectedItemViewModel data
                 checkoutViewModel.dataList.observeForever { selectedItemList ->
-                    val selectedItem = selectedItemList?.find { it.id_menu == dataSemuaMakanan.idMenu }
+                    val selectedItem =
+                        selectedItemList?.find { it.id_menu == dataSemuaMakanan.idMenu }
                     root.strokeColor = if (selectedItem != null) {
                         ContextCompat.getColor(root.context, R.color.blue)
                     } else {
@@ -108,8 +123,18 @@ class CardAdapterAllMenu(
 
             }
         }
+        
     }
 
+    private fun formatPriceWithIDR(price: Double): String {
+        val symbols = DecimalFormatSymbols(Locale.getDefault())
+        symbols.groupingSeparator = '.'
+
+        val formatter = DecimalFormat("#,###", symbols)
+        val formattedPrice = formatter.format(price)
+
+        return "IDR $formattedPrice"
+    }
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CardViewHolder {

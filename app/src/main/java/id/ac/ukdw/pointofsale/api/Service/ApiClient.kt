@@ -9,7 +9,7 @@ import retrofit2.create
 
 object ApiClient: ApiClientInterface {
 
-    const val  BASE_URL = "https://stormy-plains-56457-19235671afa2.herokuapp.com/"
+    const val  BASE_URL = "http://103.84.207.63:8000/"
 
     private val logging:HttpLoggingInterceptor
         get() {

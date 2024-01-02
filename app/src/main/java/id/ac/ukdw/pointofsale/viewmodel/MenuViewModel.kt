@@ -38,7 +38,7 @@ class MenuViewModel @Inject constructor(
                 if (response.isSuccessful) {
                     val body = response.body()
                     body?.let { apiResponse ->
-                        Log.d("body", "fetchMenuData: $apiResponse")
+                        Log.d("asw", "fetchMenuData: $apiResponse")
                         val menuItemsFromAPI = mapApiResponseToMenuItem(apiResponse)
 
                         // Get existing data from the LiveData
@@ -64,12 +64,19 @@ class MenuViewModel @Inject constructor(
     ) {
         val updatedItems = mutableListOf<MenuItem>()
 
-        // Compare API data with the data from LiveData
         for (newItem in newItems) {
-            val existingItem = oldItems.find { it.idMenu == newItem.idMenu }
+            val existingItem = oldItems.firstOrNull {
+                it.id != newItem.id &&
+                        it.idMenu == newItem.idMenu &&
+                        it.namaMenu == newItem.namaMenu &&
+                        it.harga == newItem.harga &&
+                        it.image == newItem.image &&
+                        it.jumlahStok == newItem.jumlahStok &&
+                        it.kategori == newItem.kategori
+            }
 
             if (existingItem != null) {
-                if (existingItem != newItem) {
+                if (!areMenuItemsEqual(existingItem, newItem)) {
                     updatedItems.add(newItem)
                 } else {
                     updatedItems.add(existingItem)
@@ -84,6 +91,17 @@ class MenuViewModel @Inject constructor(
             menuDao.deleteAllMenuItems()
             menuDao.insertMenuItems(updatedItems)
         }
+    }
+
+
+    private fun areMenuItemsEqual(item1: MenuItem, item2: MenuItem): Boolean {
+        return item1.id == item2.id &&
+                item1.idMenu == item2.idMenu &&
+                item1.namaMenu == item2.namaMenu &&
+                item1.harga == item2.harga &&
+                item1.image == item2.image &&
+                item1.jumlahStok == item2.jumlahStok &&
+                item1.kategori == item2.kategori
     }
 
     fun mapApiResponseToMenuItem(apiResponse: AllMenuResponse): List<MenuItem> {

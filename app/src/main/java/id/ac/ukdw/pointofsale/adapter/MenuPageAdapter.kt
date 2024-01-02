@@ -108,13 +108,24 @@ class MenuPageAdapter(
                 editMenu.setOnClickListener { onButton1Click(menuItem) }
                 hapusMenu.setOnClickListener { onButton2Click(menuItem) }
 
+                val initials = generateInitials(menuItem.namaMenu)
                 Glide.with(binding.root.context)
-                    .load("https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.facebook.com%2Fpostmalone%2F%3Flocale%3Did_ID&psig=AOvVaw0aMheJ-yxHfEWXOQC_o3RY&ust=1702412900037000&source=images&cd=vfe&ved=0CBEQjRxqFwoTCPD9o8KdiIMDFQAAAAAdAAAAABAE" // Replace with your image URL or local path
-                    )
+                    .load(menuItem.image)
                     .apply(RequestOptions.bitmapTransform(RoundedCorners(12)))
-                    .placeholder(R.drawable.ayam) // Placeholder while loading
-                    .error(R.drawable.ayam) // Error placeholder if image fails to load
+                    .placeholder(R.drawable.ic_blank) // Placeholder while loading
+                    .error(TextDrawable(initials)) // Error placeholder with initials
                     .into(imgMakanan)
+            }
+        }
+        private fun generateInitials(name: String): String {
+            val words = name.split(" ")
+            return if (words.size >= 2) {
+                val firstInitial = words.first().firstOrNull() ?: ' '
+                val lastInitial = words.last().firstOrNull() ?: ' '
+                "$firstInitial$lastInitial"
+            } else {
+                val firstInitial = words.firstOrNull()?.firstOrNull() ?: ' '
+                "$firstInitial "
             }
         }
     }

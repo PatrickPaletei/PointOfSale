@@ -5,6 +5,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.google.gson.Gson
 import dagger.hilt.android.lifecycle.HiltViewModel
 import id.ac.ukdw.pointofsale.api.Service.ApiClientInterface
 import id.ac.ukdw.pointofsale.api.request.EditMenuRequest
@@ -15,6 +16,11 @@ import id.ac.ukdw.pointofsale.database.dao.MenuDao
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import okhttp3.MediaType.Companion.toMediaTypeOrNull
+import okhttp3.MultipartBody
+import okhttp3.RequestBody.Companion.asRequestBody
+import okhttp3.RequestBody.Companion.toRequestBody
+import java.io.File
 import java.io.IOException
 import javax.inject.Inject
 
@@ -38,18 +44,29 @@ class PageMenuViewModel @Inject constructor(
         namaMenu: String,
         harga: Int,
         kategori: String,
-        token: String
+        token: String,
+        file: File,
     ) {
         viewModelScope.launch {
             try {
+                val filePart = MultipartBody.Part.createFormData(
+                    "image",
+                    file.name,
+                    file.asRequestBody("multipart/form-data".toMediaTypeOrNull())
+                )
+
+                val namaMenuPart = namaMenu.toRequestBody("multipart/form-data".toMediaTypeOrNull())
+                val hargaPart = harga.toString().toRequestBody("multipart/form-data".toMediaTypeOrNull())
+                val kategoriPart = kategori.toRequestBody("multipart/form-data".toMediaTypeOrNull())
+
                 val response = withContext(Dispatchers.IO) {
                     apiClientInterface.instance.tambahMenu(
-                        token = token, TambahMenuRequest(
-                            price = harga,
-                            namaMenu = namaMenu,
-                            category = kategori
-                        )
-                    ).execute()
+                        token = token,
+                        file = filePart,
+                        namaMenu = namaMenuPart,
+                        harga = hargaPart,
+                        kategori = kategoriPart
+                        ).execute()
                 }
                 if (response.isSuccessful) {
                     val body = response.body()
@@ -68,7 +85,9 @@ class PageMenuViewModel @Inject constructor(
 
     private val _menuUpdated = MutableLiveData<Boolean>()
     val menuUpdated: LiveData<Boolean> = _menuUpdated
+
     fun editData(
+        file: File,
         namaMenu: String,
         harga: Int,
         kategori: String,
@@ -77,30 +96,38 @@ class PageMenuViewModel @Inject constructor(
     ) {
         viewModelScope.launch {
             try {
+                val filePart = MultipartBody.Part.createFormData(
+                    "image",
+                    file.name,
+                    file.asRequestBody("multipart/form-data".toMediaTypeOrNull())
+                )
+
+                val namaMenuPart = namaMenu.toRequestBody("multipart/form-data".toMediaTypeOrNull())
+                val hargaPart = harga.toString().toRequestBody("multipart/form-data".toMediaTypeOrNull())
+                val kategoriPart = kategori.toRequestBody("multipart/form-data".toMediaTypeOrNull())
+
                 val response = withContext(Dispatchers.IO) {
                     apiClientInterface.instance.editMenu(
                         token = token,
                         id = idMenu,
-                        EditMenuRequest(
-                            harga = harga,
-                            kategori = kategori,
-                            namaMenu = namaMenu
-                        )
+                        file = filePart,
+                        namaMenu = namaMenuPart,
+                        harga = hargaPart,
+                        kategori = kategoriPart
                     ).execute()
                 }
                 if (response.isSuccessful) {
                     val body = response.body()
                     body?.let { apiResponse ->
-                        Log.d("status edit suskes", "addData: $apiResponse")
+                        Log.d("status edit sukses", "editData: $apiResponse")
                     }
                     _menuUpdated.value = true
                 } else {
                     Log.d("status edit gagal", "status edit gagal")
                 }
             } catch (e: IOException) {
-                Log.e("pageMenuViewModel", "Error edit menu: ${e.message} ")
+                Log.e("pageMenuViewModel", "Error editing menu: ${e.message} ")
             }
-
         }
     }
 

@@ -89,6 +89,7 @@ class LoginActivity : AppCompatActivity() {
                                 editor.putString("id", body.id_user.toString())
                                 editor.putString("token",body.plainTextToken)
                                 editor.putString("role",body.message)
+                                editor.putString("image",body.image)
                                 //send pake sf bearer token nya
                             }
                             editor.apply()

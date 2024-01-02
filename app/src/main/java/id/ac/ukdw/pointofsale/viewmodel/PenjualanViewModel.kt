@@ -72,7 +72,7 @@ class PenjualanViewModel @Inject constructor(
                     }
                 }
             } catch (e: IOException) {
-                Log.e("PenjualanViewModel", "Error get summary today: ${e.message} ")
+                Log.e("PenjualanViewModel", "Error get summary : ${e.message} ")
             }
         }
     }

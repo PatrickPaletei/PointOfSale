@@ -9,7 +9,7 @@ data class DataEditMenu(
     @SerializedName("id_menu")
     val idMenu: Int,
     @SerializedName("image")
-    val image: Any,
+    val image: String?,
     @SerializedName("jumlah_stok")
     val jumlahStok: Any,
     @SerializedName("kategori")

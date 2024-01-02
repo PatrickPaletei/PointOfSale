@@ -13,6 +13,11 @@ import id.ac.ukdw.pointofsale.api.response.GetUserResponse
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import okhttp3.MediaType.Companion.toMediaTypeOrNull
+import okhttp3.MultipartBody
+import okhttp3.RequestBody.Companion.asRequestBody
+import okhttp3.RequestBody.Companion.toRequestBody
+import java.io.File
 import java.io.IOException
 import javax.inject.Inject
 
@@ -47,13 +52,29 @@ class KarywawanViewModel @Inject constructor(
     private val _responseCodeRegister = MutableLiveData<Int?>()
     val responseCodeRegister: LiveData<Int?> get() = _responseCodeRegister
 
-    fun regisUser(token: String, username: String, namaKaryawan: String, password: String) {
+    fun regisUser(file: File,
+                  username: String,
+                  nama_karyawan: String,
+                  passwrod: String,
+                  token: String) {
         viewModelScope.launch {
             try {
+                val filePart = MultipartBody.Part.createFormData(
+                    "image",
+                    file.name,
+                    file.asRequestBody("multipart/form-data".toMediaTypeOrNull())
+                )
+                val usernamePart = username.toRequestBody("multipart/form-data".toMediaTypeOrNull())
+                val nama_karyawan_part = nama_karyawan.toRequestBody("multipart/form-data".toMediaTypeOrNull())
+                val passwrodPart = passwrod.toRequestBody("multipart/form-data".toMediaTypeOrNull())
+
                 val respone = withContext(Dispatchers.IO) {
                     apiClientInterface.instance.registerUser(
                         token,
-                        RegisterRequest(namaKaryawan, password, username)
+                        file = filePart,
+                        username = usernamePart,
+                        nama = nama_karyawan_part,
+                        pass = passwrodPart
                     ).execute()
                 }
                 if (respone.isSuccessful) {

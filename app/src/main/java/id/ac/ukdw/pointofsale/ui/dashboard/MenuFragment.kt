@@ -1,6 +1,7 @@
 package id.ac.ukdw.pointofsale.ui.dashboard
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -24,6 +25,9 @@ import id.ac.ukdw.pointofsale.viewmodel.SelectedItemViewModel
 import id.ac.ukdw.pointofsale.viewmodel.SharedCheckoutViewModel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import java.text.DecimalFormat
+import java.text.DecimalFormatSymbols
+import java.util.Locale
 
 @AndroidEntryPoint
 class MenuFragment : Fragment() {
@@ -91,16 +95,29 @@ class MenuFragment : Fragment() {
         binding.recyclerViewMenu.addItemDecoration(spaceItemDecoration)
     }
 
+    // Function to remove .00 suffix
+    private fun formatPriceWithIDR(price: String): String {
+        val priceValue = price.toDoubleOrNull() ?: return price // If not a valid number, return original string
+
+        val symbols = DecimalFormatSymbols(Locale.getDefault())
+        symbols.groupingSeparator = '.'
+
+        val formatter = DecimalFormat("#,###", symbols)
+        val formattedPrice = formatter.format(priceValue)
+
+        return "IDR $formattedPrice"
+    }
+
     private fun showListSemuaMakanan(data: List<DataSemuaMakanan>) {
         val adapter = CardAdapterAllMenu(object : CardAdapterAllMenu.OnClickListener {
             override fun onClickItem(dataSemuaMakanan: DataSemuaMakanan) {
-                val formattedHarga = dataSemuaMakanan.harga.removeSuffix(".00")
-                val hargaWithIDR = "IDR $formattedHarga"
+                Log.d("harga", "onClickItem: $dataSemuaMakanan.harga")
+                val formattedHarga = formatPriceWithIDR(dataSemuaMakanan.harga)
                 selectedItemViewModel.setSelectedItem(
                     CardData(
                         dataSemuaMakanan.idMenu,
                         dataSemuaMakanan.namaMenu,
-                        hargaWithIDR
+                        formattedHarga
                     )
                 )
                 // You can handle selected items here based on your requirements

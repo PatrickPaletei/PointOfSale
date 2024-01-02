@@ -13,5 +13,7 @@ data class DataUser(
     @SerializedName("role")
     val role: String,
     @SerializedName("username")
-    val username: String
+    val username: String,
+    @SerializedName("image")
+    val image: String?
 )

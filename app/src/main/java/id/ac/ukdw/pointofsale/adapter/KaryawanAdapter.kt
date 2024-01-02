@@ -1,6 +1,7 @@
 package id.ac.ukdw.pointofsale.adapter
 
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
@@ -49,10 +50,13 @@ class KaryawanAdapter(
         fun bind(dataItem: DataUser) {
             binding.namaKaryawan.text = dataItem.namaKaryawan
             binding.usernameKaryawan.text = dataItem.username
-            binding.role.text = dataItem.role
+            val role = dataItem.role
+            if (role == "admin"){
+                binding.hapusKaryawan.visibility = View.GONE
+            }
             // Loading image using Glide
             Glide.with(binding.root.context)
-                .load("https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.facebook.com%2Fpostmalone%2F%3Flocale%3Did_ID&psig=AOvVaw0aMheJ-yxHfEWXOQC_o3RY&ust=1702412900037000&source=images&cd=vfe&ved=0CBEQjRxqFwoTCPD9o8KdiIMDFQAAAAAdAAAAABAE")
+                .load(dataItem.image)
                 .apply(RequestOptions.bitmapTransform(CircleCrop()))
                 .placeholder(R.drawable.man)
                 .error(R.drawable.man)

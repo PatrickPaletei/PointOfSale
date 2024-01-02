@@ -14,4 +14,6 @@ data class LoginResponse(
     val username: String,
     @SerializedName("id_user")
     val id_user: Int,
+    @SerializedName("image")
+    val image: String?,
 )

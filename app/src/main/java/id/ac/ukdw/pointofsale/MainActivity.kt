@@ -185,8 +185,7 @@ class MainActivity : AppCompatActivity() {
         }
 
         val profileAvatar: ImageView = findViewById(R.id.profileAvatar)
-        val imageUrl =
-            "https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.facebook.com%2Fpostmalone%2F%3Flocale%3Did_ID&psig=AOvVaw0aMheJ-yxHfEWXOQC_o3RY&ust=1702412900037000&source=images&cd=vfe&ved=0CBEQjRxqFwoTCPD9o8KdiIMDFQAAAAAdAAAAABAE" // Replace with your image URL or local path
+        val imageUrl =sharedPref.getString("image","")
 
         Glide.with(this)
             .load(imageUrl)

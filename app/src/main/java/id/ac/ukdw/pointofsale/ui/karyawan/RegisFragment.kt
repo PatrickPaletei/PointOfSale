@@ -1,8 +1,16 @@
 package id.ac.ukdw.pointofsale.ui.karyawan
 
 import android.app.Dialog
+import android.content.ContentValues
 import android.content.Context
+import android.content.ContextWrapper
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
+import android.graphics.drawable.BitmapDrawable
+import android.net.Uri
 import android.os.Bundle
+import android.provider.MediaStore
+import android.util.Log
 import android.util.TypedValue
 import android.view.LayoutInflater
 import android.view.View
@@ -15,12 +23,17 @@ import dagger.hilt.android.AndroidEntryPoint
 import id.ac.ukdw.pointofsale.R
 import id.ac.ukdw.pointofsale.databinding.FragmentRegisBinding
 import id.ac.ukdw.pointofsale.viewmodel.KarywawanViewModel
+import java.io.File
+import java.io.FileOutputStream
 
 @AndroidEntryPoint
 class RegisFragment : DialogFragment() {
 
     private val karyawanViewModel: KarywawanViewModel by viewModels()
     private lateinit var binding: FragmentRegisBinding
+
+    private var selectedImageUri: Uri? = null
+    private var isNewImageSelected: Boolean = false
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -50,7 +63,7 @@ class RegisFragment : DialogFragment() {
 
             if (pass == konfirmPass && pass.length >= 6 && nama.isNotEmpty() && username.isNotEmpty()) {
                 val token = "Bearer ${getTokenFromPrefs()}"
-                binding.btnRegis.startAnimation()
+                Log.d("xmxx", "onViewCreated: $pass $konfirmPass")
                 regisUser(token, nama, pass, username)
             } else {
                 when {
@@ -80,7 +93,7 @@ class RegisFragment : DialogFragment() {
         }
 
         karyawanViewModel.responseCodeRegister.observe(viewLifecycleOwner) { responseCode ->
-            if (responseCode == 200) {
+            if (responseCode == 201) {
                 Toast.makeText(context, "Registrasi Berhasil!", Toast.LENGTH_SHORT).show()
                 dismiss()
             } else {
@@ -93,6 +106,19 @@ class RegisFragment : DialogFragment() {
         }
     }
 
+    private fun convertImageToFile(bitmap: Bitmap): File {
+        val contextWrapper = ContextWrapper(requireContext())
+        val file = File(contextWrapper.cacheDir, "tempImage.jpg")
+        file.createNewFile()
+
+        // Convert bitmap to file
+        val fileOutputStream = FileOutputStream(file)
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, fileOutputStream)
+        fileOutputStream.flush()
+        fileOutputStream.close()
+
+        return file
+    }
     private fun uploadPicFromGallery() {
         pickImages.launch("image/*")
     }
@@ -100,29 +126,70 @@ class RegisFragment : DialogFragment() {
     private fun uploadPicFromCamera() {
         takePicture.launch(null)
     }
-
-    // Activity result contracts
     private val pickImages =
         registerForActivityResult(ActivityResultContracts.GetContent()) { selectedImageUri ->
             selectedImageUri?.let {
                 binding.imageContainer.setImageURI(selectedImageUri)
+                this.selectedImageUri = selectedImageUri
+                isNewImageSelected = true// Assign the selected URI to the member variable
             }
         }
 
     private val takePicture =
         registerForActivityResult(ActivityResultContracts.TakePicturePreview()) { result ->
-            result?.let { image ->
-                binding.imageContainer.setImageBitmap(image)
+            result?.let { imageBitmap ->
+                binding.imageContainer.setImageBitmap(imageBitmap)
+                // Assuming you're converting the captured image to URI and assigning it to selectedImageUri
+                val contentValues = ContentValues().apply {
+                    put(MediaStore.Images.Media.DISPLAY_NAME, "image_${System.currentTimeMillis()}.jpg")
+                    put(MediaStore.Images.Media.MIME_TYPE, "image/jpeg")
+                }
+                val uri = requireContext().contentResolver.insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, contentValues)
+                uri?.let {
+                    this.selectedImageUri = uri
+                    val outputStream = requireContext().contentResolver.openOutputStream(uri)
+                    if (outputStream != null) {
+                        imageBitmap.compress(Bitmap.CompressFormat.JPEG, 100, outputStream)
+                    }
+                    outputStream?.close()
+                    isNewImageSelected = true
+                }
             }
         }
 
     private fun regisUser(token: String, nama: String, password: String, username: String) {
-        karyawanViewModel.regisUser(
-            token,
-            namaKaryawan = nama,
-            password = password, username = username
-        )
+        val imageFile = selectedImageUri?.let { uri ->
+            val inputStream = requireContext().contentResolver.openInputStream(uri)
+            val bitmap = BitmapFactory.decodeStream(inputStream)
+            convertImageToFile(bitmap)
+        }
+
+        if (imageFile != null || isNewImageSelected) {
+            val file = imageFile ?: run {
+                val drawable = binding.imageContainer.drawable
+                val bitmap = (drawable as BitmapDrawable).bitmap
+                convertImageToFile(bitmap)
+            }
+
+            // Start animation before making the API call
+            binding.btnRegis.startAnimation()
+
+            karyawanViewModel.regisUser(
+                file,
+                username = username,
+                nama_karyawan = nama,
+                passwrod = password,
+                token = token
+            )
+        } else {
+            // Handle case when no image is selected
+            Toast.makeText(context, "Please select an image", Toast.LENGTH_SHORT).show()
+        }
     }
+
+
+
+
 
     private fun getTokenFromPrefs(): String {
         val sharedPreferences = activity?.getSharedPreferences("LoginPrefs", Context.MODE_PRIVATE)

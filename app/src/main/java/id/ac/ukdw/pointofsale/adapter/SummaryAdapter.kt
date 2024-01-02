@@ -22,12 +22,14 @@ class SummaryAdapter(private val data: SummaryResponse) :
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val dataItem = data.data[position] // Accessing menuList directly from SummaryResponse
-        holder.bind(dataItem)
+        val dataItem = data.data?.get(position) // Accessing menuList directly from SummaryResponse
+        if (dataItem != null) {
+            holder.bind(dataItem)
+        }
     }
 
     override fun getItemCount(): Int {
-        return data.data.size // Getting size of menuList directly from SummaryResponse
+        return data.data!!.size // Getting size of menuList directly from SummaryResponse
     }
 
     class ViewHolder(private val binding: ItemPenjualanBinding) :
