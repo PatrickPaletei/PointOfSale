@@ -94,9 +94,10 @@ class RegisFragment : DialogFragment() {
 
         karyawanViewModel.responseCodeRegister.observe(viewLifecycleOwner) { responseCode ->
             if (responseCode == 201) {
-                Toast.makeText(context, "Registrasi Berhasil!", Toast.LENGTH_SHORT).show()
+                Toast.makeText(context, "Registrasi Berhasil! Harap Refresh", Toast.LENGTH_SHORT).show()
                 dismiss()
             } else {
+                binding.btnRegis.revertAnimation()
                 Toast.makeText(
                     context,
                     "Registrasi Gagal. Harap coba username lain!",

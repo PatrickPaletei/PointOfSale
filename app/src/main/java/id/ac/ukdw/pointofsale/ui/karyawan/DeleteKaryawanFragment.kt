@@ -10,6 +10,9 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.viewModels
+import com.bumptech.glide.Glide
+import com.bumptech.glide.load.resource.bitmap.RoundedCorners
+import com.bumptech.glide.request.RequestOptions
 import dagger.hilt.android.AndroidEntryPoint
 import id.ac.ukdw.pointofsale.R
 import id.ac.ukdw.pointofsale.databinding.FragmentDeleteKaryawanBinding
@@ -35,6 +38,15 @@ class DeleteKaryawanFragment : DialogFragment() {
             requireActivity().getSharedPreferences("dataEdit", Context.MODE_PRIVATE)
         val namaKaryawan = sharedPreferences.getString("namaKaryawan", "")
         val idUser = sharedPreferences.getInt("idKaryawan", 0)
+        val img = sharedPreferences.getString("img","")
+
+        Glide.with(this)
+            .load(img)
+            .apply(RequestOptions.bitmapTransform(RoundedCorners(6)))
+            .placeholder(R.drawable.ic_blank) // Placeholder while loading
+            .error(R.drawable.ic_blank)
+            .into(binding.fotoKaryawan)
+
         binding.namaKaryawan.text = namaKaryawan
         binding.batal.setOnClickListener {
             dismiss()

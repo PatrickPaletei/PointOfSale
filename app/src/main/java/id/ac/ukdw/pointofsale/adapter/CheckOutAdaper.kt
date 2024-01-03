@@ -4,9 +4,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageButton
+import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
+import com.bumptech.glide.load.resource.bitmap.RoundedCorners
+import com.bumptech.glide.request.RequestOptions
 import id.ac.ukdw.pointofsale.R
 import id.ac.ukdw.pointofsale.data.CheckOutData
 
@@ -27,7 +31,7 @@ class CheckOutAdapter(
         val tambahMenu: ImageButton = itemView.findViewById(R.id.tambahMenu)
         val kurangMenu: ImageButton = itemView.findViewById(R.id.kurangMenu)
         val ubahSemua: TextView = itemView.findViewById(R.id.ubahMenu)
-
+        val image:ImageView = itemView.findViewById(R.id.fotoMenu)
         init {
             tambahMenu.setOnClickListener {
                 val position = adapterPosition
@@ -55,6 +59,12 @@ class CheckOutAdapter(
         holder.judulMenu.text = currentItem.judulMenu
         holder.hargaMenu.text = currentItem.harga
         holder.jumlahMenu.text = currentItem.jumlah_pesanan.toString()
+        Glide.with(holder.itemView)
+            .load(currentItem.image)
+            .apply(RequestOptions.bitmapTransform(RoundedCorners(6)))
+            .placeholder(R.drawable.ic_blank)
+            .error(R.drawable.ic_blank)
+            .into(holder.image)
 
         if (currentItem.catatan.isEmpty()) {
             holder.containerCatatan.visibility = View.GONE // Hide catatanMenu if notes is empty or null

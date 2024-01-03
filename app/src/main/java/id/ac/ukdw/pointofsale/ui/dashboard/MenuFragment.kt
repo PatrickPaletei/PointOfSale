@@ -117,7 +117,8 @@ class MenuFragment : Fragment() {
                     CardData(
                         dataSemuaMakanan.idMenu,
                         dataSemuaMakanan.namaMenu,
-                        formattedHarga
+                        formattedHarga,
+                        dataSemuaMakanan.image
                     )
                 )
                 // You can handle selected items here based on your requirements

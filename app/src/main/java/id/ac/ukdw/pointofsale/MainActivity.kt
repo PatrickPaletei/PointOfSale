@@ -3,6 +3,7 @@ package id.ac.ukdw.pointofsale
 import android.content.Context
 import android.content.SharedPreferences
 import android.os.Bundle
+import android.util.Log
 import android.widget.ImageButton
 import android.widget.ImageView
 import androidx.appcompat.app.AppCompatActivity
@@ -186,6 +187,7 @@ class MainActivity : AppCompatActivity() {
 
         val profileAvatar: ImageView = findViewById(R.id.profileAvatar)
         val imageUrl =sharedPref.getString("image","")
+        Log.d("profilepic", "sideBar: $imageUrl")
 
         Glide.with(this)
             .load(imageUrl)

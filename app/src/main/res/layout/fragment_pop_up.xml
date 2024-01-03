@@ -15,9 +15,10 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <ImageView
+            android:id="@+id/fotoMenu"
             android:layout_width="100dp"
             android:layout_height="100dp"
-            android:src="@drawable/ayam" />
+            android:src="@drawable/ic_blank" />
 
         <LinearLayout
             android:layout_width="0dp"

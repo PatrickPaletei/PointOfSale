@@ -49,6 +49,7 @@ class LoginActivity : AppCompatActivity() {
                         editor.apply()
                         startNextActivity()
                     } else {
+                        binding.btnLogin.revertAnimation()
                         Toast.makeText(
                             this@LoginActivity,
                             "Login Failed",

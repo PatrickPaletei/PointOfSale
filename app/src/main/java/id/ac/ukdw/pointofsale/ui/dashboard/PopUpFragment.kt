@@ -9,9 +9,13 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageButton
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.activityViewModels
+import com.bumptech.glide.Glide
+import com.bumptech.glide.load.resource.bitmap.RoundedCorners
+import com.bumptech.glide.request.RequestOptions
 import id.ac.ukdw.pointofsale.MainActivity
 import id.ac.ukdw.pointofsale.R
 import id.ac.ukdw.pointofsale.adapter.CardAdapterAllMenu
@@ -76,7 +80,7 @@ class PopUpFragment : DialogFragment() {
         val tambahPesan: ImageButton = view.findViewById(R.id.tambahPesan)
         val kurangPesan: ImageButton = view.findViewById(R.id.kurangPesan)
         val banyakPesanan: TextView = view.findViewById(R.id.banyakPesanan)
-
+        val imgView:ImageView = view.findViewById(R.id.fotoMenu)
 
         var total: Int = DEFAULT_TOTAL
         val dataList: MutableList<CheckOutData> =
@@ -87,6 +91,12 @@ class PopUpFragment : DialogFragment() {
         selectedItemViewModel.selectedItem.observe(viewLifecycleOwner) { selectedItem ->
             namaMenu.text = selectedItem.namaMenu
             hargaMenu.text = selectedItem.hargaMenu
+            Glide.with(this)
+                .load(selectedItem.image)
+                .apply(RequestOptions.bitmapTransform(RoundedCorners(6)))
+                .placeholder(R.drawable.ic_blank)
+                .error(R.drawable.ic_blank)
+                .into(imgView)
         }
 
         // Increment button logic
@@ -112,6 +122,7 @@ class PopUpFragment : DialogFragment() {
                 val catatan = catatanMenu.text.toString()
                 val updatedItem =
                     CheckOutData(
+                        selectedItem.image,
                         selectedItem.idMenu,
                         selectedItem.namaMenu,
                         selectedItem.hargaMenu,

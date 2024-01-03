@@ -78,10 +78,11 @@ class KaryawanFragment : Fragment() {
                     binding.swipeRefreshLayout.visibility = View.VISIBLE
                     binding.noItemFound.visibility = View.GONE
                     Log.d("responseKarywan", "onViewCreated: $it")
-                    val adapter = KaryawanAdapter(it) { idUser, Nama ->
+                    val adapter = KaryawanAdapter(it) { idUser, Nama, img ->
                         val editor = sharedPreferences.edit()
                         editor.putString("namaKaryawan", Nama)
                         editor.putInt("idKaryawan", idUser)
+                        editor.putString("img", img)
                         editor.apply()
                         selectedItemViewModel.setCallPopUpDeleteUser(true)
                     }

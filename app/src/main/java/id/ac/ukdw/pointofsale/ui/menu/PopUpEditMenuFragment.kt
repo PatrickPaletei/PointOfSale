@@ -18,8 +18,12 @@ import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.viewModels
+import com.bumptech.glide.Glide
+import com.bumptech.glide.load.resource.bitmap.RoundedCorners
+import com.bumptech.glide.request.RequestOptions
 import dagger.hilt.android.AndroidEntryPoint
 import id.ac.ukdw.pointofsale.R
+import id.ac.ukdw.pointofsale.adapter.TextDrawable
 import id.ac.ukdw.pointofsale.databinding.FragmentPopUpEditMenuBinding
 import id.ac.ukdw.pointofsale.viewmodel.PageMenuViewModel
 import java.io.File
@@ -58,6 +62,14 @@ class PopUpEditMenuFragment : DialogFragment() {
         val kategori = sharedPreferences.getString("kategori", "")
         val harga = sharedPreferences.getInt("harga", 0)
         val idEditMenu = sharedPreferences.getInt("id", 0)
+        val image = sharedPreferences.getString("image","")
+
+        Glide.with(this)
+            .load(image)
+            .apply(RequestOptions.bitmapTransform(RoundedCorners(6)))
+            .placeholder(R.drawable.ic_blank) // Placeholder while loading
+            .error(R.drawable.ic_blank)
+            .into(binding.imageContainer)
 
         binding.tambahGambar.setOnClickListener {
             uploadPicFromGallery()

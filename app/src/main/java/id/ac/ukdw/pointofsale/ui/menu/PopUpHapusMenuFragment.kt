@@ -11,6 +11,9 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.viewModels
+import com.bumptech.glide.Glide
+import com.bumptech.glide.load.resource.bitmap.RoundedCorners
+import com.bumptech.glide.request.RequestOptions
 import dagger.hilt.android.AndroidEntryPoint
 import dagger.hilt.android.lifecycle.HiltViewModel
 import id.ac.ukdw.pointofsale.R
@@ -41,6 +44,15 @@ class PopUpHapusMenuFragment : DialogFragment() {
         val sharedPreferences = requireActivity().getSharedPreferences("dataEdit", Context.MODE_PRIVATE)
         val judulMenu = sharedPreferences.getString("judulMenuDelete", "")
         val idDeleteMenu = sharedPreferences.getInt("idMenuDelete", 0)
+        val imageDelete = sharedPreferences.getString("imageDelete","")
+
+        Glide.with(this)
+            .load(imageDelete)
+            .apply(RequestOptions.bitmapTransform(RoundedCorners(6)))
+            .placeholder(R.drawable.ic_blank) // Placeholder while loading
+            .error(R.drawable.ic_blank)
+            .into(binding.imgContainer)
+
 
         binding.namaMenu.text = judulMenu
         binding.btnDeleteMenu.setOnClickListener {

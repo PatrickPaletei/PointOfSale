@@ -14,7 +14,7 @@ import id.ac.ukdw.pointofsale.databinding.ItemKaryawanBinding
 
 class KaryawanAdapter(
     private val data: GetUserResponse,
-    private val onItemDeleteClick: (Int, String) -> Unit
+    private val onItemDeleteClick: (Int, String, String?) -> Unit
 ) : RecyclerView.Adapter<KaryawanAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -42,7 +42,7 @@ class KaryawanAdapter(
                 val position = bindingAdapterPosition
                 if (position != RecyclerView.NO_POSITION) {
                     val item = data.data[position]
-                    onItemDeleteClick(item.idUser, item.namaKaryawan)
+                    onItemDeleteClick(item.idUser, item.namaKaryawan, item.image)
                 }
             }
         }
@@ -51,7 +51,7 @@ class KaryawanAdapter(
             binding.namaKaryawan.text = dataItem.namaKaryawan
             binding.usernameKaryawan.text = dataItem.username
             val role = dataItem.role
-            if (role == "admin"){
+            if (role == "admin") {
                 binding.hapusKaryawan.visibility = View.GONE
             }
             // Loading image using Glide

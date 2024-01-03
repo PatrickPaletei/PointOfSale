@@ -84,7 +84,7 @@ class CardAdapterAllMenu(
 
                 Glide.with(binding.root.context)
                     .load(dataSemuaMakanan.image)
-                    .apply(RequestOptions.bitmapTransform(RoundedCorners(12)))
+                    .apply(RequestOptions.bitmapTransform(RoundedCorners(6)))
                     .placeholder(R.drawable.ic_blank)
                     .error(R.drawable.ic_blank)
                     .into(binding.imgMenu)

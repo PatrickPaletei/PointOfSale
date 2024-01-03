@@ -80,7 +80,7 @@ class KarywawanViewModel @Inject constructor(
                 if (respone.isSuccessful) {
                     val body = respone.body()
                     val codeBOdy = body?.statusCode
-                    if (codeBOdy == 200) {
+                    if (codeBOdy == 201) {
                         _responseCodeRegister.value = codeBOdy
                         Log.d("regis user", "berhasil regis user $body")
                     } else {

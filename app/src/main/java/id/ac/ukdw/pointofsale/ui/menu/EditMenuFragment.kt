@@ -50,11 +50,12 @@ class EditMenuFragment : Fragment() {
         setupChipsListeners()
         sharedPreferences = requireActivity().getSharedPreferences("dataEdit", Context.MODE_PRIVATE)
         menuPageAdapter = MenuPageAdapter(
-            onItemClick = { judulMenu, kategori, harga, id ->
+            onItemClick = { judulMenu, kategori, harga, id,img ->
                 val hargaWithoutSuffix = harga.removeSuffix(".00")
                 val hargaAsInt =
                     hargaWithoutSuffix.toIntOrNull() ?: 0 // Default to 0 if parsing fails
                 val editor = sharedPreferences.edit()
+                editor.putString("image",img)
                 editor.putString("judulMenu", judulMenu)
                 editor.putString("kategori", kategori)
                 editor.putInt("harga", hargaAsInt)
@@ -64,9 +65,10 @@ class EditMenuFragment : Fragment() {
 
                 selectedItemViewModel.setCallPopUpEditMenu(true)
             },
-            onItemDeleteClick = { idMenu,namaMenu ->
+            onItemDeleteClick = { idMenu,namaMenu,img ->
                 val editor = sharedPreferences.edit()
                 editor.putString("judulMenuDelete", namaMenu)
+                editor.putString("imageDelete",img)
                 editor.putInt("idMenuDelete",idMenu)
                 editor.apply()
                 selectedItemViewModel.setCallPopUpDeleteMenu(true)

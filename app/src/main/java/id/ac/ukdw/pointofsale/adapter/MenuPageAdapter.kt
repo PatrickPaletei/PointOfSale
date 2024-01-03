@@ -12,10 +12,13 @@ import com.bumptech.glide.request.RequestOptions
 import id.ac.ukdw.pointofsale.R
 import id.ac.ukdw.pointofsale.database.MenuItem
 import id.ac.ukdw.pointofsale.databinding.ItemMenuHalamanMenuBinding
+import java.text.DecimalFormat
+import java.text.DecimalFormatSymbols
+import java.util.Locale
 
 class MenuPageAdapter(
-    private val onItemClick: (String, String, String, Int) -> Unit,
-    private val onItemDeleteClick: (Int,String) -> Unit,
+    private val onItemClick: (String, String, String, Int,String?) -> Unit,
+    private val onItemDeleteClick: (Int,String,String?) -> Unit,
 ) : RecyclerView.Adapter<MenuPageAdapter.ViewHolder>() {
 
     private var originalData: List<MenuItem> = listOf()
@@ -76,11 +79,11 @@ class MenuPageAdapter(
             menuItem,
             onButton1Click = { item ->
                 // Action when button 1 is clicked for this menuItem
-                onItemClick(item.namaMenu, item.kategori, item.harga , item.idMenu)
+                onItemClick(item.namaMenu, item.kategori, item.harga , item.idMenu,item.image)
             },
             onButton2Click = { item ->
                 // Action when button 2 is clicked for this menuItem
-                onItemDeleteClick(item.idMenu,item.namaMenu)
+                onItemDeleteClick(item.idMenu,item.namaMenu,item.image)
             }
         )
     }
@@ -99,9 +102,9 @@ class MenuPageAdapter(
         ) {
             binding.apply {
                 judulMenu.text = menuItem.namaMenu
-                val formatHarga = menuItem.harga.removeSuffix(".00")
-                val hargaWithIDR = "IDR $formatHarga"
-                harga.text = hargaWithIDR
+//                val formatHarga = menuItem.harga.removeSuffix(".00")
+//                val hargaWithIDR = "IDR $formatHarga"
+                harga.text = formatPriceWithIDR(menuItem.harga.toDouble())
                 kategori.text = menuItem.kategori
 
                 // Set click listeners for buttons
@@ -111,7 +114,7 @@ class MenuPageAdapter(
                 val initials = generateInitials(menuItem.namaMenu)
                 Glide.with(binding.root.context)
                     .load(menuItem.image)
-                    .apply(RequestOptions.bitmapTransform(RoundedCorners(12)))
+                    .apply(RequestOptions.bitmapTransform(RoundedCorners(6)))
                     .placeholder(R.drawable.ic_blank) // Placeholder while loading
                     .error(TextDrawable(initials)) // Error placeholder with initials
                     .into(imgMakanan)
@@ -128,5 +131,15 @@ class MenuPageAdapter(
                 "$firstInitial "
             }
         }
+        private fun formatPriceWithIDR(price: Double): String {
+            val symbols = DecimalFormatSymbols(Locale.getDefault())
+            symbols.groupingSeparator = '.'
+
+            val formatter = DecimalFormat("#,###", symbols)
+            val formattedPrice = formatter.format(price)
+
+            return "IDR $formattedPrice"
+        }
     }
+
 }
